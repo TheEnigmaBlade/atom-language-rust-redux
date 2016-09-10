@@ -1,6 +1,6 @@
 '.source.rust':
   'editor':
-    'commentStart': '// '
+    'commentStart': '//'
     'increaseIndentPattern': '(?x)
        ^ .* \\{ [^}"\']* $
       |^ .* \\( [^\\)"\']* $
@@ -11,5 +11,5 @@
       |^ \\s* (\\s* /[*] .* [*]/ \\s*)* \\)
       '
     'tabLength': 4
-    #'softTabs': true
+    'softTabs': true
     'preferredLineLength': 99

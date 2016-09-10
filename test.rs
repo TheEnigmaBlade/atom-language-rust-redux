@@ -34,6 +34,14 @@ text
 /// ```
 /// test
 
+/**
+ * Deprecated
+ */
+
+/*!
+ * Deprecated
+ */
+
 text /**/ text
 text /***/ text
 text /****/ text
@@ -239,7 +247,7 @@ fn foo(bar: *const i32) {
 // Keywords and known types in wrapper structs (#56)
 pub struct Foobar(pub Option<bool>);
 
-// Lifetimes in associated type definitions (#55)
+// Lifetimes in associated type definitions
 trait Foo {
     type B: A + 'static;
 }
@@ -260,7 +268,7 @@ text
 trait Foo<A, B> : C where { }
 text
 
-// Unsafe in function arguments (#73)
+// Unsafe in function arguments
 unsafe fn foo();
 fn foo(f: unsafe fn());
 

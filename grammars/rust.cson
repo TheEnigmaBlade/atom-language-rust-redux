@@ -204,6 +204,11 @@
     'name': 'storage.modifier.visibility.rust'
     'match': '\\bpub\\b'
   }
+  'unsafe': {
+    'comment': 'Unsafe code keyword'
+    'name': 'keyword.other.unsafe.rust'
+    'match': '\\bunsafe\\b'
+  }
   'where': {
     'comment': 'Generic where clause'
     'name': 'keyword.other.where.rust'
@@ -366,6 +371,7 @@
     'name': 'keyword.other.unsafe.rust'
     'match': '\\bunsafe\\b'
   }
+  { 'include': '#unsafe' }
   { 'include': '#sigils' }
   { 'include': '#self' }
   { 'include': '#mut' }
@@ -493,6 +499,12 @@
       { 'include': '#type_params' }
       { 'include': '#const' }
       { 'include': '#where' }
+      { 'include': '#unsafe' }
+      {
+        'comment': 'Function arguments'
+        'match': 'fn'
+        'name': 'keyword.other.fn.rust'
+      }
     ]
   }
   # Type declaration

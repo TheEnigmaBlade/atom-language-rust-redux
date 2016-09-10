@@ -260,6 +260,10 @@ text
 trait Foo<A, B> : C where { }
 text
 
+// Unsafe in function arguments (#73)
+unsafe fn foo();
+fn foo(f: unsafe fn());
+
 // Format macros
 format!("text");
 format!("text{}text", 1);

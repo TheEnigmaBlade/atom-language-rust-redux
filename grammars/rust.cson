@@ -131,6 +131,49 @@
     'end': '"\\1'
   }
   
+  ## Format strings
+  
+  'format_string_literal': {
+    'comment': 'Format string literal'
+    'name': 'string.quoted.double.format.rust'
+    'begin': '"'
+    'end': '"'
+    'patterns': [
+      { 'include': '#escaped_character' }
+      {
+        'name': 'constant.character.escape.rust'
+        'match': '{{|}}'
+      }
+      {
+        'comment': 'Format string thing'
+        'name': 'punctuation.section.embedded.format.rust'
+        'begin': "{"
+        'end': "}"
+        'patterns': [
+          {
+            # I hope you like regular expressions
+            'match': '(?:([0-9]+)|(\\p{Alpha}\\w*|_\\w+))?(?:(\\:)(.?[<>\\^])?([\\+\\-])?(#)?0?(?:((?:([0-9]+)|\\p{Alpha}\\w*|_\\w+)\\$)|([0-9]+))?(?:\\.(?:(?:((?:([0-9]+)|\\p{Alpha}\\w*|_\\w+)\\$)|([0-9]+))|\\*))?(\\?|\\p{Alpha}\\w*|_\\w+)?)?'
+            'captures': {
+              '1': { 'name': 'constant.numeric.integer.format.argument.rust' }
+              '2': { 'name': 'constant.variable.format.argument.rust' }
+              '3': { 'name': 'meta.separator.format.rust' }
+              '4': { 'name': 'punctuation.parameters.format.fill.rust' }
+              '5': { 'name': 'punctuation.separator.format.sign.rust' }
+              '6': { 'name': 'punctuation.separator.format.alt.rust' }
+              '7': { 'name': 'constant.variable.format.width.argument.rust' }
+              '8': { 'name': 'constant.numeric.integer.format.width.argument.rust' }
+              '9': { 'name': 'constant.numeric.integer.format.width.rust' }
+              '10': { 'name': 'constant.variable.format.precision.argument.rust' }
+              '11': { 'name': 'constant.numeric.integer.format.precision.argument.rust' }
+              '12': { 'name': 'constant.numeric.integer.format.precision.rust' }
+              '13': { 'name': 'support.type.format.type.rust' }
+            }
+          }
+        ]
+      }
+    ]
+  }
+  
   'sigils': {
     'comment': 'Sigil'
     'name': 'keyword.operator.sigil.rust'
@@ -360,26 +403,51 @@
   { 'include': '#std_types' }
   { 'include': '#std_traits' }
   # TODO: procs and closures
+  
   # Macros
+  
   {
     'comment': 'Built-in macro'
-    'name': 'support.function.builtin.rust'
-    'match': '\\b(macro_rules|format_args|env|option_env|concat_idents|concat|log_syntax|line|column|file|stringify|include|include_str|include_bytes|module_path|asm|cfg|trace_macros)!'
+    'name': 'support.function.macro.builtin.rust'
+    'match': '\\b(macro_rules|env|option_env|concat_idents|concat|log_syntax|line|column|file|stringify|include|include_str|include_bytes|module_path|asm|cfg|trace_macros)!'
   }
   {
     'comment': 'Core macro'
-    'name': 'support.function.core.rust'
-    'match': '\\b(panic|assert|assert_eq|debug_assert|debug_assert_eq|try|write|writeln|unreachable|unimplemented)!'
+    'name': 'support.function.macro.core.rust'
+    'match': '\\b(panic|assert|assert_eq|debug_assert|debug_assert_eq|try|unreachable|unimplemented)!'
   }
   {
     'comment': 'Standard library macro'
-    'name': 'support.function.std.rust'
-    'match': '\\b(format|print|println|select|vec)!'
+    'name': 'support.function.macro.std.rust'
+    'match': '\\b(select|vec)!'
+  }
+  {
+    'comment': 'Format macro'
+    'begin': '\\b(?:((?:write|writeln)!)|((?:format|format_args|print|println)!))'
+    'end': '[,\\)\\]\\}]'
+    'beginCaptures': {
+      '1': { 'name': 'support.function.macro.core.rust' }
+      '2': { 'name': 'support.function.macro.std.rust' }
+    }
+    'patterns': [
+      { 'include': '#format_string_literal' }
+    ]
   }
   {
     'comment': 'Logging macro'
     'name': 'support.function.log.rust'
-    'match': '\\b(log|error|warn|info|debug|trace|log_enabled)!'
+    'match': '\\b(log_enabled)!'
+  }
+  {
+    'comment': 'Logging format macro'
+    'begin': '\\b((?:log|error|warn|info|debug|trace)!)'
+    'end': '[,\\)\\]\\}]'
+    'beginCaptures': {
+      '1': { 'name': 'support.function.macro.log.rust' }
+    }
+    'patterns': [
+      { 'include': '#format_string_literal' }
+    ]
   }
   # Function and macro calls
   {

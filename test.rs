@@ -243,3 +243,47 @@ pub struct Foobar(pub Option<bool>);
 trait Foo {
     type B: A + 'static;
 }
+
+// Format macros
+format!("text");
+format!("text{}text", 1);
+format!("text{0}text", 1);
+format!("text{named}text", named=1);
+format!("text{:?}text", to_debug);
+format!("text{0:?}text", to_debug);
+format!("text{named:?}text", named=to_debug);
+format!("text{:<}text", 1);
+format!("text{:.>}text", 1);
+format!("text{:+}text", pos_or_neg);
+format!("text{:+0}text", pos_or_neg);
+format!("text{:+04}text", pos_or_neg);
+format!("text{:6}", "text");
+format!("text{:1$}", "text", 6);
+format!("text{1:6$}", 6, "text");
+format!("text{:w$}", "text", w=6);
+format!("text{:8b}text", byte);
+format!("text{:08b}text", byte);
+format!("text{:#010b}text", byte);
+format!("text{:2x}text", byte);
+format!("text{:#4x}text", byte);
+format!("text{:.2}text", 0.5);
+format!("text{:0.2}text", 0.5);
+format!("text{:06.2}text", 0.5);
+format!("text{named:.prec$}text", prec=0.5, named=2.0);
+format!("text{}text{2:.*}text", "text", 6, 0.5);
+format!("text{named:-^+#06.2e}text", named=0.5);
+format!("text{named:-^+#0width$.prec$e}text", named=0.5, width=6, prec=2);
+format!("text{{escaped}}text\n{0}text", "only {text} first {{text}}");
+
+not_format!("text{}text");
+format_args!("{}", "text");
+write!("{}", "text");
+writeln!("{}", "text");
+print!("{}", "text");
+println!("{}", "text");
+log!("{}", "text");
+error!("{}", "text");
+warn!("{}", "text");
+info!("{}", "text");
+debug!("{}", "text");
+trace!("{}", "text");

@@ -36,9 +36,27 @@
   'block_doc_comment': {
     'comment': 'Block documentation comment'
     'name': 'comment.block.documentation.rust'
-    'begin': '/\\*[\\*!](?![\\*/])'
-    'end': '\\*/'
+    'begin': '(/\\*[\\*!](?![\\*/]))'
+    'end': '(\\*/)'
+    'beginCaptures': {
+      '1': { 'name': 'invalid.deprecated.rust' }
+    }
+    'endCaptures': {
+      '1': { 'name': 'invalid.deprecated.rust' }
+    }
     'patterns': [
+      {
+        'begin': '^\\s*(\\*)(?!/)'
+        'end': '$'
+        'beginCaptures': {
+          '1': { 'name': 'invalid.deprecated.rust' }
+        }
+        'patterns': [
+          { 'include': '#block_comment' }
+          { 'include': '#block_doc_comment' }
+          { 'include': '#markdown' }
+        ]
+      }
       { 'include': '#block_comment' }
       { 'include': '#block_doc_comment' }
       { 'include': '#markdown' }

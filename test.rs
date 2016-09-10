@@ -244,6 +244,22 @@ trait Foo {
     type B: A + 'static;
 }
 
+// where clause
+impl Foo<A, B> where text { }
+text
+impl Foo<A, B> for C where text { }
+text
+impl Foo<A, B> for C {
+    fn foo<A, B> -> C where text { }
+}
+text
+fn foo<A, B> -> C where text { }
+text
+struct Foo<A, B> where text { }
+text
+trait Foo<A, B> : C where { }
+text
+
 // Format macros
 format!("text");
 format!("text{}text", 1);

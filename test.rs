@@ -126,6 +126,11 @@ text
 use super::foo::{bar, baz};
 text
 
+x = 1+1;
+y = 4-2;
+x *= 3;
+y++;
+
 text
 pub enum MyEnum {
     One,

@@ -424,28 +424,34 @@
   {
     'comment': 'Miscellaneous operator'
     'name': 'keyword.operator.misc.rust'
-    'match': '(=>|::|\\bas\\b)'
+    'match': '->|=>|::|\\bas\\b'
   }
   {
     'comment': 'Comparison operator'
     'name': 'keyword.operator.comparison.rust'
-    'match': '(&&|\\|\\||==|!=)'
+    'match': '&&|\\|\\||==|!='
   }
   {
     'comment': 'Assignment operator'
     'name': 'keyword.operator.assignment.rust'
-    'match': '(\\+=|-=|/=|\\*=|%=|\\^=|&=|\\|=|<<=|>>=|=)'
+    'match': '\\+=|-=|/=|\\*=|%=|\\^=|&=|\\|=|<<=|>>=|='
   }
   {
     'comment': 'Arithmetic operator'
     'name': 'keyword.operator.arithmetic.rust'
-    'match': '(!|\\+|-|/|\\*|%|\\^|&|\\||<<|>>)'
+    'match': '!|\\+(?!\\+)|-(?!-)|/|\\*|%|\\^|&|\\||<<|>>'
   }
   {
     'comment': 'Comparison operator (second group because of regex precedence)'
     'name': 'keyword.operator.comparison.rust'
-    'match': '(<=|>=|<|>)'
+    'match': '<=|>=|<|>'
   }
+  {
+    'comment': 'Common non-existant operators'
+    'name': 'invalid.illegal.rust'
+    'match': '\\+\\+|--'
+  }
+  
   # Standard types and traits
   { 'include': '#types' }
   { 'include': '#core_vars' }

@@ -156,6 +156,15 @@
     'end': '"\\1'
   }
   
+  'character_literal': {
+    'comment': 'Character literal'
+    'name': 'string.quoted.single.rust'
+    'match': 'b?\'(?:[^\'\\\\]|\\\\(?:x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.))([^\']*)\''
+    'captures': {
+      '1': { 'name': 'invalid.illegal.rust' }
+    }
+  }
+  
   ## Format strings
   
   'format_string_literal': {
@@ -195,6 +204,42 @@
             }
           }
         ]
+      }
+    ]
+  }
+  
+  # Keywords
+  
+  ## Types
+  
+  'types': {
+    'patterns': [
+      {
+        'comment': 'Built-in/core type'
+        'name': 'storage.type.core.rust'
+        'match': '\\b(bool|char|usize|isize|u8|u16|u32|u64|i8|i16|i32|i64|f32|f64|str|Self|Option|Result)\\b'
+      },
+      {
+        'comment': 'Standard library type'
+        'name': 'storage.class.std.rust'
+        'match': '\\b(Box|String|Vec|Path|PathBuf)\\b'
+      }
+    ]
+  }
+  
+  ## Traits
+  
+  'traits': {
+    'patterns': [
+      {
+        'comment': 'Core trait'
+        'name': 'support.type.core.rust'
+        'match': '\\b(Drop|Fn|FnMut|FnOnce|Clone|PartialEq|PartialOrd|Eq|Ord|AsRef|AsMut|Into|From|Default|Iterator|Extend|IntoIterator|DoubleEndedIterator|ExactSizeIterator)\\b'
+      },
+      {
+        'comment': 'Standard library trait'
+        'name': 'support.type.std.rust'
+        'match': '\\b(ToOwned|ToString)\\b'
       }
     ]
   }
@@ -256,11 +301,6 @@
       '2': { 'name': 'entity.name.lifetime.rust' }
     }
   }
-  'core_types': {
-    'comment': 'Built-in/core type'
-    'name': 'storage.type.core.rust'
-    'match': '\\b(bool|char|usize|isize|u8|u16|u32|u64|i8|i16|i32|i64|f32|f64|str|Self|Option|Result)\\b'
-  }
   'core_vars': {
     'comment': 'Core type variant'
     'name': 'support.constant.core.rust'
@@ -270,21 +310,6 @@
     'comment': 'Core trait (marker)'
     'name': 'support.type.marker.rust'
     'match': '\\b(Copy|Send|Sized|Sync)\\b'
-  }
-  'core_traits': {
-    'comment': 'Core trait'
-    'name': 'support.type.core.rust'
-    'match': '\\b(Drop|Fn|FnMut|FnOnce|Clone|PartialEq|PartialOrd|Eq|Ord|AsRef|AsMut|Into|From|Default|Iterator|Extend|IntoIterator|DoubleEndedIterator|ExactSizeIterator)\\b'
-  }
-  'std_types': {
-    'comment': 'Standard library type'
-    'name': 'storage.class.std.rust'
-    'match': '\\b(Box|String|Vec|Path|PathBuf)\\b'
-  }
-  'std_traits': {
-    'comment': 'Standard library trait'
-    'name': 'support.type.std.rust'
-    'match': '\\b(ToOwned|ToString)\\b'
   }
   'type_params': {
     'comment': 'Type parameters'
@@ -296,11 +321,9 @@
       { 'include': '#sigils' }
       { 'include': '#mut' }
       { 'include': '#lifetime' }
-      { 'include': '#core_types' }
+      { 'include': '#types' }
       { 'include': '#core_marker' }
-      { 'include': '#core_traits' }
-      { 'include': '#std_types' }
-      { 'include': '#std_traits' }
+      { 'include': '#traits' }
       { 'include': '#type_params' }
     ]
   }
@@ -321,15 +344,10 @@
     ]
   }
   
-  # Strings
+  # Literals
   { 'include': '#string_literal' }
   { 'include': '#raw_string_literal' }
-  
-  {
-    'comment': 'Character literal'
-    'name': 'string.quoted.single.rust'
-    'match': 'b?\'([^\'\\\\]|\\\\(x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.))\''
-  }
+  { 'include': '#character_literal' }
   
   # Numbers
   {
@@ -429,12 +447,10 @@
     'match': '(<=|>=|<|>)'
   }
   # Standard types and traits
-  { 'include': '#core_types' }
+  { 'include': '#types' }
   { 'include': '#core_vars' }
   { 'include': '#core_marker' }
-  { 'include': '#core_traits' }
-  { 'include': '#std_types' }
-  { 'include': '#std_traits' }
+  { 'include': '#traits' }
   # TODO: procs and closures
   
   # Macros
@@ -512,11 +528,9 @@
       { 'include': '#self' }
       { 'include': '#mut' }
       { 'include': '#ref_lifetime' }
-      { 'include': '#core_types' }
+      { 'include': '#types' }
       { 'include': '#core_marker' }
-      { 'include': '#core_traits' }
-      { 'include': '#std_types' }
-      { 'include': '#std_traits' }
+      { 'include': '#traits' }
       { 'include': '#type_params' }
       { 'include': '#const' }
       { 'include': '#where' }
@@ -539,10 +553,9 @@
     }
     'patterns': [
       { 'include': '#comments' }
-      { 'include': '#core_traits' }
-      { 'include': '#std_traits' }
+      { 'include': '#traits' }
       { 'include': '#type_params' }
-      { 'include': '#core_types' }
+      { 'include': '#types' }
       { 'include': '#pub' }
       { 'include': '#where' }
     ]
@@ -562,11 +575,9 @@
       { 'include': '#mut' }
       { 'include': '#lifetime' }
       { 'include': '#ref_lifetime' }
-      { 'include': '#core_types' }
+      { 'include': '#types' }
       { 'include': '#core_marker' }
-      { 'include': '#core_traits' }
-      { 'include': '#std_types' }
-      { 'include': '#std_traits' }
+      { 'include': '#traits' }
       { 'include': '#type_params' }
     ]
   }
@@ -582,11 +593,9 @@
       { 'include': '#comments' }
       { 'include': '#sigils' }
       { 'include': '#ref_lifetime' }
-      { 'include': '#core_types' }
+      { 'include': '#types' }
       { 'include': '#core_marker' }
-      { 'include': '#core_traits' }
-      { 'include': '#std_types' }
-      { 'include': '#std_traits' }
+      { 'include': '#traits' }
       { 'include': '#type_params' }
       { 'include': '#where' }
       {

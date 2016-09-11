@@ -75,11 +75,15 @@ text "strings can
 span multiple lines" text
 
 text 'c' text
+text 'cc' text
 text '\n' text
+text '\nf' text
+text '\n\n' text
 text '\x20' text
 text '\'' text
 text '\\' text
 text b'b' text
+text b'bb' text
 text b'\x20' text
 
 text 42f32 text
@@ -98,7 +102,8 @@ text 0b101010 text
 text bool text char text usize text isize text
 text u8 text u16 text u32 text u64 text
 text i8 text i16 text i32 text i64 text
-text str text Self text
+text Self text
+text str text &str text String text &String text
 
 text true text false text
 
@@ -117,6 +122,8 @@ text
 use std::{num, str};
 text
 use self::foo::{bar, baz};
+text
+use super::foo::{bar, baz};
 text
 
 text

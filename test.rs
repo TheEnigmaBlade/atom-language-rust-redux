@@ -19,6 +19,7 @@ text
 /// _test_
 /// __test__
 /// __***test***__
+/// ___test___
 /// # test
 /// ## test
 /// ### test
@@ -26,8 +27,13 @@ text
 /// ##### test
 /// ###### test
 /// ####### test
-/// [test](http://test.com)
+/// # test **test**
+/// # test _test_
+// [test](http://test.com)
 /// [test](#test)
+/// ![test](#test)
+/// [test]
+/// [test]: http://test.com
 /// `test code`
 /// ```rust
 /// test code block
@@ -130,6 +136,7 @@ x = 1+1;
 y = 4-2;
 x *= 3;
 y++;
+y += 1;
 
 text
 pub enum MyEnum {

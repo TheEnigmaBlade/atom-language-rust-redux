@@ -8,7 +8,7 @@
   
   'line_comment': {
     'comment': 'Single-line comment'
-    'name': 'comment.line.double-slash.rust'
+    'name': 'comment.line.rust'
     'begin': '//'
     'end': '$'
   }
@@ -72,38 +72,73 @@
   
   # Markdown for documentation comments
   
+  'md_inline': {
+    'patterns': [
+      {
+        'comment': 'Italic'
+        'begin': '\\*(?!\\*)'
+        'end': '\\*'
+        'name': 'markup.italic.documentation.rust'
+        'patterns': [
+          { 'include': '#md_inline' }
+        ]
+      }
+      {
+        'comment': 'Italic'
+        'begin': '_(?!_)'
+        'end': '_'
+        'name': 'markup.italic.documentation.rust'
+        'patterns': [
+          { 'include': '#md_inline' }
+        ]
+      }
+      {
+        'comment': 'Bold'
+        'begin': '\\*\\*'
+        'end': '\\*\\*'
+        'name': 'markup.bold.documentation.rust'
+        'patterns': [
+          { 'include': '#md_inline' }
+        ]
+      }
+      {
+        'comment': 'Underline'
+        'begin': '__'
+        'end': '__'
+        'name': 'markup.underline.documentation.rust'
+        'patterns': [
+          { 'include': '#md_inline' }
+        ]
+      }
+    ]
+  }
+  
   'markdown': {
     'patterns': [
       {
-        'match': '\\*[^\\*].*?\\*'
-        'name': 'markup.italic.documentation.rust'
-      }
-      {
-        'match': '\\*\\*[^\\*].*?\\*\\*'
-        'name': 'markup.bold.documentation.rust'
-      }
-      {
-        'match': '\\*\\*\\*.*?\\*\\*\\*'
-        'name': 'markup.bold.italic.documentation.rust'
-      }
-      {
-        'match': '_(?!_).*?_'
-        'name': 'markup.italic.documentation.rust'
-      }
-      {
-        'match': '__.*?__'
-        'name': 'markup.underline.documentation.rust'
-      }
-      {
-        'match': '(?<!#)(#{1,6})(#*)(?!#).*'
+        'comment': 'Headers'
+        'begin': '(#{1,6})(#*)'
+        'end': '$'
         'name': 'markup.heading.documentation.rust'
         'captures': {
           '1': { 'name': 'markup.heading.punctuation.definition.documentation.rust' }
           '2': { 'name': 'markup.invalid.illegal.documentation.rust' }
         }
+        'patterns': [
+          { 'include': 'md_inline' }
+        ]
       }
       {
-        'match': '(\\[.*?\\]\\((.*?)\\))'
+        'comment': 'Links'
+        'match': '(!?\\[.*?\\]\\((.*?)\\))'
+        'captures': {
+          '1': { 'name': 'markup.link.documentation.rust' }
+          '2': { 'name': 'markup.link.entity.documentation.rust' }
+        }
+      }
+      {
+        'comment': 'Links'
+        'match': '(\\[.*?\\]\\:\\s*([^\\s]*))'
         'captures': {
           '1': { 'name': 'markup.link.documentation.rust' }
           '2': { 'name': 'markup.link.entity.documentation.rust' }
@@ -127,6 +162,7 @@
           }
         ]
       }
+      { 'include': '#md_inline' }
     ]
   }
   

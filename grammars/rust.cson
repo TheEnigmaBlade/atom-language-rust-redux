@@ -261,6 +261,72 @@
     ]
   }
   
+  ## Numbers
+  
+  'floating_point_literal': {
+    'patterns': [
+      {
+        'comment': 'Floating point literal (basic)'
+        'name': 'constant.numeric.float.rust'
+        'match': '\\b([0-9][0-9_]*\\.[0-9][0-9_]*)\\b'
+      }
+      {
+        'comment': 'Floating point literal (typed)'
+        'name': 'constant.numeric.float.rust'
+        'match': '\\b([0-9][0-9_]*(?:\\.[0-9][0-9_]*)?)(f32|f64)\\b'
+      }
+      {
+        'comment': 'Floating point literal (exponent)'
+        'name': 'constant.numeric.float.rust'
+        'match': '\\b([0-9][0-9_]*(?:\\.[0-9][0-9_]*)?[eE][+-]?[0-9_]+)(f32|f64)?\\b'
+      }
+    ]
+  }
+  
+  'integer_literal': {
+    'patterns': [
+      {
+        'comment': 'Integer literal (decimal)'
+        'name': 'constant.numeric.integer.decimal.rust'
+        'match': '\\b([0-9][0-9_]*)(?:([ui](?:8|16|32|64|size))|(int|uint|is|us))?\\b'
+        'captures': {
+          '3': { 'name': 'invalid.illegal.rust' }
+        }
+      }
+      {
+        'comment': 'Integer literal (hexadecimal)'
+        'name': 'constant.numeric.integer.hexadecimal.rust'
+        'match': '\\b(0x[a-fA-F0-9_]+)(?:([ui](?:8|16|32|64|size))|(int|uint|is|us))?\\b'
+        'captures': {
+          '3': { 'name': 'invalid.illegal.rust' }
+        }
+      }
+      {
+        'comment': 'Integer literal (octal)'
+        'name': 'constant.numeric.integer.octal.rust'
+        'match': '\\b(0o[0-7_]+)(?:([ui](?:8|16|32|64|size))|(int|uint|is|us))?\\b'
+        'captures': {
+          '3': { 'name': 'invalid.illegal.rust' }
+        }
+      }
+      {
+        'comment': 'Integer literal (binary)'
+        'name': 'constant.numeric.integer.binary.rust'
+        'match': '\\b(0b[01_]+)(?:([ui](?:8|16|32|64|size))|(int|uint|is|us))?\\b'
+        'captures': {
+          '3': { 'name': 'invalid.illegal.rust' }
+        }
+      }
+    ]
+  }
+  
+  'number_literal': {
+    'patterns': [
+      { 'include': '#floating_point_literal' }
+      { 'include': '#integer_literal' }
+    ]
+  }
+  
   # Keywords
   
   ## Types
@@ -401,43 +467,8 @@
   { 'include': '#string_literal' }
   { 'include': '#raw_string_literal' }
   { 'include': '#character_literal' }
+  { 'include': '#number_literal' }
   
-  # Numbers
-  {
-    'comment': 'Floating point literal (fraction)'
-    'name': 'constant.numeric.float.rust'
-    'match': '\\b[0-9][0-9_]*\\.[0-9][0-9_]*([eE][+-]?[0-9_]+)?(f32|f64)?\\b'
-  }
-  {
-    'comment': 'Floating point literal (exponent)'
-    'name': 'constant.numeric.float.rust'
-    'match': '\\b[0-9][0-9_]*(\\.[0-9][0-9_]*)?[eE][+-]?[0-9_]+(f32|f64)?\\b'
-  }
-  {
-    'comment': 'Floating point literal (typed)'
-    'name': 'constant.numeric.float.rust'
-    'match': '\\b[0-9][0-9_]*(\\.[0-9][0-9_]*)?([eE][+-]?[0-9_]+)?(f32|f64)\\b'
-  }
-  {
-    'comment': 'Integer literal (decimal)'
-    'name': 'constant.numeric.integer.decimal.rust'
-    'match': '\\b[0-9][0-9_]*([ui](8|16|32|64|s|size))?\\b'
-  }
-  {
-    'comment': 'Integer literal (hexadecimal)'
-    'name': 'constant.numeric.integer.hexadecimal.rust'
-    'match': '\\b0x[a-fA-F0-9_]+([ui](8|16|32|64|s|size))?\\b'
-  }
-  {
-    'comment': 'Integer literal (octal)'
-    'name': 'constant.numeric.integer.octal.rust'
-    'match': '\\b0o[0-7_]+([ui](8|16|32|64|s|size))?\\b'
-  }
-  {
-    'comment': 'Integer literal (binary)'
-    'name': 'constant.numeric.integer.binary.rust'
-    'match': '\\b0b[01_]+([ui](8|16|32|64|s|size))?\\b'
-  }
   # Language
   {
     'comment': 'Static storage modifier'

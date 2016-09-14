@@ -20,16 +20,26 @@ expectToken = (tokens, lineN, tokenN, value, scope) ->
 	expect(t.value).toEqual ct.value
 	expect(t.scopes).toEqual ct.scopes
 
+expectNoScope = (tokens, lineN, tokenN, scope) ->
+	currentLine = lineN
+	currentToken = tokenN
+	t = tokens[lineN][tokenN]
+	expect(t.scopes).not.toContain scope
+
 expectNext = (tokens, value, scope) ->
 	expectToken(tokens, currentLine, currentToken+1, value, scope)
 
 nextLine = ->
 	currentLine += 1
 	currentToken = -1
-	
+
 reset = ->
 	currentLine = 0
 	currentToken = -1
+
+tokenize = (grammar, value) ->
+	reset()
+	grammar.tokenizeLines value
 
 # Main
 describe 'atom-language-rust', ->
@@ -649,3 +659,244 @@ describe 'atom-language-rust', ->
 	
 	describe 'when tokenizing format strings', ->
 		#TODO
+
+	describe 'when tokenizing floating-point literals', ->
+		it 'should parse without type', ->
+			tokens = tokenize grammar, '4.2'
+			expectNext tokens,
+				'4.2',
+				'constant.numeric.float.rust'
+			
+			tokens = tokenize grammar, '4_2.0'
+			expectNext tokens,
+				'4_2.0',
+				'constant.numeric.float.rust'
+			
+			tokens = tokenize grammar, '0_________0.6'
+			expectNext tokens,
+				'0_________0.6',
+				'constant.numeric.float.rust'
+		
+		it 'should parse with type', ->
+			tokens = tokenize grammar, '4f32'
+			expectNext tokens,
+				'4f32',
+				'constant.numeric.float.rust'
+			
+			tokens = tokenize grammar, '4f64'
+			expectNext tokens,
+				'4f64',
+				'constant.numeric.float.rust'
+			
+			tokens = tokenize grammar, '4.2f32'
+			expectNext tokens,
+				'4.2f32',
+				'constant.numeric.float.rust'
+			
+			tokens = tokenize grammar, '3_________3f32'
+			expectNext tokens,
+				'3_________3f32',
+				'constant.numeric.float.rust'
+		
+		it 'should parse with exponents', ->
+			tokens = tokenize grammar, '3e8'
+			expectNext tokens,
+				'3e8',
+				'constant.numeric.float.rust'
+			
+			tokens = tokenize grammar, '3E8'
+			expectNext tokens,
+				'3E8',
+				'constant.numeric.float.rust'
+			
+			tokens = tokenize grammar, '3e+8'
+			expectNext tokens,
+				'3e+8',
+				'constant.numeric.float.rust'
+			
+			tokens = tokenize grammar, '3e-8'
+			expectNext tokens,
+				'3e-8',
+				'constant.numeric.float.rust'
+			
+			tokens = tokenize grammar, '2.99e8'
+			expectNext tokens,
+				'2.99e8',
+				'constant.numeric.float.rust'
+			
+			tokens = tokenize grammar, '6.626e-34'
+			expectNext tokens,
+				'6.626e-34',
+				'constant.numeric.float.rust'
+			
+			tokens = tokenize grammar, '3e8f64'
+			expectNext tokens,
+				'3e8f64',
+				'constant.numeric.float.rust'
+	
+	describe 'when tokenizing integer literals', ->
+		it 'should parse decimal', ->
+			tokens = tokenize grammar, '13'
+			expectNext tokens,
+				'13',
+				'constant.numeric.integer.decimal.rust'
+			
+			tokens = tokenize grammar, '1_013'
+			expectNext tokens,
+				'1_013',
+				'constant.numeric.integer.decimal.rust'
+			
+			tokens = tokenize grammar, '_031'
+			expectNoScope tokens, 0, 0,
+				'constant.numeric.integer.decimal.rust'
+		
+		it 'should parse type suffixes', ->
+			tokens = tokenize grammar, '101u8'
+			expectNext tokens,
+				'101u8',
+				'constant.numeric.integer.decimal.rust'
+			
+			tokens = tokenize grammar, '103u16'
+			expectNext tokens,
+				'103u16',
+				'constant.numeric.integer.decimal.rust'
+			
+			tokens = tokenize grammar, '107u32'
+			expectNext tokens,
+				'107u32',
+				'constant.numeric.integer.decimal.rust'
+			
+			tokens = tokenize grammar, '109u64'
+			expectNext tokens,
+				'109u64',
+				'constant.numeric.integer.decimal.rust'
+			
+			tokens = tokenize grammar, '113i8'
+			expectNext tokens,
+				'113i8',
+				'constant.numeric.integer.decimal.rust'
+			
+			tokens = tokenize grammar, '127i16'
+			expectNext tokens,
+				'127i16',
+				'constant.numeric.integer.decimal.rust'
+			
+			tokens = tokenize grammar, '131i32'
+			expectNext tokens,
+				'131i32',
+				'constant.numeric.integer.decimal.rust'
+			
+			tokens = tokenize grammar, '137i64'
+			expectNext tokens,
+				'137i64',
+				'constant.numeric.integer.decimal.rust'
+			
+			tokens = tokenize grammar, '139int'
+			expectNext tokens,
+				'139',
+				'constant.numeric.integer.decimal.rust'
+			expectNext tokens,
+				'int',
+				['constant.numeric.integer.decimal.rust', 'invalid.illegal.rust']
+			
+			tokens = tokenize grammar, '149uint'
+			expectNext tokens,
+				'149',
+				'constant.numeric.integer.decimal.rust'
+			expectNext tokens,
+				'uint',
+				['constant.numeric.integer.decimal.rust', 'invalid.illegal.rust']
+			
+			tokens = tokenize grammar, '151is'
+			expectNext tokens,
+				'151',
+				'constant.numeric.integer.decimal.rust'
+			expectNext tokens,
+				'is',
+				['constant.numeric.integer.decimal.rust', 'invalid.illegal.rust']
+			
+			tokens = tokenize grammar, '157us'
+			expectNext tokens,
+				'157',
+				'constant.numeric.integer.decimal.rust'
+			expectNext tokens,
+				'us',
+				['constant.numeric.integer.decimal.rust', 'invalid.illegal.rust']
+		
+		it 'should parse hexadecimal', ->
+			tokens = tokenize grammar, '0x123'
+			expectNext tokens,
+				'0x123',
+				'constant.numeric.integer.hexadecimal.rust'
+			
+			tokens = tokenize grammar, '0xbeeF'
+			expectNext tokens,
+				'0xbeeF',
+				'constant.numeric.integer.hexadecimal.rust'
+			
+			tokens = tokenize grammar, '0x1_2_3'
+			expectNext tokens,
+				'0x1_2_3',
+				'constant.numeric.integer.hexadecimal.rust'
+			
+			tokens = tokenize grammar, '0x123u8'
+			expectNext tokens,
+				'0x123u8',
+				'constant.numeric.integer.hexadecimal.rust'
+			
+			tokens = tokenize grammar, '0x123us'
+			expectNext tokens,
+				'0x123',
+				'constant.numeric.integer.hexadecimal.rust'
+			expectNext tokens,
+				'us',
+				['constant.numeric.integer.hexadecimal.rust', 'invalid.illegal.rust']
+		
+		it 'should parse octal', ->
+			tokens = tokenize grammar, '0o123'
+			expectNext tokens,
+				'0o123',
+				'constant.numeric.integer.octal.rust'
+			
+			tokens = tokenize grammar, '0o1_2_3'
+			expectNext tokens,
+				'0o1_2_3',
+				'constant.numeric.integer.octal.rust'
+			
+			tokens = tokenize grammar, '0o123u8'
+			expectNext tokens,
+				'0o123u8',
+				'constant.numeric.integer.octal.rust'
+			
+			tokens = tokenize grammar, '0o123us'
+			expectNext tokens,
+				'0o123',
+				'constant.numeric.integer.octal.rust'
+			expectNext tokens,
+				'us',
+				['constant.numeric.integer.octal.rust', 'invalid.illegal.rust']
+		
+		it 'should parse binary', ->
+			tokens = tokenize grammar, '0b1111011'
+			expectNext tokens,
+				'0b1111011',
+				'constant.numeric.integer.binary.rust'
+			
+			tokens = tokenize grammar, '0b1_11_10_11'
+			expectNext tokens,
+				'0b1_11_10_11',
+				'constant.numeric.integer.binary.rust'
+			
+			tokens = tokenize grammar, '0b1111011u8'
+			expectNext tokens,
+				'0b1111011u8',
+				'constant.numeric.integer.binary.rust'
+			
+			tokens = tokenize grammar, '0b1111011us'
+			expectNext tokens,
+				'0b1111011',
+				'constant.numeric.integer.binary.rust'
+			expectNext tokens,
+				'us',
+				['constant.numeric.integer.binary.rust', 'invalid.illegal.rust']
+			

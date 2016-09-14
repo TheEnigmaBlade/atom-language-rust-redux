@@ -95,13 +95,16 @@ text b'b' text
 text b'bb' text
 text b'\x20' text
 
-text 42f32 text
-text 42is text
 text 42i32 text
+text 42is text
+text 42int text
+text 42f32 text
 text 42e+18 text
 text 42.1415 text
+text 42.1415f32 text
 text 42.1415e18 text
 text 42.1415e+18 text
+text 42.1415e-18f64 text
 
 text 42 text
 text 0xf00b text

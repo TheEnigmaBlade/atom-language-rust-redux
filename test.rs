@@ -29,7 +29,8 @@ text
 /// ####### test
 /// # test **test**
 /// # test _test_
-// [test](http://test.com)
+/// [text]()
+/// [test](http://test.com)
 /// [test](#test)
 /// ![test](#test)
 /// [test]

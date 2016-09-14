@@ -15,7 +15,7 @@
   'line_doc_comment': {
     'comment': 'Single-line documentation comment'
     'name': 'comment.line.documentation.rust'
-    'begin': '//[!/](?=[^/])\\s'
+    'begin': '//[!/](?=[^/])\\s*'
     'end': '$'
     'patterns': [
       { 'include': '#markdown' }
@@ -130,15 +130,17 @@
       }
       {
         'comment': 'Links'
-        'match': '(!?\\[.*?\\]\\((.*?)\\))'
+        'match': '!?\\[.*?\\](?:\\(([^\\s\\)]+)(?:\\s+(["\'].*?["\']))?\\)|(\\(\\)))'
+        'name': 'markup.link.documentation.rust'
         'captures': {
-          '1': { 'name': 'markup.link.documentation.rust' }
+          '1': { 'name': 'markup.link.entity.documentation.rust' }
           '2': { 'name': 'markup.link.entity.documentation.rust' }
+          '3': { 'name': 'markup.invalid.illegal.documentation.rust' }
         }
       }
       {
         'comment': 'Links'
-        'match': '(\\[.*?\\]\\:\\s*([^\\s]*))'
+        'match': '(\\[.*?\\]\\:\\s*([^\\s\\)]+))'
         'captures': {
           '1': { 'name': 'markup.link.documentation.rust' }
           '2': { 'name': 'markup.link.entity.documentation.rust' }
@@ -149,16 +151,23 @@
         'name': 'markup.code.raw.inline.documentation.rust'
       }
       {
-        'begin': '```(\\w+)?'
-        'end': '```'
-        'name': 'markup.code.raw.block.documentation.rust'
-        'captures': {
-          '1': { 'name': 'markup.bold.code.block.name.documentation.rust' }
+        'begin': '(```)(\\w*)'
+        'end': '//[/!]\\s*(```)'
+        'beginCaptures': {
+          '1': { 'name': 'markup.code.raw.block.documentation.rust' }
+          '2': { 'name': 'markup.bold.code.raw.block.name.documentation.rust' }
+        }
+        'endCaptures': {
+          '1': { 'name': 'markup.code.raw.block.documentation.rust' }
         }
         'patterns': [
           {
-            'match': '//[/!](?!```)'
-            'name': 'comment.line.documentation.rust'
+            'match': '//[/!]\\s*(?!```)'
+            #'name': 'comment.line.documentation.rust'
+          }
+          {
+            'match': '(?<!```).+(?!```)'
+            'name': 'markup.code.raw.block.documentation.rust'
           }
         ]
       }

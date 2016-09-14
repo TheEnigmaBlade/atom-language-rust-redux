@@ -21,8 +21,6 @@ expectToken = (tokens, lineN, tokenN, value, scope) ->
 	expect(t.scopes).toEqual ct.scopes
 
 expectNext = (tokens, value, scope) ->
-	console.error currentLine
-	console.error currentToken+1
 	expectToken(tokens, currentLine, currentToken+1, value, scope)
 
 nextLine = ->
@@ -443,3 +441,210 @@ describe 'atom-language-rust', ->
 			expectNext tokens,
 				'```',
 				['comment.line.documentation.rust', 'markup.code.raw.block.documentation.rust']
+	
+	describe 'when tokenizing strings', ->
+		#TODO: unicode tests
+		beforeEach ->
+			reset()
+		
+		it 'should parse strings', ->
+			tokens = grammar.tokenizeLines('"test"')
+			expectNext tokens,
+				'"',
+				'string.quoted.double.rust'
+			expectNext tokens,
+				'test',
+				'string.quoted.double.rust'
+			expectNext tokens,
+				'"',
+				'string.quoted.double.rust'
+			
+			reset()
+			tokens = grammar.tokenizeLines('"test\\ntset"')
+			expectNext tokens,
+				'"',
+				'string.quoted.double.rust'
+			expectNext tokens,
+				'test',
+				'string.quoted.double.rust'
+			expectNext tokens,
+				'\\n',
+				['string.quoted.double.rust', 'constant.character.escape.rust']
+			expectNext tokens,
+				'tset',
+				'string.quoted.double.rust'
+			expectNext tokens,
+				'"',
+				'string.quoted.double.rust'
+		
+		it 'should parse byte strings', ->
+			tokens = grammar.tokenizeLines('b"test"')
+			expectNext tokens,
+				'b"',
+				'string.quoted.double.rust'
+			expectNext tokens,
+				'test',
+				'string.quoted.double.rust'
+			expectNext tokens,
+				'"',
+				'string.quoted.double.rust'
+			
+			reset()
+			tokens = grammar.tokenizeLines('b"test\\ntset"')
+			expectNext tokens,
+				'b"',
+				'string.quoted.double.rust'
+			expectNext tokens,
+				'test',
+				'string.quoted.double.rust'
+			expectNext tokens,
+				'\\n',
+				['string.quoted.double.rust', 'constant.character.escape.rust']
+			expectNext tokens,
+				'tset',
+				'string.quoted.double.rust'
+			expectNext tokens,
+				'"',
+				'string.quoted.double.rust'
+		
+		it 'should parse raw strings', ->
+			tokens = grammar.tokenizeLines('r"test"')
+			expectNext tokens,
+				'r"',
+				'string.quoted.double.raw.rust'
+			expectNext tokens,
+				'test',
+				'string.quoted.double.raw.rust'
+			expectNext tokens,
+				'"',
+				'string.quoted.double.raw.rust'
+			
+			reset()
+			tokens = grammar.tokenizeLines('r"test\\ntset"')
+			expectNext tokens,
+				'r"',
+				'string.quoted.double.raw.rust'
+			expectNext tokens,
+				'test\\ntset',
+				'string.quoted.double.raw.rust'
+			expectNext tokens,
+				'"',
+				'string.quoted.double.raw.rust'
+			
+			reset()
+			tokens = grammar.tokenizeLines('r##"test##"#tset"##')
+			expectNext tokens,
+				'r##"',
+				'string.quoted.double.raw.rust'
+			expectNext tokens,
+				'test##"#tset',
+				'string.quoted.double.raw.rust'
+			expectNext tokens,
+				'"##',
+				'string.quoted.double.raw.rust'
+			
+			reset()
+			tokens = grammar.tokenizeLines('r"test\ntset"')
+			expectNext tokens,
+				'r"',
+				'string.quoted.double.raw.rust'
+			expectNext tokens,
+				'test',
+				'string.quoted.double.raw.rust'
+			nextLine()
+			expectNext tokens,
+				'tset',
+				'string.quoted.double.raw.rust'
+			expectNext tokens,
+				'"',
+				'string.quoted.double.raw.rust'
+			
+			reset()
+			tokens = grammar.tokenizeLines('r#"test#"##test"#')
+			expectNext tokens,
+				'r#"',
+				'string.quoted.double.raw.rust'
+			expectNext tokens,
+				'test#',
+				'string.quoted.double.raw.rust'
+			expectNext tokens,
+				'"#',
+				'string.quoted.double.raw.rust'
+			expectNext tokens,
+				'#',
+				['string.quoted.double.raw.rust', 'invalid.illegal.rust']
+			expectNext tokens,
+				'test',
+				[]
+		
+		it 'should parse raw byte strings', ->
+			tokens = grammar.tokenizeLines('br"test"')
+			expectNext tokens,
+				'br"',
+				'string.quoted.double.raw.rust'
+			expectNext tokens,
+				'test',
+				'string.quoted.double.raw.rust'
+			expectNext tokens,
+				'"',
+				'string.quoted.double.raw.rust'
+			
+			reset()
+			tokens = grammar.tokenizeLines('br"test\\ntset"')
+			expectNext tokens,
+				'br"',
+				'string.quoted.double.raw.rust'
+			expectNext tokens,
+				'test\\ntset',
+				'string.quoted.double.raw.rust'
+			expectNext tokens,
+				'"',
+				'string.quoted.double.raw.rust'
+			
+			reset()
+			tokens = grammar.tokenizeLines('rb"test"')
+			expectNext tokens,
+				'rb',
+				['string.quoted.double.raw.rust', 'invalid.illegal.rust']
+			expectNext tokens,
+				'"',
+				'string.quoted.double.raw.rust'
+			expectNext tokens,
+				'test',
+				'string.quoted.double.raw.rust'
+			expectNext tokens,
+				'"',
+				'string.quoted.double.raw.rust'
+		
+		it 'should parse character strings', ->
+			tokens = grammar.tokenizeLines('\'a\'')
+			#TODO
+			
+			reset()
+			tokens = grammar.tokenizeLines('\'\\n\'')
+			#TODO
+			
+			reset()
+			tokens = grammar.tokenizeLines('\'abc\'')
+			expectNext tokens,
+				'\'',
+				'string.quoted.single.rust'
+			expectNext tokens,
+				'a',
+				'string.quoted.single.rust'
+			expectNext tokens,
+				'bc',
+				['string.quoted.single.rust', 'invalid.illegal.rust']
+			expectNext tokens,
+				'\'',
+				'string.quoted.single.rust'
+		
+		it 'should parse character byte strings', ->
+			tokens = grammar.tokenizeLines('b\'a\'')
+			#TODO
+		
+		it 'should parse escape characters', ->
+			#TODO
+	
+	describe 'when tokenizing format strings', ->
+		#TODO

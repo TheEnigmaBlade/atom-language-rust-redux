@@ -69,8 +69,10 @@ text r"This is a raw string" text
 text r"This raw string ends in \" text
 text r#"This is also valid"# text
 text r##"This is ##"# also valid."## text
-test b"This is a bytestring" text
-test br"And a raw byte string" text
+text r#"This is #"## not valid."# text  //"
+text b"This is a bytestring" text
+text br"And a raw byte string" text
+text rb"Invalid raw byte string" text
 text br##"This is ##"# also valid."## text
 text r##"Raw strings can
 span multiple lines"## text

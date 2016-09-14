@@ -197,16 +197,24 @@
   'raw_string_literal': {
     'comment': 'Raw double-quote string literal'
     'name': 'string.quoted.double.raw.rust'
-    'begin': 'b?r(#*)"'
-    'end': '"\\1'
+    'begin': '(?:b?r|(rb))(#*)"'
+    'end': '"\\2(#*)'
+    'beginCaptures': {
+      '1': { 'name': 'invalid.illegal.rust' }
+    }
+    'endCaptures': {
+      '1': { 'name': 'invalid.illegal.rust' }
+    }
   }
   
   'character_literal': {
     'comment': 'Character literal'
     'name': 'string.quoted.single.rust'
-    'match': 'b?\'(?:[^\'\\\\]|\\\\(?:x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.))([^\']*)\''
+    'match': '(b?\')(?:[^\'\\\\]|\\\\(?:x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.))([^\']*)(\')'
     'captures': {
-      '1': { 'name': 'invalid.illegal.rust' }
+      '1': { 'name': '' }
+      '2': { 'name': 'invalid.illegal.rust' }
+      '3': { 'name': '' }
     }
   }
   

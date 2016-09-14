@@ -2,7 +2,7 @@
 
 Adds syntax highlighting and snippets for [Rust](http://www.rust-lang.org/) files in [Atom](http://atom.io/).
 
-Forked from the existing [language-rust](https://github.com/zargony/atom-language-rust) due to lack of support.
+Forked from the existing [atom-language-rust](https://github.com/zargony/atom-language-rust) due to lack of support.
 
 ## Install
 

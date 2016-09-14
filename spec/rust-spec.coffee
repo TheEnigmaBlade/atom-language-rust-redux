@@ -47,6 +47,7 @@ describe 'atom-language-rust', ->
 		expect(grammar.scopeName).toBe 'source.rust'
 	
 	# Tests
+	
 	describe 'when tokenizing comments', ->
 		beforeEach ->
 			reset()

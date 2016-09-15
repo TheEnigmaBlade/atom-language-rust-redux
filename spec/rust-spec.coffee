@@ -59,11 +59,8 @@ describe 'atom-language-rust', ->
 	# Tests
 	
 	describe 'when tokenizing comments', ->
-		beforeEach ->
-			reset()
-		
 		it 'should recognize line comments', ->
-			tokens = grammar.tokenizeLines('// test')
+			tokens = tokenize grammar, '// test'
 			expectNext tokens,
 				'//',
 				'comment.line.rust'
@@ -72,7 +69,7 @@ describe 'atom-language-rust', ->
 				'comment.line.rust'
 				
 		it 'should recognize multiline comments', ->
-			tokens = grammar.tokenizeLines '/*\ntest\n*/'
+			tokens = tokenize grammar, '/*\ntest\n*/'
 			expectToken tokens, 0, 0,
 				'/*',
 				'comment.block.rust'
@@ -84,7 +81,7 @@ describe 'atom-language-rust', ->
 				'comment.block.rust'
 		
 		it 'should nest multiline comments', ->
-			tokens = grammar.tokenizeLines '/*\n/*\n*/\n*/'
+			tokens = tokenize grammar, '/*\n/*\n*/\n*/'
 			expectToken tokens, 0, 0,
 				'/*',
 				'comment.block.rust'
@@ -99,11 +96,8 @@ describe 'atom-language-rust', ->
 				'comment.block.rust'
 	
 	describe 'when tokenizing doc comments', ->
-		beforeEach ->
-			reset()
-		
 		it 'should recognize line doc comments', ->
-			tokens = grammar.tokenizeLines('//! test\n/// test')
+			tokens = tokenize grammar, '//! test\n/// test'
 			expectNext tokens,
 				'//! ',
 				'comment.line.documentation.rust'
@@ -119,7 +113,7 @@ describe 'atom-language-rust', ->
 				'comment.line.documentation.rust'
 		
 		it 'should recognize block doc comments', ->
-			tokens = grammar.tokenizeLines('/**\ntest\n*/')
+			tokens = tokenize grammar, '/**\ntest\n*/'
 			expectToken tokens, 0, 0,
 				'/**',
 				['comment.block.documentation.rust', 'invalid.deprecated.rust']
@@ -131,13 +125,13 @@ describe 'atom-language-rust', ->
 				['comment.block.documentation.rust', 'invalid.deprecated.rust']
 		
 		it 'should parse inline markdown', ->
-			tokens = grammar.tokenizeLines('''
+			tokens = tokenize grammar, '''
 				/// *italic*
 				/// **bold**
 				/// _italic_
 				/// __underline__
 				/// ***bolditalic***
-				''')
+				'''
 			
 			expectNext tokens,
 				'/// ',
@@ -215,7 +209,7 @@ describe 'atom-language-rust', ->
 				['comment.line.documentation.rust', 'markup.bold.documentation.rust']
 		
 		it 'should parse header markdown', ->
-			tokens = grammar.tokenizeLines('''
+			tokens = tokenize grammar, '''
 				/// # h1
 				/// ## h2
 				/// ### h3
@@ -223,7 +217,7 @@ describe 'atom-language-rust', ->
 				/// ##### h5
 				/// ###### h6
 				/// ####### h6
-				''')
+				'''
 			
 			expectNext tokens,
 				'/// ',
@@ -305,14 +299,14 @@ describe 'atom-language-rust', ->
 				['comment.line.documentation.rust', 'markup.heading.documentation.rust']
 		
 		it 'should parse link markdown', ->
-			tokens = grammar.tokenizeLines('''
+			tokens = tokenize grammar, '''
 				/// [text]()
 				/// [text](http://link.com)
 				/// [text](http://link.com "title")
 				/// ![text](http://link.com)
 				/// [text]
 				/// [text]: http://link.com
-				''')
+				'''
 			
 			expectNext tokens,
 				'/// ',
@@ -392,14 +386,14 @@ describe 'atom-language-rust', ->
 				['comment.line.documentation.rust', 'markup.link.documentation.rust', 'markup.link.entity.documentation.rust']
 			
 		it 'should parse code blocks', ->
-			tokens = grammar.tokenizeLines('''
+			tokens = tokenize grammar, '''
 				/// text `code` text
 				/// ```rust
 				/// impl such_code for wow {
 				///     type Many = Tokens;
 				/// }
 				/// ```
-				''')
+				'''
 			
 			expectNext tokens,
 				'/// ',
@@ -455,11 +449,8 @@ describe 'atom-language-rust', ->
 	
 	describe 'when tokenizing strings', ->
 		#TODO: unicode tests
-		beforeEach ->
-			reset()
-		
 		it 'should parse strings', ->
-			tokens = grammar.tokenizeLines('"test"')
+			tokens = tokenize grammar, '"test"'
 			expectNext tokens,
 				'"',
 				'string.quoted.double.rust'
@@ -470,8 +461,7 @@ describe 'atom-language-rust', ->
 				'"',
 				'string.quoted.double.rust'
 			
-			reset()
-			tokens = grammar.tokenizeLines('"test\\ntset"')
+			tokens = tokenize grammar, '"test\\ntset"'
 			expectNext tokens,
 				'"',
 				'string.quoted.double.rust'
@@ -489,7 +479,7 @@ describe 'atom-language-rust', ->
 				'string.quoted.double.rust'
 		
 		it 'should parse byte strings', ->
-			tokens = grammar.tokenizeLines('b"test"')
+			tokens = tokenize grammar, 'b"test"'
 			expectNext tokens,
 				'b"',
 				'string.quoted.double.rust'
@@ -500,8 +490,7 @@ describe 'atom-language-rust', ->
 				'"',
 				'string.quoted.double.rust'
 			
-			reset()
-			tokens = grammar.tokenizeLines('b"test\\ntset"')
+			tokens = tokenize grammar, 'b"test\\ntset"'
 			expectNext tokens,
 				'b"',
 				'string.quoted.double.rust'
@@ -519,7 +508,7 @@ describe 'atom-language-rust', ->
 				'string.quoted.double.rust'
 		
 		it 'should parse raw strings', ->
-			tokens = grammar.tokenizeLines('r"test"')
+			tokens = tokenize grammar, 'r"test"'
 			expectNext tokens,
 				'r"',
 				'string.quoted.double.raw.rust'
@@ -530,8 +519,7 @@ describe 'atom-language-rust', ->
 				'"',
 				'string.quoted.double.raw.rust'
 			
-			reset()
-			tokens = grammar.tokenizeLines('r"test\\ntset"')
+			tokens = tokenize grammar, 'r"test\\ntset"'
 			expectNext tokens,
 				'r"',
 				'string.quoted.double.raw.rust'
@@ -542,8 +530,7 @@ describe 'atom-language-rust', ->
 				'"',
 				'string.quoted.double.raw.rust'
 			
-			reset()
-			tokens = grammar.tokenizeLines('r##"test##"#tset"##')
+			tokens = tokenize grammar, 'r##"test##"#tset"##'
 			expectNext tokens,
 				'r##"',
 				'string.quoted.double.raw.rust'
@@ -554,8 +541,7 @@ describe 'atom-language-rust', ->
 				'"##',
 				'string.quoted.double.raw.rust'
 			
-			reset()
-			tokens = grammar.tokenizeLines('r"test\ntset"')
+			tokens = tokenize grammar, 'r"test\ntset"'
 			expectNext tokens,
 				'r"',
 				'string.quoted.double.raw.rust'
@@ -570,8 +556,7 @@ describe 'atom-language-rust', ->
 				'"',
 				'string.quoted.double.raw.rust'
 			
-			reset()
-			tokens = grammar.tokenizeLines('r#"test#"##test"#')
+			tokens = tokenize grammar, 'r#"test#"##test"#'
 			expectNext tokens,
 				'r#"',
 				'string.quoted.double.raw.rust'
@@ -589,7 +574,7 @@ describe 'atom-language-rust', ->
 				[]
 		
 		it 'should parse raw byte strings', ->
-			tokens = grammar.tokenizeLines('br"test"')
+			tokens = tokenize grammar, 'br"test"'
 			expectNext tokens,
 				'br"',
 				'string.quoted.double.raw.rust'
@@ -600,8 +585,7 @@ describe 'atom-language-rust', ->
 				'"',
 				'string.quoted.double.raw.rust'
 			
-			reset()
-			tokens = grammar.tokenizeLines('br"test\\ntset"')
+			tokens = tokenize grammar, 'br"test\\ntset"'
 			expectNext tokens,
 				'br"',
 				'string.quoted.double.raw.rust'
@@ -612,8 +596,7 @@ describe 'atom-language-rust', ->
 				'"',
 				'string.quoted.double.raw.rust'
 			
-			reset()
-			tokens = grammar.tokenizeLines('rb"test"')
+			tokens = tokenize grammar, 'rb"test"'
 			expectNext tokens,
 				'rb',
 				['string.quoted.double.raw.rust', 'invalid.illegal.rust']
@@ -628,15 +611,13 @@ describe 'atom-language-rust', ->
 				'string.quoted.double.raw.rust'
 		
 		it 'should parse character strings', ->
-			tokens = grammar.tokenizeLines('\'a\'')
+			tokens = tokenize grammar, '\'a\''
 			#TODO
 			
-			reset()
-			tokens = grammar.tokenizeLines('\'\\n\'')
+			tokens = tokenize grammar, '\'\\n\''
 			#TODO
 			
-			reset()
-			tokens = grammar.tokenizeLines('\'abc\'')
+			tokens = tokenize grammar, '\'abc\''
 			expectNext tokens,
 				'\'',
 				'string.quoted.single.rust'
@@ -651,7 +632,7 @@ describe 'atom-language-rust', ->
 				'string.quoted.single.rust'
 		
 		it 'should parse character byte strings', ->
-			tokens = grammar.tokenizeLines('b\'a\'')
+			tokens = tokenize grammar, 'b\'a\''
 			#TODO
 		
 		it 'should parse escape characters', ->

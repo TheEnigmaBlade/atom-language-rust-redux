@@ -606,6 +606,11 @@
     'name': 'invalid.illegal.rust'
     'match': '\\+\\+|--'
   }
+  {
+    'comment': 'General punctuation'
+    'name': 'punctuation.rust'
+    'match': '[\\{\\}]'
+  }
   
   # Standard types and traits
   { 'include': '#types' }

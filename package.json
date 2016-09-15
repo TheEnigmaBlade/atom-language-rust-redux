@@ -7,12 +7,12 @@
     "atom": ">0.50.0 <2.0.0"
   },
   "dependencies": {},
-  "homepage": "https://github.com/theenigmablade/atom-language-rust",
+  "homepage": "https://github.com/theenigmablade/atom-language-rust-redux",
   "repository": {
     "type": "git",
-    "url": "https://github.com/theenigmablade/atom-language-rust.git"
+    "url": "https://github.com/theenigmablade/atom-language-rust-redux.git"
   },
   "bugs": {
-    "url": "https://github.com/theenigmablade/atom-language-rust/issues"
+    "url": "https://github.com/theenigmablade/atom-language-rust-redux/issues"
   }
 }

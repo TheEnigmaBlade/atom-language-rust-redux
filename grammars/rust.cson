@@ -438,7 +438,7 @@
   'sigils': {
     'comment': 'Sigil'
     'name': 'keyword.operator.sigil.rust'
-    'match': '[&*](?=[a-zA-Z0-9_\\(\\[\\|\\"]+)'
+    'match': '[&*](?=[\\w\\(\\[\\|\\"]+)'
   }
   'self': {
     'comment': 'Self variable'
@@ -489,14 +489,14 @@
   'lifetime': {
     'comment': 'Named lifetime'
     'name': 'storage.modifier.lifetime.rust'
-    'match': '\'([a-zA-Z_][a-zA-Z0-9_]*)\\b'
+    'match': '\'([\\p{Alpha}_][\\w]*)\\b'
     'captures': {
       '1': { 'name': 'entity.name.lifetime.rust' }
     }
   }
   'ref_lifetime': {
     'comment': 'Reference with named lifetime'
-    'match': '&(\'([a-zA-Z_][a-zA-Z0-9_]*))\\b'
+    'match': '&(\'([\\p{Alpha}_][\\w]*))\\b'
     'captures': {
       '1': { 'name': 'storage.modifier.lifetime.rust' }
       '2': { 'name': 'entity.name.lifetime.rust' }
@@ -617,14 +617,14 @@
   # Function and macro calls
   {
     'comment': 'Invokation of a macro'
-    'match': '\\b([a-zA-Z_][a-zA-Z0-9_]*\\!)\\s*[({\\[]'
+    'match': '\\b([\\p{Alpha}_][\\w]*\\!)\\s*[({\\[]'
     'captures': {
       '1': { 'name': 'entity.name.function.macro.rust' }
     }
   }
   {
     'comment': 'Function call'
-    'match': '\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()'
+    'match': '\\b([\\p{Alpha}_][\\w]*)\\s*(?=\\()'
     'captures': {
       '1': { 'name': 'entity.name.function.rust' }
     }
@@ -633,7 +633,7 @@
   # Function definition
   {
     'comment': 'Function definition'
-    'begin': '\\b(fn)\\s+([a-zA-Z_][a-zA-Z0-9_]*)'
+    'begin': '\\b(fn)\\s+([\\p{Alpha}_][\\w]*)'
     'end': '(?=[\\{;])'
     'beginCaptures': {
       '1': { 'name': 'keyword.other.fn.rust' }
@@ -662,7 +662,7 @@
   # Type declaration
   {
     'comment': 'Type declaration'
-    'begin': '\\b(enum|struct|trait)\\s+([a-zA-Z_][a-zA-Z0-9_]*)'
+    'begin': '\\b(enum|struct|trait)\\s+([\\p{Alpha}_][\\w]*)'
     'end': '(?=[\\{\\(;])'
     'beginCaptures': {
       '1': { 'name': 'storage.type.rust' }
@@ -681,7 +681,7 @@
   # Type alias
   {
     'comment': 'Type alias'
-    'begin': '\\b(type)\\s+([a-zA-Z_][a-zA-Z0-9_]*)'
+    'begin': '\\b(type)\\s+([\\p{Alpha}_][\\w]*)'
     'end': '(?=;)'
     'beginCaptures': {
       '1': { 'name': 'storage.type.rust' }
@@ -711,7 +711,7 @@
       { 'include': '#comments' }
       { 'include': '#type_params' }
       {
-        'begin': '([\\p{Alpha}_][\\p{Alnum}_]*)'
+        'begin': '([\\p{Alpha}_][\\w]*)'
         'end': '(?=\\{)'
         'beginCaptures': {
           '1': { 'name': 'entity.name.type.rust' }
@@ -725,7 +725,7 @@
           { 'include': '#where' }
           {
             'name': ''
-            'match': '\\b(for)\\s+([\\p{Alpha}_][\\p{Alnum}_]*)'
+            'match': '\\b(for)\\s+([\\p{Alpha}_][\\w]*)'
             'captures': {
               '1': { 'name': 'storage.type.rust' }
               #'2': { 'name': 'entity.name.type.rust' }

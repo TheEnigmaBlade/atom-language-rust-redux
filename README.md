@@ -1,6 +1,6 @@
 # Rust language support in Atom
 
-[![Build Status](https://travis-ci.org/TheEnigmaBlade/atom-language-rust-redux.svg?branch=master)](https://travis-ci.org/TheEnigmaBlade/atom-language-rust-redux)
+[![apm](https://img.shields.io/apm/v/atom-language-rust-redux.svg)](https://atom.io/packages/language-rust-redux) [![Build Status](https://travis-ci.org/TheEnigmaBlade/atom-language-rust-redux.svg?branch=master)](https://travis-ci.org/TheEnigmaBlade/atom-language-rust-redux)
 
 Adds syntax highlighting and snippets for [Rust](http://www.rust-lang.org/) files in [Atom](http://atom.io/).
 
@@ -18,16 +18,16 @@ $ apm install language-rust-redux
 
 Previews taken with Firewatch syntax. More improvements to come.
 
-* Format macro syntax highlighting  
+- Format macro syntax highlighting<br>
   ![](http://i.imgur.com/mUlh8P0.png)
-* Markdown syntax highlighting in doc comments  
+- Markdown syntax highlighting in doc comments<br>
   ![](http://i.imgur.com/JDSoPSQ.png)
-* Invalid syntax common in similar languages  
+- Invalid syntax common in similar languages<br>
   ![](http://i.imgur.com/KsS24Di.png)
-* Common mistake recognition  
+- Common mistake recognition<br>
   ![](http://i.imgur.com/kPhbuE7.png)
-* Improved keyword context (`where` actually works)
-* Numerous fixes, including lifetimes in associated type definitions and `fn` in function arguments
+- Improved keyword context (`where` actually works)
+- Numerous fixes, including lifetimes in associated type definitions and `fn` in function arguments
 
 ## Bugs and suggestions
 

@@ -327,6 +327,14 @@
     ]
   }
   
+  ## Other
+  
+  'boolean_literal': {
+    'comment': 'Boolean constant'
+    'name': 'constant.language.boolean.rust'
+    'match': '\\b(true|false)\\b'
+  }
+  
   # Keywords
   
   ## Types
@@ -539,17 +547,13 @@
   { 'include': '#raw_string_literal' }
   { 'include': '#character_literal' }
   { 'include': '#number_literal' }
+  { 'include': '#boolean_literal' }
   
   # Language
   {
     'comment': 'Static storage modifier'
     'name': 'storage.modifier.static.rust'
     'match': '\\bstatic\\b'
-  }
-  {
-    'comment': 'Boolean constant'
-    'name': 'constant.language.boolean.rust'
-    'match': '\\b(true|false)\\b'
   }
   {
     'comment': 'Control keyword'
@@ -561,11 +565,6 @@
     'name': 'keyword.other.rust'
     'match': '\\b(crate|extern|mod|let|proc|ref|use|super|as|move)\\b'
   }
-  {
-    'comment': 'Unsafe code keyword'
-    'name': 'keyword.other.unsafe.rust'
-    'match': '\\bunsafe\\b'
-  }
   { 'include': '#unsafe' }
   { 'include': '#sigils' }
   { 'include': '#self' }
@@ -575,6 +574,7 @@
   { 'include': '#ref_lifetime' }
   { 'include': '#const' }
   { 'include': '#pub' }
+  
   # Operators
   {
     'comment': 'Miscellaneous operator'
@@ -724,7 +724,6 @@
           { 'include': '#ref_lifetime' }
           { 'include': '#where' }
           {
-            'name': ''
             'match': '\\b(for)\\s+([\\p{Alpha}_][\\w]*)'
             'captures': {
               '1': { 'name': 'storage.type.rust' }

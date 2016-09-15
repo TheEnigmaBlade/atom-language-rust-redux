@@ -336,12 +336,12 @@
       {
         'comment': 'Built-in/core type'
         'name': 'storage.type.core.rust'
-        'match': '\\b(bool|char|usize|isize|u8|u16|u32|u64|i8|i16|i32|i64|f32|f64|str|Self|Option|Result)\\b'
-      },
+        'match': '\\b(bool|char|usize|isize|[ui](?:8|16|32|64)|f(?:32|64)|str|Self|Option|Result)\\b'
+      }
       {
         'comment': 'Standard library type'
         'name': 'storage.class.std.rust'
-        'match': '\\b(Box|String|Vec|Path|PathBuf)\\b'
+        'match': '\\b(String|Vec|Path|PathBuf|Arc|Weak|Box|Rc)\\b'
       }
     ]
   }
@@ -353,12 +353,84 @@
       {
         'comment': 'Core trait'
         'name': 'support.type.core.rust'
-        'match': '\\b(Drop|Fn|FnMut|FnOnce|Clone|PartialEq|PartialOrd|Eq|Ord|AsRef|AsMut|Into|From|Default|Iterator|Extend|IntoIterator|DoubleEndedIterator|ExactSizeIterator)\\b'
-      },
+        'match': '\\b(Any|FixedSizeArray|Borrow|BorrowMut|Clone|Eq|Ord|PartialEq|PartialOrd|AsMut|AsRef|From|Into|TryFrom|TryInfo|Default|Debug|Display|Write|Binary|LowerExp|LowerHex|Octal|Pointer|UpperExp|UpperHex|BuildHasher|Hash|Hasher|DoubleEndedIterator|ExactSizeIterator|Extend|FromIterator|IntoIterator|Iterator|Product|Step|Sum|Zeroable|One|Zero|SliceExt|FromStr)\\b'
+      }
+      {
+        'comment': 'Core trait (marker)'
+        'name': 'support.type.marker.rust'
+        'match': '\\b(Copy|Send|Sized|Sync|Reflect|Unsize)\\b'
+      }
+      {
+        'comment': 'Core trait (ops)'
+        'name': 'support.type.marker.rust'
+        'match': '\\b(Add|AddAssign|BitAnd|BitAndAssign|BitOr|BitOrAssign|BitXor|BitXorAssign|Deref|DerefMut|Div|DivAssign|Drop|Fn|FnMut|FnOnce|Index|IndexMut|Mul|MulAssign|Neg|Not|Rem|RemAssign|Shl|ShlAssign|Shr|ShrAssign|Sub|SubAssign|BoxPlace|Boxed|CoerceUnsized|InPlace|Place|Placer)\\b'
+      }
       {
         'comment': 'Standard library trait'
         'name': 'support.type.std.rust'
-        'match': '\\b(ToOwned|ToString)\\b'
+        'match': '\\b(FnBox|ToOwned|ToString)\\b'
+      }
+    ]
+  }
+  
+  ## Macros
+  
+  'macros': {
+    'patterns': [
+      {
+        'comment': 'Built-in macro'
+        'name': 'support.function.macro.builtin.rust'
+        'match': '\\b(macro_rules|log_syntax|asm|trace_macros)!'
+      }
+      {
+        'comment': 'Core macro'
+        'name': 'support.function.macro.core.rust'
+        'match': '\\b(assert|assert_eq|debug_assert|debug_assert_eq|panic|try|unimplemented|unreachable)!'
+      }
+      {
+        'comment': 'Standard library macro'
+        'name': 'support.function.macro.std.rust'
+        'match': '\\b(cfg|column|concat|env|file|include|include_bytes|include_str|line|module_path|option_env|stringify|thread_local|concat_idents|select|vec)!'
+      }
+      {
+        'comment': 'Format macro'
+        'begin': '\\b(?:((?:write|writeln)!)|((?:format|format_args|print|println)!))'
+        'end': '[,\\)\\]\\}]'
+        'beginCaptures': {
+          '1': { 'name': 'support.function.macro.core.rust' }
+          '2': { 'name': 'support.function.macro.std.rust' }
+        }
+        'patterns': [
+          { 'include': '#format_string_literal' }
+        ]
+      }
+      {
+        'comment': 'Logging macro'
+        'name': 'support.function.log.rust'
+        'match': '\\b(log_enabled)!'
+      }
+      {
+        'comment': 'Logging format macro'
+        'begin': '\\b((?:log|error|warn|info|debug|trace)!)'
+        'end': '[,\\)\\]\\}]'
+        'beginCaptures': {
+          '1': { 'name': 'support.function.macro.log.rust' }
+        }
+        'patterns': [
+          { 'include': '#format_string_literal' }
+        ]
+      }
+    ]
+  }
+  
+  ## Structs
+  
+  'enum_varients': {
+    'patterns': [
+      {
+        'comment': 'Core struct'
+        'name': 'support.constant.core.rust'
+        'match': '\\b(Some|None|Ok|Err)\\b'
       }
     ]
   }
@@ -400,8 +472,18 @@
   }
   'where': {
     'comment': 'Generic where clause'
-    'name': 'keyword.other.where.rust'
-    'match': '\\bwhere\\b'
+    'begin': '\\b(where)\\b'
+    'end': '(?=\\{)'
+    'beginCaptures': {
+      '1': { 'name': 'keyword.other.where.rust' }
+    }
+    'patterns': [
+      { 'include': '#comments' }
+      { 'include': '#types' }
+      { 'include': '#traits' }
+      { 'include': '#type_params' }
+      { 'include': '#lifetime' }
+    ]
   }
   
   'lifetime': {
@@ -420,16 +502,6 @@
       '2': { 'name': 'entity.name.lifetime.rust' }
     }
   }
-  'core_vars': {
-    'comment': 'Core type variant'
-    'name': 'support.constant.core.rust'
-    'match': '\\b(Some|None|Ok|Err)\\b'
-  }
-  'core_marker': {
-    'comment': 'Core trait (marker)'
-    'name': 'support.type.marker.rust'
-    'match': '\\b(Copy|Send|Sized|Sync)\\b'
-  }
   'type_params': {
     'comment': 'Type parameters'
     'name': 'meta.type_params.rust'
@@ -441,7 +513,6 @@
       { 'include': '#mut' }
       { 'include': '#lifetime' }
       { 'include': '#types' }
-      { 'include': '#core_marker' }
       { 'include': '#traits' }
       { 'include': '#type_params' }
     ]
@@ -538,56 +609,11 @@
   
   # Standard types and traits
   { 'include': '#types' }
-  { 'include': '#core_vars' }
-  { 'include': '#core_marker' }
+  { 'include': '#enum_varients' }
   { 'include': '#traits' }
+  { 'include': '#macros' }
   # TODO: procs and closures
   
-  # Macros
-  
-  {
-    'comment': 'Built-in macro'
-    'name': 'support.function.macro.builtin.rust'
-    'match': '\\b(macro_rules|env|option_env|concat_idents|concat|log_syntax|line|column|file|stringify|include|include_str|include_bytes|module_path|asm|cfg|trace_macros)!'
-  }
-  {
-    'comment': 'Core macro'
-    'name': 'support.function.macro.core.rust'
-    'match': '\\b(panic|assert|assert_eq|debug_assert|debug_assert_eq|try|unreachable|unimplemented)!'
-  }
-  {
-    'comment': 'Standard library macro'
-    'name': 'support.function.macro.std.rust'
-    'match': '\\b(select|vec)!'
-  }
-  {
-    'comment': 'Format macro'
-    'begin': '\\b(?:((?:write|writeln)!)|((?:format|format_args|print|println)!))'
-    'end': '[,\\)\\]\\}]'
-    'beginCaptures': {
-      '1': { 'name': 'support.function.macro.core.rust' }
-      '2': { 'name': 'support.function.macro.std.rust' }
-    }
-    'patterns': [
-      { 'include': '#format_string_literal' }
-    ]
-  }
-  {
-    'comment': 'Logging macro'
-    'name': 'support.function.log.rust'
-    'match': '\\b(log_enabled)!'
-  }
-  {
-    'comment': 'Logging format macro'
-    'begin': '\\b((?:log|error|warn|info|debug|trace)!)'
-    'end': '[,\\)\\]\\}]'
-    'beginCaptures': {
-      '1': { 'name': 'support.function.macro.log.rust' }
-    }
-    'patterns': [
-      { 'include': '#format_string_literal' }
-    ]
-  }
   # Function and macro calls
   {
     'comment': 'Invokation of a macro'
@@ -603,11 +629,12 @@
       '1': { 'name': 'entity.name.function.rust' }
     }
   }
+  
   # Function definition
   {
     'comment': 'Function definition'
     'begin': '\\b(fn)\\s+([a-zA-Z_][a-zA-Z0-9_]*)'
-    'end': '[\\{;]'
+    'end': '(?=[\\{;])'
     'beginCaptures': {
       '1': { 'name': 'keyword.other.fn.rust' }
       '2': { 'name': 'entity.name.function.rust' }
@@ -619,7 +646,6 @@
       { 'include': '#mut' }
       { 'include': '#ref_lifetime' }
       { 'include': '#types' }
-      { 'include': '#core_marker' }
       { 'include': '#traits' }
       { 'include': '#type_params' }
       { 'include': '#const' }
@@ -632,11 +658,12 @@
       }
     ]
   }
+  
   # Type declaration
   {
     'comment': 'Type declaration'
     'begin': '\\b(enum|struct|trait)\\s+([a-zA-Z_][a-zA-Z0-9_]*)'
-    'end': '[\\{\\(;]'
+    'end': '(?=[\\{\\(;])'
     'beginCaptures': {
       '1': { 'name': 'storage.type.rust' }
       '2': { 'name': 'entity.name.type.rust' }
@@ -650,11 +677,12 @@
       { 'include': '#where' }
     ]
   }
+  
   # Type alias
   {
     'comment': 'Type alias'
     'begin': '\\b(type)\\s+([a-zA-Z_][a-zA-Z0-9_]*)'
-    'end': ';'
+    'end': '(?=;)'
     'beginCaptures': {
       '1': { 'name': 'storage.type.rust' }
       '2': { 'name': 'entity.name.type.rust' }
@@ -666,35 +694,44 @@
       { 'include': '#lifetime' }
       { 'include': '#ref_lifetime' }
       { 'include': '#types' }
-      { 'include': '#core_marker' }
       { 'include': '#traits' }
       { 'include': '#type_params' }
     ]
   }
+  
   # Implementation
   {
     'comment': 'Implementation'
     'begin': '\\b(impl)\\b'
-    'end': '\\{'
+    'end': '(?=\\{)'
     'beginCaptures': {
       '1': { 'name': 'storage.type.rust' }
     }
     'patterns': [
       { 'include': '#comments' }
-      { 'include': '#sigils' }
-      { 'include': '#ref_lifetime' }
-      { 'include': '#types' }
-      { 'include': '#core_marker' }
-      { 'include': '#traits' }
       { 'include': '#type_params' }
-      { 'include': '#where' }
       {
-        'name': 'storage.type.rust'
-        'match': '\\bfor\\b'
-      }
-      {
-        'match': '[a-zA-Z_][a-zA-Z0-9_]*'
-        'name': 'entity.name.type.rust'
+        'begin': '([\\p{Alpha}_][\\p{Alnum}_]*)'
+        'end': '(?=\\{)'
+        'beginCaptures': {
+          '1': { 'name': 'entity.name.type.rust' }
+        }
+        'patterns': [
+          { 'include': '#comments' }
+          { 'include': '#types' }
+          { 'include': '#traits' }
+          { 'include': '#type_params' }
+          { 'include': '#ref_lifetime' }
+          { 'include': '#where' }
+          {
+            'name': ''
+            'match': '\\b(for)\\s+([\\p{Alpha}_][\\p{Alnum}_]*)'
+            'captures': {
+              '1': { 'name': 'storage.type.rust' }
+              #'2': { 'name': 'entity.name.type.rust' }
+            }
+          }
+        ]
       }
     ]
   }

@@ -293,6 +293,11 @@ text
 trait Foo<A, B> : C where { }
 text
 
+fn do_work<T: Any + Debug>(value: &T) {}
+impl<T> PrintInOption for T where Option<T>: Debug {}
+impl<K,V> HashMap<K, V> where K : Hash + Eq {}
+impl<A, D> MyTrait<A, D> for YourType where A: TraitB + TraitC, D: TraitE + TraitF {}
+
 // Unsafe in function arguments
 unsafe fn foo();
 fn foo(f: unsafe fn());

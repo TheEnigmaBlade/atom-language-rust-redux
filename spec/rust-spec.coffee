@@ -899,4 +899,5 @@ describe 'atom-language-rust', ->
 			expectNext tokens,
 				'us',
 				['constant.numeric.integer.binary.rust', 'invalid.illegal.rust']
-			
+	
+	

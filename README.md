@@ -1,5 +1,7 @@
 # Rust language support in Atom
 
+[![Build Status](https://travis-ci.org/TheEnigmaBlade/atom-language-rust.svg?branch=master)](https://travis-ci.org/TheEnigmaBlade/atom-language-rust)
+
 Adds syntax highlighting and snippets for [Rust](http://www.rust-lang.org/) files in [Atom](http://atom.io/).
 
 Forked from the existing [atom-language-rust](https://github.com/zargony/atom-language-rust) due to lack of support. A number of improvements and fixes provided by this package were originally submitted as pull requests, which have yet to be accepted.

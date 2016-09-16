@@ -608,7 +608,7 @@
   }
   {
     'comment': 'General punctuation'
-    'name': 'punctuation.rust'
+    'name': 'punctuation.brace.rust'
     'match': '[\\{\\}]'
   }
   
@@ -622,7 +622,7 @@
   # Function and macro calls
   {
     'comment': 'Invokation of a macro'
-    'match': '\\b([\\p{Alpha}_][\\w]*\\!)\\s*[({\\[]'
+    'match': '\\b([\\p{Alpha}_][\\w]*\\!)'
     'captures': {
       '1': { 'name': 'entity.name.function.macro.rust' }
     }
@@ -710,11 +710,12 @@
     'begin': '\\b(impl)\\b'
     'end': '(?=\\{)'
     'beginCaptures': {
-      '1': { 'name': 'storage.type.rust' }
+      '1': { 'name': 'storage.type.impl.rust' }
     }
     'patterns': [
       { 'include': '#comments' }
       { 'include': '#type_params' }
+      { 'include': '#traits' }
       {
         'begin': '([\\p{Alpha}_][\\w]*)'
         'end': '(?=\\{)'
@@ -729,11 +730,18 @@
           { 'include': '#ref_lifetime' }
           { 'include': '#where' }
           {
-            'match': '\\b(for)\\s+([\\p{Alpha}_][\\w]*)'
-            'captures': {
-              '1': { 'name': 'storage.type.rust' }
-              #'2': { 'name': 'entity.name.type.rust' }
+            'begin': '\\b(for)\\b'
+            'end': '(?<=\\w)(?<!\\sfor)'
+            'beginCaptures': {
+              '1': { 'name': 'keyword.other.for.rust' }
             }
+            'patterns': [
+              { 'include': '#comments' }
+              {
+                'match': '[\\p{Alpha}_][\\w]*'
+                'name': ''#'entity.name.type.rust'
+              }
+            ]
           }
         ]
       }

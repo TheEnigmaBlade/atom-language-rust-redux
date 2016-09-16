@@ -29,6 +29,11 @@ expectNoScope = (tokens, lineN, tokenN, scope) ->
 expectNext = (tokens, value, scope) ->
 	expectToken(tokens, currentLine, currentToken+1, value, scope)
 
+expectSpace = (tokens) ->
+	currentToken += 1
+	t = tokens[currentLine][currentToken]
+	expect(t.value).not.toMatch /\S+/
+
 nextLine = ->
 	currentLine += 1
 	currentToken = -1
@@ -42,13 +47,13 @@ tokenize = (grammar, value) ->
 	grammar.tokenizeLines value
 
 # Main
-describe 'atom-language-rust', ->
+describe 'atom-language-rust-redux', ->
 	grammar = null
 	
 	# Setup
 	beforeEach ->
 		waitsForPromise ->
-			atom.packages.activatePackage 'language-rust'
+			atom.packages.activatePackage 'language-rust-redux'
 		runs ->
 			grammar = atom.grammars.grammarForScopeName('source.rust')
 	
@@ -881,4 +886,147 @@ describe 'atom-language-rust', ->
 				'us',
 				['constant.numeric.integer.binary.rust', 'invalid.illegal.rust']
 	
+	describe 'when tokenizing boolean literals', ->
+		it 'should parse them', ->
+			tokens = tokenize grammar, 'true'
+			expectNext tokens,
+				'true',
+				'constant.language.boolean.rust'
+			
+			tokens = tokenize grammar, 'false'
+			expectNext tokens,
+				'false',
+				'constant.language.boolean.rust'
 	
+	# Incomplete
+	
+	describe 'when tokenizing impl', ->
+		it 'should parse basic', ->
+			tokens = tokenize grammar, 'impl Cookie {}'
+			expectNext tokens,
+				'impl',
+				'storage.type.impl.rust'
+			expectSpace tokens
+			expectNext tokens,
+				'Cookie',
+				'entity.name.type.rust'
+			expectSpace tokens
+			expectNext tokens,
+				'{',
+				'punctuation.brace.rust'
+		
+		it 'should parse for', ->
+			tokens = tokenize grammar, 'impl Eat for Cookie {}'
+			expectNext tokens,
+				'impl',
+				'storage.type.impl.rust'
+			expectSpace tokens
+			expectNext tokens,
+				'Eat',
+				'entity.name.type.rust'
+			expectSpace tokens
+			expectNext tokens,
+				'for',
+				'keyword.other.for.rust'
+			expectSpace tokens
+			expectNext tokens,
+				'Cookie',
+				[]
+			expectSpace tokens
+			expectNext tokens,
+				'{',
+				'punctuation.brace.rust'
+		
+		it 'should parse where', ->
+			tokens = tokenize grammar, 'impl Eat where Cookie: Delicious {}'
+			expectNext tokens,
+				'impl',
+				'storage.type.impl.rust'
+			expectSpace tokens
+			expectNext tokens,
+				'Eat',
+				'entity.name.type.rust'
+			expectSpace tokens
+			expectNext tokens,
+				'where',
+				'keyword.other.where.rust'
+			expectNext tokens,
+				' Cookie: Delicious ',
+				[]
+			expectNext tokens,
+				'{',
+				'punctuation.brace.rust'
+		
+		it 'should parse for and where', ->
+			tokens = tokenize grammar, 'impl Eat for Cookie where Cookie: Delicious {}'
+			expectNext tokens,
+				'impl',
+				'storage.type.impl.rust'
+			expectSpace tokens
+			expectNext tokens,
+				'Eat',
+				'entity.name.type.rust'
+			expectSpace tokens
+			expectNext tokens,
+				'for',
+				'keyword.other.for.rust'
+			expectSpace tokens
+			expectNext tokens,
+				'Cookie',
+				[]
+			expectSpace tokens
+			expectNext tokens,
+				'where',
+				'keyword.other.where.rust'
+			expectNext tokens,
+				' Cookie: Delicious ',
+				[]
+			expectNext tokens,
+				'{',
+				'punctuation.brace.rust'
+		
+		describe 'with type args', ->
+			it 'should parse where', ->
+				tokens = tokenize grammar, 'impl<Flavor> Eat where Cookie<Flavor>: Oatmeal {}'
+				expectNext tokens,
+					'impl',
+					'storage.type.impl.rust'
+				expectNext tokens,
+					'<',
+					'meta.type_params.rust'
+				expectNext tokens,
+					'Flavor',
+					'meta.type_params.rust'
+				expectNext tokens,
+					'>',
+					'meta.type_params.rust'
+				expectSpace tokens
+				expectNext tokens,
+					'Eat',
+					'entity.name.type.rust'
+				expectSpace tokens
+				expectNext tokens,
+					'where',
+					'keyword.other.where.rust'
+				expectNext tokens,
+					' Cookie',
+					[]
+				expectNext tokens,
+					'<',
+					'meta.type_params.rust'
+				expectNext tokens,
+					'Flavor',
+					'meta.type_params.rust'
+				expectNext tokens,
+					'>',
+					'meta.type_params.rust'
+				expectNext tokens,
+					': Oatmeal ',
+					[]
+				expectNext tokens,
+					'{',
+					'punctuation.brace.rust'
+		
+		describe 'with type args and lifetimes', ->
+			
+		

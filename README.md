@@ -1,6 +1,6 @@
 # Rust language support in Atom
 
-[![apm](https://img.shields.io/apm/v/language-rust-redux.svg)](https://atom.io/packages/language-rust-redux)
+[![apm](https://img.shields.io/apm/v/language-rust-redux.svg)](https://atom.io/packages/language-rust-redux) [![Travis CI](https://travis-ci.org/TheEnigmaBlade/atom-language-rust-redux.svg?branch=master)](https://travis-ci.org/TheEnigmaBlade/atom-language-rust-redux) [![Circle CI](https://circleci.com/gh/TheEnigmaBlade/atom-language-rust-redux.svg?style=svg)](https://circleci.com/gh/TheEnigmaBlade/atom-language-rust-redux)
 
 Adds syntax highlighting and snippets for [Rust](http://www.rust-lang.org/) files in [Atom](http://atom.io/).
 

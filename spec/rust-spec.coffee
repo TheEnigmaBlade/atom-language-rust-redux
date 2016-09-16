@@ -951,7 +951,13 @@ describe 'atom-language-rust-redux', ->
 				'where',
 				'keyword.other.where.rust'
 			expectNext tokens,
-				' Cookie: Delicious ',
+				' Cookie',
+				[]
+			expectNext tokens,
+				':',
+				'keyword.operator.misc.rust'
+			expectNext tokens,
+				' Delicious ',
 				[]
 			expectNext tokens,
 				'{',
@@ -979,7 +985,13 @@ describe 'atom-language-rust-redux', ->
 				'where',
 				'keyword.other.where.rust'
 			expectNext tokens,
-				' Cookie: Delicious ',
+				' Cookie',
+				[]
+			expectNext tokens,
+				':',
+				'keyword.operator.misc.rust'
+			expectNext tokens,
+				' Delicious ',
 				[]
 			expectNext tokens,
 				'{',
@@ -1021,7 +1033,10 @@ describe 'atom-language-rust-redux', ->
 					'>',
 					'meta.type_params.rust'
 				expectNext tokens,
-					': Oatmeal ',
+					':',
+					'keyword.operator.misc.rust'
+				expectNext tokens,
+					' Oatmeal ',
 					[]
 				expectNext tokens,
 					'{',
@@ -1067,7 +1082,13 @@ describe 'atom-language-rust-redux', ->
 					'where',
 					'keyword.other.where.rust'
 				expectNext tokens,
-					' Flavor: Oatmeal ',
+					' Flavor',
+					[]
+				expectNext tokens,
+					':',
+					'keyword.operator.misc.rust'
+				expectNext tokens,
+					' Oatmeal ',
 					[]
 				expectNext tokens,
 					'{',
@@ -1115,7 +1136,10 @@ describe 'atom-language-rust-redux', ->
 					'>',
 					'meta.type_params.rust'
 				expectNext tokens,
-					': Oatmeal ',
+					':',
+					'keyword.operator.misc.rust'
+				expectNext tokens,
+					' Oatmeal ',
 					[]
 				expectNext tokens,
 					'{',
@@ -1161,7 +1185,13 @@ describe 'atom-language-rust-redux', ->
 					'where',
 					'keyword.other.where.rust'
 				expectNext tokens,
-					' Flavor: Oatmeal ',
+					' Flavor',
+					[]
+				expectNext tokens,
+					':',
+					'keyword.operator.misc.rust'
+				expectNext tokens,
+					' Oatmeal ',
 					[]
 				expectNext tokens,
 					'{',

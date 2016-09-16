@@ -443,6 +443,75 @@
     ]
   }
   
+  # Operators
+  
+  'structure_operators': {
+    'comment': 'Miscellaneous operator'
+    'name': 'keyword.operator.misc.rust'
+    'match': '->|=>|::|:|\\bas\\b'
+  }
+  
+  'operators': {
+    'patterns': [
+      { 'include': '#structure_operators' }
+      {
+        'comment': 'Comparison operator'
+        'name': 'keyword.operator.comparison.rust'
+        'match': '&&|\\|\\||==|!='
+      }
+      {
+        'comment': 'Assignment operator'
+        'name': 'keyword.operator.assignment.rust'
+        'match': '\\+=|-=|/=|\\*=|%=|\\^=|&=|\\|=|<<=|>>=|='
+      }
+      {
+        'comment': 'Arithmetic operator'
+        'name': 'keyword.operator.arithmetic.rust'
+        'match': '!|\\+(?!\\+)|-(?!-)|/|\\*|%|\\^|&|\\||<<|>>'
+      }
+      {
+        'comment': 'Comparison operator (second group because of regex precedence)'
+        'name': 'keyword.operator.comparison.rust'
+        'match': '<=|>=|<|>'
+      }
+      {
+        'comment': 'Common non-existant operators'
+        'name': 'invalid.illegal.rust'
+        'match': '\\+\\+|--'
+      }
+    ]
+  }
+  
+  # Punctuation
+  
+  'punctuation_braces': {
+    'comment': '{ and }'
+    'name': 'punctuation.brace.rust'
+    'match': '[\\{\\}]'
+  }
+  
+  'punctuation_brackets': {
+    'comment': '[ and ]'
+    'name': 'punctuation.bracket.rust'
+    'match': '[\\[\\]]'
+  }
+  
+  'punctuation_parentheses': {
+    'comment': '( and )'
+    'name': 'punctuation.parenthesis.rust'
+    'match': '[\\(\\)]'
+  }
+  
+  'punctuation': {
+    'patterns': [
+      { 'include': '#punctuation_braces' }
+      { 'include': '#punctuation_brackets' }
+      { 'include': '#punctuation_parentheses' }
+    ]
+  }
+  
+  # Unsorted
+  
   'sigils': {
     'comment': 'Sigil'
     'name': 'keyword.operator.sigil.rust'
@@ -487,6 +556,7 @@
     }
     'patterns': [
       { 'include': '#comments' }
+      { 'include': '#structure_operators' }
       { 'include': '#types' }
       { 'include': '#traits' }
       { 'include': '#type_params' }
@@ -576,41 +646,8 @@
   { 'include': '#pub' }
   
   # Operators
-  {
-    'comment': 'Miscellaneous operator'
-    'name': 'keyword.operator.misc.rust'
-    'match': '->|=>|::|\\bas\\b'
-  }
-  {
-    'comment': 'Comparison operator'
-    'name': 'keyword.operator.comparison.rust'
-    'match': '&&|\\|\\||==|!='
-  }
-  {
-    'comment': 'Assignment operator'
-    'name': 'keyword.operator.assignment.rust'
-    'match': '\\+=|-=|/=|\\*=|%=|\\^=|&=|\\|=|<<=|>>=|='
-  }
-  {
-    'comment': 'Arithmetic operator'
-    'name': 'keyword.operator.arithmetic.rust'
-    'match': '!|\\+(?!\\+)|-(?!-)|/|\\*|%|\\^|&|\\||<<|>>'
-  }
-  {
-    'comment': 'Comparison operator (second group because of regex precedence)'
-    'name': 'keyword.operator.comparison.rust'
-    'match': '<=|>=|<|>'
-  }
-  {
-    'comment': 'Common non-existant operators'
-    'name': 'invalid.illegal.rust'
-    'match': '\\+\\+|--'
-  }
-  {
-    'comment': 'General punctuation'
-    'name': 'punctuation.brace.rust'
-    'match': '[\\{\\}]'
-  }
+  { 'include': '#operators' }
+  { 'include': '#punctuation' }
   
   # Standard types and traits
   { 'include': '#types' }
@@ -638,28 +675,38 @@
   # Function definition
   {
     'comment': 'Function definition'
-    'begin': '\\b(fn)\\s+([\\p{Alpha}_][\\w]*)'
+    'begin': '\\b(fn)\\b'
     'end': '(?=[\\{;])'
     'beginCaptures': {
       '1': { 'name': 'keyword.other.fn.rust' }
-      '2': { 'name': 'entity.name.function.rust' }
     }
     'patterns': [
       { 'include': '#comments' }
-      { 'include': '#sigils' }
-      { 'include': '#self' }
-      { 'include': '#mut' }
-      { 'include': '#ref_lifetime' }
-      { 'include': '#types' }
-      { 'include': '#traits' }
-      { 'include': '#type_params' }
-      { 'include': '#const' }
-      { 'include': '#where' }
-      { 'include': '#unsafe' }
       {
-        'comment': 'Function arguments'
-        'match': 'fn'
-        'name': 'keyword.other.fn.rust'
+        'begin': '([\\p{Alpha}_][\\w]*)'
+        'end': '(?=[\\{;])'
+        'beginCaptures': {
+          '1': { 'name': 'entity.name.function.rust' }
+        }
+        'patterns': [
+          { 'include': '#comments' }
+          { 'include': '#structure_operators' }
+          { 'include': '#sigils' }
+          { 'include': '#self' }
+          { 'include': '#mut' }
+          { 'include': '#ref_lifetime' }
+          { 'include': '#types' }
+          { 'include': '#traits' }
+          { 'include': '#type_params' }
+          { 'include': '#const' }
+          { 'include': '#where' }
+          { 'include': '#unsafe' }
+          {
+            'comment': 'Function arguments'
+            'match': 'fn'
+            'name': 'keyword.other.fn.rust'
+          }
+        ]
       }
     ]
   }
@@ -667,26 +714,36 @@
   # Type declaration
   {
     'comment': 'Type declaration'
-    'begin': '\\b(enum|struct|trait)\\s+([\\p{Alpha}_][\\w]*)'
+    'begin': '\\b(enum|struct|trait)\\b'
     'end': '(?=[\\{\\(;])'
     'beginCaptures': {
       '1': { 'name': 'storage.type.rust' }
-      '2': { 'name': 'entity.name.type.rust' }
     }
     'patterns': [
       { 'include': '#comments' }
-      { 'include': '#traits' }
-      { 'include': '#type_params' }
-      { 'include': '#types' }
-      { 'include': '#pub' }
-      { 'include': '#where' }
+      {
+        'begin': '([\\p{Alpha}_][\\w]*)'
+        'end': '(?=[\\{;])'
+        'beginCaptures': {
+          '1': { 'name': 'entity.name.type.rust' }
+        }
+        'patterns': [
+          { 'include': '#comments' }
+          { 'include': '#structure_operators' }
+          { 'include': '#traits' }
+          { 'include': '#type_params' }
+          { 'include': '#types' }
+          { 'include': '#pub' }
+          { 'include': '#where' }
+        ]
+      }
     ]
   }
   
   # Type alias
   {
     'comment': 'Type alias'
-    'begin': '\\b(type)\\s+([\\p{Alpha}_][\\w]*)'
+    'begin': '\\b(type)\\b'
     'end': '(?=;)'
     'beginCaptures': {
       '1': { 'name': 'storage.type.rust' }
@@ -694,13 +751,24 @@
     }
     'patterns': [
       { 'include': '#comments' }
-      { 'include': '#sigils' }
-      { 'include': '#mut' }
-      { 'include': '#lifetime' }
-      { 'include': '#ref_lifetime' }
-      { 'include': '#types' }
-      { 'include': '#traits' }
-      { 'include': '#type_params' }
+      {
+        'begin': '([\\p{Alpha}_][\\w]*)'
+        'end': '(?=[\\{;])'
+        'beginCaptures': {
+          '1': { 'name': 'entity.name.type.rust' }
+        }
+        'patterns': [
+          { 'include': '#punctuation' }
+          { 'include': '#operators' }
+          { 'include': '#sigils' }
+          { 'include': '#mut' }
+          { 'include': '#lifetime' }
+          { 'include': '#ref_lifetime' }
+          { 'include': '#types' }
+          { 'include': '#traits' }
+          { 'include': '#type_params' }
+        ]
+      }
     ]
   }
   
@@ -727,8 +795,8 @@
           { 'include': '#comments' }
           { 'include': '#types' }
           { 'include': '#traits' }
+          { 'include': '#lifetime' }
           { 'include': '#type_params' }
-          { 'include': '#ref_lifetime' }
           { 'include': '#where' }
           {
             'begin': '\\b(for)\\b'

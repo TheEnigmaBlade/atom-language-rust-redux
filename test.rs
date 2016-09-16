@@ -294,9 +294,14 @@ trait Foo<A, B> : C where { }
 text
 
 fn do_work<T: Any + Debug>(value: &T) {}
-impl<T> PrintInOption for T where Option<T>: Debug {}
+
+impl Cookie {}
+impl<T> PrintInOption for /**/ T where Option<T>: Debug {}
 impl<K,V> HashMap<K, V> where K : Hash + Eq {}
 impl<A, D> MyTrait<A, D> for YourType where A: TraitB + TraitC, D: TraitE + TraitF {}
+impl Debug for a where asdf {}
+
+impl<Flavor> Eat where Cookie<Flavor>: Oatmeal {}
 
 // Unsafe in function arguments
 unsafe fn foo();

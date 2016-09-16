@@ -1073,6 +1073,97 @@ describe 'atom-language-rust-redux', ->
 					'{',
 					'punctuation.brace.rust'
 			
-		describe 'with type args and lifetimes', ->
+		describe 'with lifetimes', ->
+			it 'should parse where', ->
+				tokens = tokenize grammar, 'impl<\'F> Eat where Cookie<\'F>: Oatmeal {}'
+				expectNext tokens,
+					'impl',
+					'storage.type.impl.rust'
+				expectNext tokens,
+					'<',
+					'meta.type_params.rust'
+				expectNext tokens,
+					'\'',
+					['meta.type_params.rust', 'storage.modifier.lifetime.rust']
+				expectNext tokens,
+					'F',
+					['meta.type_params.rust', 'storage.modifier.lifetime.rust', 'entity.name.lifetime.rust']
+				expectNext tokens,
+					'>',
+					'meta.type_params.rust'
+				expectSpace tokens
+				expectNext tokens,
+					'Eat',
+					'entity.name.type.rust'
+				expectSpace tokens
+				expectNext tokens,
+					'where',
+					'keyword.other.where.rust'
+				expectNext tokens,
+					' Cookie',
+					[]
+				expectNext tokens,
+					'<',
+					'meta.type_params.rust'
+				expectNext tokens,
+					'\'',
+					['meta.type_params.rust', 'storage.modifier.lifetime.rust']
+				expectNext tokens,
+					'F',
+					['meta.type_params.rust', 'storage.modifier.lifetime.rust', 'entity.name.lifetime.rust']
+				expectNext tokens,
+					'>',
+					'meta.type_params.rust'
+				expectNext tokens,
+					': Oatmeal ',
+					[]
+				expectNext tokens,
+					'{',
+					'punctuation.brace.rust'
 			
+			it 'should parse for and where', ->
+				tokens = tokenize grammar, 'impl<Flavor> Eat for Cookie<Flavor> where Flavor: Oatmeal {}'
+				expectNext tokens,
+					'impl',
+					'storage.type.impl.rust'
+				expectNext tokens,
+					'<',
+					'meta.type_params.rust'
+				expectNext tokens,
+					'Flavor',
+					'meta.type_params.rust'
+				expectNext tokens,
+					'>',
+					'meta.type_params.rust'
+				expectSpace tokens
+				expectNext tokens,
+					'Eat',
+					'entity.name.type.rust'
+				expectSpace tokens
+				expectNext tokens,
+					'for',
+					'keyword.other.for.rust'
+				expectSpace tokens
+				expectNext tokens,
+					'Cookie',
+					[]
+				expectNext tokens,
+					'<',
+					'meta.type_params.rust'
+				expectNext tokens,
+					'Flavor',
+					'meta.type_params.rust'
+				expectNext tokens,
+					'>',
+					'meta.type_params.rust'
+				expectSpace tokens
+				expectNext tokens,
+					'where',
+					'keyword.other.where.rust'
+				expectNext tokens,
+					' Flavor: Oatmeal ',
+					[]
+				expectNext tokens,
+					'{',
+					'punctuation.brace.rust'
 		

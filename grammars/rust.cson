@@ -717,7 +717,8 @@
       { 'include': '#type_params' }
       { 'include': '#traits' }
       {
-        'begin': '([\\p{Alpha}_][\\w]*)'
+        'comment': 'Trait name (or skip if for is next)'
+        'begin': '([\\p{Alpha}_][\\w]*)|(?=\\s*for)'
         'end': '(?=\\{)'
         'beginCaptures': {
           '1': { 'name': 'entity.name.type.rust' }

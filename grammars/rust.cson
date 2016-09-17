@@ -337,6 +337,38 @@
   
   # Keywords
   
+  ## Modifiers
+  
+  'modifiers': {
+    'patterns': [
+      {
+        'comment': 'Mutable storage modifier'
+        'name': 'storage.modifier.mut.rust'
+        'match': '\\bmut\\b'
+      }
+      {
+        'comment': 'Visibility modifier'
+        'name': 'storage.modifier.visibility.rust'
+        'match': '\\bpub\\b'
+      }
+      {
+        'comment': 'Const storage modifier'
+        'name': 'storage.modifier.const.rust'
+        'match': '\\bconst\\b'
+      }
+      {
+        'comment': 'Static storage modifier'
+        'name': 'storage.modifier.static.rust'
+        'match': '\\bstatic\\b'
+      }
+      {
+        'comment': 'Unsafe code keyword'
+        'name': 'keyword.other.unsafe.rust'
+        'match': '\\bunsafe\\b'
+      }
+    ]
+  }
+  
   ## Types
   
   'types': {
@@ -431,15 +463,28 @@
     ]
   }
   
-  ## Structs
+  ## Special variables
   
-  'enum_varients': {
+  'special_enums': {
     'patterns': [
       {
-        'comment': 'Core struct'
+        'comment': 'Enum'
         'name': 'support.constant.core.rust'
         'match': '\\b(Some|None|Ok|Err)\\b'
       }
+    ]
+  }
+  
+  'self': {
+    'comment': 'Self variable'
+    'name': 'variable.language.rust'
+    'match': '\\bself\\b'
+  }
+  
+  'special_variables': {
+    'patterns': [
+      { 'include': '#special_enums' }
+      { 'include': '#self' }
     ]
   }
   
@@ -479,6 +524,11 @@
         'name': 'invalid.illegal.rust'
         'match': '\\+\\+|--'
       }
+      {
+        'comment': 'Box pattern'
+        'name': 'storage.modifier.box.rust'
+        'match': '\\bbox\\b'
+      }
     ]
   }
   
@@ -510,43 +560,14 @@
     ]
   }
   
-  # Unsorted
+  # Grammar structures
   
   'sigils': {
     'comment': 'Sigil'
     'name': 'keyword.operator.sigil.rust'
     'match': '[&*](?=[\\w\\(\\[\\|\\"]+)'
   }
-  'self': {
-    'comment': 'Self variable'
-    'name': 'variable.language.rust'
-    'match': '\\bself\\b'
-  }
-  'mut': {
-    'comment': 'Mutable storage modifier'
-    'name': 'storage.modifier.mut.rust'
-    'match': '\\bmut\\b'
-  }
-  'box': {
-    'comment': 'Box storage modifier'
-    'name': 'storage.modifier.box.rust'
-    'match': '\\bbox\\b'
-  }
-  'const': {
-    'comment': 'Const storage modifier'
-    'name': 'storage.modifier.const.rust'
-    'match': '\\bconst\\b'
-  }
-  'pub': {
-    'comment': 'Visibility modifier'
-    'name': 'storage.modifier.visibility.rust'
-    'match': '\\bpub\\b'
-  }
-  'unsafe': {
-    'comment': 'Unsafe code keyword'
-    'name': 'keyword.other.unsafe.rust'
-    'match': '\\bunsafe\\b'
-  }
+  
   'where': {
     'comment': 'Generic where clause'
     'begin': '\\b(where)\\b'
@@ -564,22 +585,6 @@
     ]
   }
   
-  'lifetime': {
-    'comment': 'Named lifetime'
-    'name': 'storage.modifier.lifetime.rust'
-    'match': '\'([\\p{Alpha}_][\\w]*)\\b'
-    'captures': {
-      '1': { 'name': 'entity.name.lifetime.rust' }
-    }
-  }
-  'ref_lifetime': {
-    'comment': 'Reference with named lifetime'
-    'match': '&(\'([\\p{Alpha}_][\\w]*))\\b'
-    'captures': {
-      '1': { 'name': 'storage.modifier.lifetime.rust' }
-      '2': { 'name': 'entity.name.lifetime.rust' }
-    }
-  }
   'type_params': {
     'comment': 'Type parameters'
     'name': 'meta.type_params.rust'
@@ -588,15 +593,32 @@
     'patterns': [
       { 'include': '#comments' }
       { 'include': '#sigils' }
-      { 'include': '#mut' }
+      { 'include': '#modifiers' }
       { 'include': '#lifetime' }
       { 'include': '#types' }
       { 'include': '#traits' }
       { 'include': '#type_params' }
     ]
   }
-}
-
+  
+  'lifetime': {
+    'comment': 'Named lifetime'
+    'name': 'storage.modifier.lifetime.rust'
+    'match': '\'([\\p{Alpha}_][\\w]*)\\b'
+    'captures': {
+      '1': { 'name': 'entity.name.lifetime.rust' }
+    }
+  }
+  
+  'ref_lifetime': {
+    'comment': 'Reference with named lifetime'
+    'match': '&(\'([\\p{Alpha}_][\\w]*))\\b'
+    'captures': {
+      '1': { 'name': 'storage.modifier.lifetime.rust' }
+      '2': { 'name': 'entity.name.lifetime.rust' }
+    }
+  }
+  
 'patterns': [
   # Comments
   { 'include': '#comments' }
@@ -621,11 +643,6 @@
   
   # Language
   {
-    'comment': 'Static storage modifier'
-    'name': 'storage.modifier.static.rust'
-    'match': '\\bstatic\\b'
-  }
-  {
     'comment': 'Control keyword'
     'name': 'keyword.control.rust'
     'match': '\\b(break|continue|else|if|in|for|loop|match|return|while)\\b'
@@ -635,15 +652,10 @@
     'name': 'keyword.other.rust'
     'match': '\\b(crate|extern|mod|let|proc|ref|use|super|as|move)\\b'
   }
-  { 'include': '#unsafe' }
   { 'include': '#sigils' }
-  { 'include': '#self' }
-  { 'include': '#mut' }
-  { 'include': '#box' }
+  { 'include': '#modifiers' }
   { 'include': '#lifetime' }
   { 'include': '#ref_lifetime' }
-  { 'include': '#const' }
-  { 'include': '#pub' }
   
   # Operators
   { 'include': '#operators' }
@@ -651,14 +663,13 @@
   
   # Standard types and traits
   { 'include': '#types' }
-  { 'include': '#enum_varients' }
+  { 'include': '#special_variables' }
   { 'include': '#traits' }
   { 'include': '#macros' }
-  # TODO: procs and closures
   
   # Function and macro calls
   {
-    'comment': 'Invokation of a macro'
+    'comment': 'Macro invocation'
     'match': '\\b([\\p{Alpha}_][\\w]*\\!)'
     'captures': {
       '1': { 'name': 'entity.name.function.macro.rust' }
@@ -691,16 +702,14 @@
         'patterns': [
           { 'include': '#comments' }
           { 'include': '#structure_operators' }
+          { 'include': '#special_variables' }
           { 'include': '#sigils' }
-          { 'include': '#self' }
-          { 'include': '#mut' }
+          { 'include': '#modifiers' }
           { 'include': '#ref_lifetime' }
           { 'include': '#types' }
           { 'include': '#traits' }
           { 'include': '#type_params' }
-          { 'include': '#const' }
           { 'include': '#where' }
-          { 'include': '#unsafe' }
           {
             'comment': 'Function arguments'
             'match': 'fn'
@@ -730,10 +739,12 @@
         'patterns': [
           { 'include': '#comments' }
           { 'include': '#structure_operators' }
+          { 'include': '#sigils' }
+          { 'include': '#modifiers' }
           { 'include': '#traits' }
           { 'include': '#type_params' }
           { 'include': '#types' }
-          { 'include': '#pub' }
+          { 'include': '#modifiers' }
           { 'include': '#where' }
         ]
       }
@@ -758,10 +769,11 @@
           '1': { 'name': 'entity.name.type.rust' }
         }
         'patterns': [
+          { 'include': '#comments' }
           { 'include': '#punctuation' }
           { 'include': '#operators' }
           { 'include': '#sigils' }
-          { 'include': '#mut' }
+          { 'include': '#modifiers' }
           { 'include': '#lifetime' }
           { 'include': '#ref_lifetime' }
           { 'include': '#types' }

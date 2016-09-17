@@ -296,7 +296,7 @@ text
 fn do_work<T: Any + Debug>(value: &T) {}
 
 impl Cookie {}
-impl<T> PrintInOption for /**/ T where Option<T>: Debug {}
+impl<T> PrintInOption for T where Option<T>: Debug {}
 impl<K,V> HashMap<K, V> where K : Hash + Eq {}
 impl<A, D> MyTrait<A, D> for YourType where A: TraitB + TraitC, D: TraitE + TraitF {}
 impl Debug for a where asdf {}

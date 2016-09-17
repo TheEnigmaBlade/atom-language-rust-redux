@@ -177,6 +177,16 @@
   
   # Literals
   
+  'literals': {
+    'patterns': [
+      { 'include': '#string_literal' }
+      { 'include': '#raw_string_literal' }
+      { 'include': '#character_literal' }
+      { 'include': '#number_literal' }
+      { 'include': '#boolean_literal' }
+    ]
+  }
+  
   ## Strings
   
   'escaped_character': {
@@ -635,11 +645,7 @@
   }
   
   # Literals
-  { 'include': '#string_literal' }
-  { 'include': '#raw_string_literal' }
-  { 'include': '#character_literal' }
-  { 'include': '#number_literal' }
-  { 'include': '#boolean_literal' }
+  { 'include': '#literals' }
   
   # Language
   {

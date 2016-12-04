@@ -40,6 +40,20 @@ text
 /// test code block
 /// ```
 /// test
+///
+
+///
+/// # Test
+///
+/// ```
+/// assert!(true);
+/// ```
+///
+fn test(&self) {
+    asdf
+    // test
+    asdf
+}
 
 /**
  * Deprecated

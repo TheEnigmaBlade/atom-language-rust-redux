@@ -15,7 +15,7 @@
   'line_doc_comment': {
     'comment': 'Single-line documentation comment'
     'name': 'comment.line.documentation.rust'
-    'begin': '//[!/](?=[^/])\\s*'
+    'begin': '//[!/](?=[^/])'
     'end': '$'
     'patterns': [
       { 'include': '#markdown' }

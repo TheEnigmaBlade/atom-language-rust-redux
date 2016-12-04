@@ -104,17 +104,17 @@ describe 'atom-language-rust-redux', ->
 		it 'should recognize line doc comments', ->
 			tokens = tokenize grammar, '//! test\n/// test'
 			expectNext tokens,
-				'//! ',
+				'//!',
 				'comment.line.documentation.rust'
 			expectNext tokens,
-				'test',
+				' test',
 				'comment.line.documentation.rust'
 			nextLine()
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
 			expectNext tokens,
-				'test',
+				' test',
 				'comment.line.documentation.rust'
 		
 		it 'should recognize block doc comments', ->
@@ -139,8 +139,9 @@ describe 'atom-language-rust-redux', ->
 				'''
 			
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
+			expectSpace tokens
 			expectNext tokens,
 				'*',
 				['comment.line.documentation.rust', 'markup.italic.documentation.rust']
@@ -153,8 +154,9 @@ describe 'atom-language-rust-redux', ->
 			
 			nextLine()
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
+			expectSpace tokens
 			expectNext tokens,
 				'**',
 				['comment.line.documentation.rust', 'markup.bold.documentation.rust']
@@ -167,8 +169,9 @@ describe 'atom-language-rust-redux', ->
 			
 			nextLine()
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
+			expectSpace tokens
 			expectNext tokens,
 				'_',
 				['comment.line.documentation.rust', 'markup.italic.documentation.rust']
@@ -181,8 +184,9 @@ describe 'atom-language-rust-redux', ->
 			
 			nextLine()
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
+			expectSpace tokens
 			expectNext tokens,
 				'__',
 				['comment.line.documentation.rust', 'markup.underline.documentation.rust']
@@ -195,8 +199,9 @@ describe 'atom-language-rust-redux', ->
 			
 			nextLine()
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
+			expectSpace tokens
 			expectNext tokens,
 				'**',
 				['comment.line.documentation.rust', 'markup.bold.documentation.rust']
@@ -225,8 +230,9 @@ describe 'atom-language-rust-redux', ->
 				'''
 			
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
+			expectSpace tokens
 			expectNext tokens,
 				'#',
 				['comment.line.documentation.rust', 'markup.heading.documentation.rust', 'markup.heading.punctuation.definition.documentation.rust']
@@ -236,8 +242,9 @@ describe 'atom-language-rust-redux', ->
 			
 			nextLine()
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
+			expectSpace tokens
 			expectNext tokens,
 				'##',
 				['comment.line.documentation.rust', 'markup.heading.documentation.rust', 'markup.heading.punctuation.definition.documentation.rust']
@@ -247,8 +254,9 @@ describe 'atom-language-rust-redux', ->
 			
 			nextLine()
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
+			expectSpace tokens
 			expectNext tokens,
 				'###',
 				['comment.line.documentation.rust', 'markup.heading.documentation.rust', 'markup.heading.punctuation.definition.documentation.rust']
@@ -258,8 +266,9 @@ describe 'atom-language-rust-redux', ->
 			
 			nextLine()
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
+			expectSpace tokens
 			expectNext tokens,
 				'####',
 				['comment.line.documentation.rust', 'markup.heading.documentation.rust', 'markup.heading.punctuation.definition.documentation.rust']
@@ -269,8 +278,9 @@ describe 'atom-language-rust-redux', ->
 			
 			nextLine()
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
+			expectSpace tokens
 			expectNext tokens,
 				'#####',
 				['comment.line.documentation.rust', 'markup.heading.documentation.rust', 'markup.heading.punctuation.definition.documentation.rust']
@@ -280,8 +290,9 @@ describe 'atom-language-rust-redux', ->
 			
 			nextLine()
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
+			expectSpace tokens
 			expectNext tokens,
 				'######',
 				['comment.line.documentation.rust', 'markup.heading.documentation.rust', 'markup.heading.punctuation.definition.documentation.rust']
@@ -291,8 +302,9 @@ describe 'atom-language-rust-redux', ->
 			
 			nextLine()
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
+			expectSpace tokens
 			expectNext tokens,
 				'######',
 				['comment.line.documentation.rust', 'markup.heading.documentation.rust', 'markup.heading.punctuation.definition.documentation.rust']
@@ -314,8 +326,9 @@ describe 'atom-language-rust-redux', ->
 				'''
 			
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
+			expectSpace tokens
 			expectNext tokens,
 				'[text]',
 				['comment.line.documentation.rust', 'markup.link.documentation.rust']
@@ -325,8 +338,9 @@ describe 'atom-language-rust-redux', ->
 
 			nextLine()
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
+			expectSpace tokens
 			expectNext tokens,
 				'[text](',
 				['comment.line.documentation.rust', 'markup.link.documentation.rust']
@@ -339,8 +353,9 @@ describe 'atom-language-rust-redux', ->
 			
 			nextLine()
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
+			expectSpace tokens
 			expectNext tokens,
 				'[text](',
 				['comment.line.documentation.rust', 'markup.link.documentation.rust']
@@ -359,8 +374,9 @@ describe 'atom-language-rust-redux', ->
 			
 			nextLine()
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
+			expectSpace tokens
 			expectNext tokens,
 				'![text](',
 				['comment.line.documentation.rust', 'markup.link.documentation.rust']
@@ -373,16 +389,17 @@ describe 'atom-language-rust-redux', ->
 			
 			nextLine()
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
 			expectNext tokens,
-				'[text]',
+				' [text]',
 				'comment.line.documentation.rust'
 			
 			nextLine()
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
+			expectSpace tokens
 			expectNext tokens,
 				'[text]: ',
 				['comment.line.documentation.rust', 'markup.link.documentation.rust']
@@ -401,10 +418,10 @@ describe 'atom-language-rust-redux', ->
 				'''
 			
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
 			expectNext tokens,
-				'text ',
+				' text ',
 				'comment.line.documentation.rust'
 			expectNext tokens,
 				'`code`',
@@ -415,8 +432,9 @@ describe 'atom-language-rust-redux', ->
 			
 			nextLine()
 			expectNext tokens,
-				'/// ',
+				'///',
 				'comment.line.documentation.rust'
+			expectSpace tokens
 			expectNext tokens,
 				'```',
 				['comment.line.documentation.rust', 'markup.code.raw.block.documentation.rust']

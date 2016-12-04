@@ -1197,3 +1197,116 @@ describe 'atom-language-rust-redux', ->
 					'{',
 					'punctuation.brace.rust'
 		
+	describe 'when tokenizing the question mark operator thing', ->
+		beforeEach ->
+			reset()
+		
+		it 'should parse', ->
+			tokens = grammar.tokenizeLines('File::create("foo.txt")?')
+			expectNext tokens,
+				'File',
+				[]
+			expectNext tokens,
+				'::',
+				'keyword.operator.misc.rust'
+			expectNext tokens,
+				'create',
+				'entity.name.function.rust'
+			expectNext tokens,
+				'(',
+				'punctuation.parenthesis.rust'
+			expectNext tokens,
+				'"',
+				'string.quoted.double.rust'
+			expectNext tokens,
+				'foo.txt',
+				'string.quoted.double.rust'
+			expectNext tokens,
+				'"',
+				'string.quoted.double.rust'
+			expectNext tokens,
+				')',
+				'punctuation.parenthesis.rust'
+			expectNext tokens,
+				'?',
+				'keyword.operator.misc.question-mark.rust'
+			
+			reset()
+			tokens = grammar.tokenizeLines('File::create("foo.txt")?.write_all("test")?')
+			expectNext tokens,
+				'File',
+				[]
+			expectNext tokens,
+				'::',
+				'keyword.operator.misc.rust'
+			expectNext tokens,
+				'create',
+				'entity.name.function.rust'
+			expectNext tokens,
+				'(',
+				'punctuation.parenthesis.rust'
+			expectNext tokens,
+				'"',
+				'string.quoted.double.rust'
+			expectNext tokens,
+				'foo.txt',
+				'string.quoted.double.rust'
+			expectNext tokens,
+				'"',
+				'string.quoted.double.rust'
+			expectNext tokens,
+				')',
+				'punctuation.parenthesis.rust'
+			expectNext tokens,
+				'?',
+				'keyword.operator.misc.question-mark.rust'
+			expectNext tokens,
+				'.',
+				[]
+			expectNext tokens,
+				'write_all',
+				'entity.name.function.rust'
+			expectNext tokens,
+				'(',
+				'punctuation.parenthesis.rust'
+			expectNext tokens,
+				'"',
+				'string.quoted.double.rust'
+			expectNext tokens,
+				'test',
+				'string.quoted.double.rust'
+			expectNext tokens,
+				'"',
+				'string.quoted.double.rust'
+			expectNext tokens,
+				')',
+				'punctuation.parenthesis.rust'
+			expectNext tokens,
+				'?',
+				'keyword.operator.misc.question-mark.rust'
+			
+			reset()
+			tokens = grammar.tokenizeLines('if test()? {}')
+			expectNext tokens,
+				'if',
+				'keyword.control.rust'
+			expectSpace tokens
+			expectNext tokens,
+				'test',
+				'entity.name.function.rust'
+			expectNext tokens,
+				'(',
+				'punctuation.parenthesis.rust'
+			expectNext tokens,
+				')',
+				'punctuation.parenthesis.rust'
+			expectNext tokens,
+				'?',
+				'keyword.operator.misc.question-mark.rust'
+			expectSpace tokens
+			expectNext tokens,
+				'{',
+				'punctuation.brace.rust'
+			expectNext tokens,
+				'}',
+				'punctuation.brace.rust'

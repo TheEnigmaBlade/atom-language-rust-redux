@@ -503,7 +503,7 @@
   'structure_operators': {
     'comment': 'Miscellaneous operator'
     'name': 'keyword.operator.misc.rust'
-    'match': '->|=>|::|:|\\bas\\b'
+    'match': '->|=>|::|:'
   }
   
   'operators': {
@@ -538,6 +538,11 @@
         'comment': 'Box pattern'
         'name': 'storage.modifier.box.rust'
         'match': '\\bbox\\b'
+      }
+      {
+        'comment': '? operator (v1.13 onwards)'
+        'name': 'keyword.operator.misc.question-mark.rust'
+        'match': '\\?'
       }
     ]
   }

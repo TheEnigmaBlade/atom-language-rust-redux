@@ -1,17 +1,16 @@
 @import "syntax-variables";
 
-atom-text-editor,
-::shadow {
-    .meta.attribute.rust {
+atom-text-editor {
+    .syntax--rust.syntax--meta.syntax--attribute {
         color: mix(#ff0, @syntax-text-color, 20%);
     }
     
-    .storage.modifier.lifetime.rust,
-    .entity.name.lifetime.rust {
+    .syntax--rust.syntax--storage.syntax--modifier.syntax--lifetime,
+    .syntax--rust.syntax--entity.syntax--name.syntax--lifetime {
         color: mix(#0ff, @syntax-text-color, 70%);
     }
     
-    .keyword.unsafe.rust {
+    .syntax--rust.syntax--keyword.syntax--unsafe {
         color: mix(#f00, @syntax-text-color, 40%);
     }
 }

@@ -633,6 +633,50 @@
       '2': { 'name': 'entity.name.lifetime.rust' }
     }
   }
+  
+  'implementation': {
+    'comment': 'Implementation'
+    'begin': '\\b(impl)\\b'
+    'end': '(?=[\\{])'
+    'beginCaptures': {
+      '1': { 'name': 'storage.type.impl.rust' }
+    }
+    'patterns': [
+      { 'include': '#comments' }
+      { 'include': '#type_params' }
+      { 'include': '#traits' }
+      {
+        'comment': 'Trait name (or skip if for is next)'
+        'begin': '([\\p{Alpha}_][\\w]*)|(?=\\s*for)'
+        'end': '(?=[\\{])'
+        'beginCaptures': {
+          '1': { 'name': 'entity.name.type.rust' }
+        }
+        'patterns': [
+          { 'include': '#comments' }
+          { 'include': '#types' }
+          { 'include': '#traits' }
+          { 'include': '#lifetime' }
+          { 'include': '#type_params' }
+          { 'include': '#where' }
+          {
+            'begin': '\\b(for)\\b'
+            'end': '(?<=\\w)(?<!\\sfor)'
+            'beginCaptures': {
+              '1': { 'name': 'keyword.other.for.rust' }
+            }
+            'patterns': [
+              { 'include': '#comments' }
+              {
+                'match': '[\\p{Alpha}_][\\w]*'
+                'name': ''#'entity.name.type.rust'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }
 'patterns': [
   # Comments
@@ -661,7 +705,12 @@
   {
     'comment': 'Keyword'
     'name': 'keyword.other.rust'
-    'match': '\\b(crate|extern|mod|let|proc|ref|use|super|as|move)\\b'
+    'match': '\\b(crate|extern|mod|let|ref|use|super|as|move)\\b'
+  }
+  {
+    'comment': 'Unused reserved keyword'
+    'name': 'invalid.illegal.rust'
+    'match': '\\b(abstract|alignof|become|do|final|macro|offsetof|override|priv|proc|pure|sizeof|typeof|virtual|yield)\\b'
   }
   { 'include': '#sigils' }
   { 'include': '#modifiers' }
@@ -796,47 +845,5 @@
   }
   
   # Implementation
-  {
-    'comment': 'Implementation'
-    'begin': '\\b(impl)\\b'
-    'end': '(?=\\{)'
-    'beginCaptures': {
-      '1': { 'name': 'storage.type.impl.rust' }
-    }
-    'patterns': [
-      { 'include': '#comments' }
-      { 'include': '#type_params' }
-      { 'include': '#traits' }
-      {
-        'comment': 'Trait name (or skip if for is next)'
-        'begin': '([\\p{Alpha}_][\\w]*)|(?=\\s*for)'
-        'end': '(?=\\{)'
-        'beginCaptures': {
-          '1': { 'name': 'entity.name.type.rust' }
-        }
-        'patterns': [
-          { 'include': '#comments' }
-          { 'include': '#types' }
-          { 'include': '#traits' }
-          { 'include': '#lifetime' }
-          { 'include': '#type_params' }
-          { 'include': '#where' }
-          {
-            'begin': '\\b(for)\\b'
-            'end': '(?<=\\w)(?<!\\sfor)'
-            'beginCaptures': {
-              '1': { 'name': 'keyword.other.for.rust' }
-            }
-            'patterns': [
-              { 'include': '#comments' }
-              {
-                'match': '[\\p{Alpha}_][\\w]*'
-                'name': ''#'entity.name.type.rust'
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+  { 'include': '#implementation' }
 ]

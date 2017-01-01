@@ -3,9 +3,9 @@ token = (value, scope) ->
 	scopes: [
 		'source.rust'
 		(if Array.isArray scope
-     	scope
-     else
-       [scope])...
+		 	scope
+		 else
+			 [scope])...
 	]
 	value: value
 
@@ -33,6 +33,11 @@ expectSpace = (tokens) ->
 	currentToken += 1
 	t = tokens[currentLine][currentToken]
 	expect(t.value).not.toMatch /\S+/
+
+skip = (n) ->
+	if not n?
+		n = 1
+	currentToken += n
 
 nextLine = ->
 	currentLine += 1
@@ -755,77 +760,25 @@ describe 'atom-language-rust-redux', ->
 				'constant.numeric.integer.decimal.rust'
 		
 		it 'should parse type suffixes', ->
-			tokens = tokenize grammar, '101u8'
-			expectNext tokens,
-				'101u8',
-				'constant.numeric.integer.decimal.rust'
-			
-			tokens = tokenize grammar, '103u16'
-			expectNext tokens,
-				'103u16',
-				'constant.numeric.integer.decimal.rust'
-			
-			tokens = tokenize grammar, '107u32'
-			expectNext tokens,
-				'107u32',
-				'constant.numeric.integer.decimal.rust'
-			
-			tokens = tokenize grammar, '109u64'
-			expectNext tokens,
-				'109u64',
-				'constant.numeric.integer.decimal.rust'
-			
-			tokens = tokenize grammar, '113i8'
-			expectNext tokens,
-				'113i8',
-				'constant.numeric.integer.decimal.rust'
-			
-			tokens = tokenize grammar, '127i16'
-			expectNext tokens,
-				'127i16',
-				'constant.numeric.integer.decimal.rust'
-			
-			tokens = tokenize grammar, '131i32'
-			expectNext tokens,
-				'131i32',
-				'constant.numeric.integer.decimal.rust'
-			
-			tokens = tokenize grammar, '137i64'
-			expectNext tokens,
-				'137i64',
-				'constant.numeric.integer.decimal.rust'
-			
-			tokens = tokenize grammar, '139int'
-			expectNext tokens,
-				'139',
-				'constant.numeric.integer.decimal.rust'
-			expectNext tokens,
-				'int',
-				['constant.numeric.integer.decimal.rust', 'invalid.illegal.rust']
-			
-			tokens = tokenize grammar, '149uint'
-			expectNext tokens,
-				'149',
-				'constant.numeric.integer.decimal.rust'
-			expectNext tokens,
-				'uint',
-				['constant.numeric.integer.decimal.rust', 'invalid.illegal.rust']
-			
-			tokens = tokenize grammar, '151is'
-			expectNext tokens,
-				'151',
-				'constant.numeric.integer.decimal.rust'
-			expectNext tokens,
-				'is',
-				['constant.numeric.integer.decimal.rust', 'invalid.illegal.rust']
-			
-			tokens = tokenize grammar, '157us'
-			expectNext tokens,
-				'157',
-				'constant.numeric.integer.decimal.rust'
-			expectNext tokens,
-				'us',
-				['constant.numeric.integer.decimal.rust', 'invalid.illegal.rust']
+			val = 2
+			for type in ['u8', 'u16', 'u32', 'u64', 'u128', 'usize', 'i8', 'i16', 'i32', 'i64', 'i128', 'isize']
+				tokens = tokenize grammar, "#{val}#{type}"
+				expectNext tokens,
+					"#{val}#{type}",
+					'constant.numeric.integer.decimal.rust'
+				val *= 2
+		
+		it 'should parse invalid type suffixes', ->
+			val = 2
+			for type in ['int', 'uint', 'is', 'us']
+				tokens = tokenize grammar, "#{val}#{type}"
+				expectNext tokens,
+					"#{val}",
+					'constant.numeric.integer.decimal.rust'
+				expectNext tokens,
+					"#{type}",
+					['constant.numeric.integer.decimal.rust', 'invalid.illegal.rust']
+				val *= 2
 		
 		it 'should parse hexadecimal', ->
 			tokens = tokenize grammar, '0x123'
@@ -915,6 +868,39 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'false',
 				'constant.language.boolean.rust'
+	
+	describe 'when tokenizing variable type declarations', ->
+		it 'should parse integer variations', ->
+			for type in ['u8', 'u16', 'u32', 'u64', 'u128', 'usize', 'i8', 'i16', 'i32', 'i64', 'i128', 'isize']
+				tokens = tokenize grammar, "let x: #{type};"
+				skip 4
+				expectNext tokens,
+					type,
+					'storage.type.core.rust'
+		
+		it 'should parse float variations', ->
+			for type in ['f32', 'f64']
+				tokens = tokenize grammar, "let x: #{type};"
+				skip 4
+				expectNext tokens,
+					type,
+					'storage.type.core.rust'
+		
+		it 'should parse other core types', ->
+			for type in ['bool', 'char', 'str', 'String', 'Self', 'Option', 'Result']
+				tokens = tokenize grammar, "let x: #{type};"
+				skip 4
+				expectNext tokens,
+					type,
+					'storage.type.core.rust'
+		
+		it 'should parse std types', ->
+			for type in ['Path', 'PathBuf', 'Arc', 'Weak', 'Box', 'Rc', 'Vec', 'VecDeque', 'LinkedList', 'HashMap', 'BTreeMap', 'HashSet', 'BTreeSet', 'BinaryHeap']
+				tokens = tokenize grammar, "let x: #{type};"
+				skip 4
+				expectNext tokens,
+					type,
+					'storage.class.std.rust'
 	
 	# Incomplete
 	

@@ -18,6 +18,7 @@ $ apm install language-rust-redux
 
 Previews taken with Firewatch syntax. More improvements to come.
 
+- The latest syntax, such as the `?` operator
 - Format macro syntax highlighting<br>
   ![](http://i.imgur.com/mUlh8P0.png)
 - Markdown syntax highlighting in doc comments<br>
@@ -26,8 +27,8 @@ Previews taken with Firewatch syntax. More improvements to come.
   ![](http://i.imgur.com/KsS24Di.png)
 - Common mistake recognition<br>
   ![](http://i.imgur.com/kPhbuE7.png)
-- Improved keyword context (`where` actually works)
-- Numerous fixes, including lifetimes in associated type definitions and `fn` in function arguments
+- Improved keyword context (`where` actually works, `unsafe` allowed in more places)
+- Numerous fixes: lifetimes in associated type definitions, `fn` in function arguments, and nested block comments
 
 ## Bugs and suggestions
 

@@ -290,6 +290,11 @@ pub struct Foobar(pub Test<W=bool>);
 pub struct Foobar(pub Test<W==bool>);
 pub struct Foobar(pub Test<W = bool>);
 
+struct Test(i32);
+struct Test(String);
+struct Test(Vec<i32>);
+struct Test(BTreeMap<String, i32>);
+
 // Lifetimes in associated type definitions
 trait Foo {
     type B: A + 'static;

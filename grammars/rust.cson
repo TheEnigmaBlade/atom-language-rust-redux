@@ -391,7 +391,7 @@
       {
         'comment': 'Standard library type'
         'name': 'storage.class.std.rust'
-        'match': '\\b(String|Vec|Path|PathBuf|Arc|Weak|Box|Rc)\\b'
+        'match': '\\b(String|Path|PathBuf|Arc|Weak|Box|Rc|Vec|VecDeque|LinkedList|HashMap|BTreeMap|HashSet|BTreeSet|BinaryHeap)\\b'
       }
     ]
   }

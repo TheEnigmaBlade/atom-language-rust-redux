@@ -1,6 +1,6 @@
 {
   "name": "language-rust-redux",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Rust language support for Atom (maintained)",
   "license": "MIT",
   "engines": {

@@ -243,7 +243,7 @@
       }
       {
         'comment': 'Format string thing'
-        'name': 'punctuation.section.embedded.format.rust'
+        'name': 'punctuation.section.embedded.meta.tag.format.rust'
         'begin': "{"
         'end': "}"
         'patterns': [

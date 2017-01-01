@@ -232,7 +232,7 @@ impl<'foo> MyTrait for MyStruct<'foo> {
         text
     }
     text
-    fn do_even_more<'a, T: Send+Whatever, U: Something<T>+Freeze> (&'a mut self, param: &T) -> &'a U {
+    fn do_even_more<'a, T: Send+Whatever+'static, U: Something<T>+Freeze> (&'a mut self, param: &T) -> &'a U {
         text
         let foo: Option<'a u32> = Some(18);
         text
@@ -285,6 +285,10 @@ fn foo(bar: *const i32) {
 
 // Keywords and known types in wrapper structs (#56)
 pub struct Foobar(pub Option<bool>);
+
+pub struct Foobar(pub Test<W=bool>);
+pub struct Foobar(pub Test<W==bool>);
+pub struct Foobar(pub Test<W = bool>);
 
 // Lifetimes in associated type definitions
 trait Foo {

@@ -607,6 +607,11 @@
     'end': '>'
     'patterns': [
       { 'include': '#comments' }
+      {
+        'match': '\\b\\s*(=)\\s*\\b'
+        'captures':
+          '1': { 'name': 'keyword.operator.type_params.rust' }
+      }
       { 'include': '#sigils' }
       { 'include': '#modifiers' }
       { 'include': '#lifetime' }

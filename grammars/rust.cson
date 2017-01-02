@@ -435,7 +435,7 @@
       {
         'comment': 'Core macro'
         'name': 'support.function.macro.core.rust'
-        'match': '\\b(assert|assert_eq|debug_assert|debug_assert_eq|panic|try|unimplemented|unreachable)!'
+        'match': '\\b(assert|assert_eq|debug_assert|debug_assert_eq|try|unimplemented|unreachable)!'
       }
       {
         'comment': 'Standard library macro'
@@ -444,7 +444,7 @@
       }
       {
         'comment': 'Format macro'
-        'begin': '\\b(?:((?:write|writeln)!)|((?:format|format_args|print|println)!))'
+        'begin': '\\b(?:((?:write|writeln|panic)!)|((?:format|format_args|print|println)!))'
         'end': '[,\\)\\]\\}]'
         'beginCaptures': {
           '1': { 'name': 'support.function.macro.core.rust' }

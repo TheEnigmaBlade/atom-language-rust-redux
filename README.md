@@ -24,7 +24,8 @@ Previews taken with Firewatch syntax. More improvements to come.
 - Markdown syntax highlighting in doc comments<br>
   ![](http://i.imgur.com/JDSoPSQ.png)
 - Invalid syntax common in similar languages<br>
-  ![](http://i.imgur.com/KsS24Di.png)
+  ![](http://i.imgur.com/KsS24Di.png)<br>
+  ![](http://i.imgur.com/0C3xdPv.png)
 - Common mistake recognition<br>
   ![](http://i.imgur.com/kPhbuE7.png)
 - Improved keyword context (`where` actually works, `unsafe` allowed in more places)

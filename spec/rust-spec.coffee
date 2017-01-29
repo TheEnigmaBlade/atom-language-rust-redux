@@ -61,11 +61,11 @@ describe 'atom-language-rust-redux', ->
 			atom.packages.activatePackage 'language-rust-redux'
 		runs ->
 			grammar = atom.grammars.grammarForScopeName('source.rust')
-	
+			
 	it 'should be ready to parse', ->
 		expect(grammar).toBeDefined()
 		expect(grammar.scopeName).toBe 'source.rust'
-	
+		
 	# Tests
 	
 	describe 'when tokenizing comments', ->
@@ -77,7 +77,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				' test',
 				'comment.line.rust'
-				
+
 		it 'should recognize multiline comments', ->
 			tokens = tokenize grammar, '/*\ntest\n*/'
 			expectToken tokens, 0, 0,
@@ -89,7 +89,7 @@ describe 'atom-language-rust-redux', ->
 			expectToken tokens, 2, 0,
 				'*/',
 				'comment.block.rust'
-		
+
 		it 'should nest multiline comments', ->
 			tokens = tokenize grammar, '/*\n/*\n*/\n*/'
 			expectToken tokens, 0, 0,
@@ -142,7 +142,7 @@ describe 'atom-language-rust-redux', ->
 				/// __underline__
 				/// ***bolditalic***
 				'''
-			
+
 			expectNext tokens,
 				'///',
 				'comment.line.documentation.rust'
@@ -156,7 +156,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'*',
 				['comment.line.documentation.rust', 'markup.italic.documentation.rust']
-			
+
 			nextLine()
 			expectNext tokens,
 				'///',
@@ -171,7 +171,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'**',
 				['comment.line.documentation.rust', 'markup.bold.documentation.rust']
-			
+
 			nextLine()
 			expectNext tokens,
 				'///',
@@ -186,7 +186,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'_',
 				['comment.line.documentation.rust', 'markup.italic.documentation.rust']
-			
+
 			nextLine()
 			expectNext tokens,
 				'///',
@@ -201,7 +201,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'__',
 				['comment.line.documentation.rust', 'markup.underline.documentation.rust']
-			
+
 			nextLine()
 			expectNext tokens,
 				'///',
@@ -233,7 +233,7 @@ describe 'atom-language-rust-redux', ->
 				/// ###### h6
 				/// ####### h6
 				'''
-			
+
 			expectNext tokens,
 				'///',
 				'comment.line.documentation.rust'
@@ -244,7 +244,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				' h1',
 				['comment.line.documentation.rust', 'markup.heading.documentation.rust']
-			
+
 			nextLine()
 			expectNext tokens,
 				'///',
@@ -256,7 +256,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				' h2',
 				['comment.line.documentation.rust', 'markup.heading.documentation.rust']
-			
+
 			nextLine()
 			expectNext tokens,
 				'///',
@@ -268,7 +268,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				' h3',
 				['comment.line.documentation.rust', 'markup.heading.documentation.rust']
-			
+
 			nextLine()
 			expectNext tokens,
 				'///',
@@ -280,7 +280,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				' h4',
 				['comment.line.documentation.rust', 'markup.heading.documentation.rust']
-			
+
 			nextLine()
 			expectNext tokens,
 				'///',
@@ -292,7 +292,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				' h5',
 				['comment.line.documentation.rust', 'markup.heading.documentation.rust']
-			
+
 			nextLine()
 			expectNext tokens,
 				'///',
@@ -304,7 +304,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				' h6',
 				['comment.line.documentation.rust', 'markup.heading.documentation.rust']
-			
+
 			nextLine()
 			expectNext tokens,
 				'///',
@@ -329,25 +329,37 @@ describe 'atom-language-rust-redux', ->
 				/// [text]
 				/// [text]: http://link.com
 				'''
-			
+				
 			expectNext tokens,
 				'///',
 				'comment.line.documentation.rust'
 			expectSpace tokens
 			expectNext tokens,
-				'[text]',
+				'[',
+				['comment.line.documentation.rust', 'markup.link.documentation.rust']
+			expectNext tokens,
+				'text',
+				['comment.line.documentation.rust', 'markup.link.documentation.rust', 'markup.link.text.documentation.rust']
+			expectNext tokens,
+				']',
 				['comment.line.documentation.rust', 'markup.link.documentation.rust']
 			expectNext tokens,
 				'()',
 				['comment.line.documentation.rust', 'markup.link.documentation.rust', 'markup.invalid.illegal.documentation.rust']
-
+				
 			nextLine()
 			expectNext tokens,
 				'///',
 				'comment.line.documentation.rust'
 			expectSpace tokens
 			expectNext tokens,
-				'[text](',
+				'[',
+				['comment.line.documentation.rust', 'markup.link.documentation.rust']
+			expectNext tokens,
+				'text',
+				['comment.line.documentation.rust', 'markup.link.documentation.rust', 'markup.link.text.documentation.rust']
+			expectNext tokens,
+				'](',
 				['comment.line.documentation.rust', 'markup.link.documentation.rust']
 			expectNext tokens,
 				'http://link.com',
@@ -355,14 +367,20 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				')',
 				['comment.line.documentation.rust', 'markup.link.documentation.rust']
-			
+				
 			nextLine()
 			expectNext tokens,
 				'///',
 				'comment.line.documentation.rust'
 			expectSpace tokens
 			expectNext tokens,
-				'[text](',
+				'[',
+				['comment.line.documentation.rust', 'markup.link.documentation.rust']
+			expectNext tokens,
+				'text',
+				['comment.line.documentation.rust', 'markup.link.documentation.rust', 'markup.link.text.documentation.rust']
+			expectNext tokens,
+				'](',
 				['comment.line.documentation.rust', 'markup.link.documentation.rust']
 			expectNext tokens,
 				'http://link.com',
@@ -376,14 +394,20 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				')',
 				['comment.line.documentation.rust', 'markup.link.documentation.rust']
-			
+				
 			nextLine()
 			expectNext tokens,
 				'///',
 				'comment.line.documentation.rust'
 			expectSpace tokens
 			expectNext tokens,
-				'![text](',
+				'![',
+				['comment.line.documentation.rust', 'markup.link.documentation.rust']
+			expectNext tokens,
+				'text',
+				['comment.line.documentation.rust', 'markup.link.documentation.rust', 'markup.link.text.documentation.rust']
+			expectNext tokens,
+				'](',
 				['comment.line.documentation.rust', 'markup.link.documentation.rust']
 			expectNext tokens,
 				'http://link.com',
@@ -391,7 +415,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				')',
 				['comment.line.documentation.rust', 'markup.link.documentation.rust']
-			
+				
 			nextLine()
 			expectNext tokens,
 				'///',
@@ -399,19 +423,25 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				' [text]',
 				'comment.line.documentation.rust'
-			
+				
 			nextLine()
 			expectNext tokens,
 				'///',
 				'comment.line.documentation.rust'
 			expectSpace tokens
 			expectNext tokens,
-				'[text]: ',
+				'[',
+				['comment.line.documentation.rust', 'markup.link.documentation.rust']
+			expectNext tokens,
+				'text',
+				['comment.line.documentation.rust', 'markup.link.documentation.rust', 'markup.link.text.documentation.rust']
+			expectNext tokens,
+				']: ',
 				['comment.line.documentation.rust', 'markup.link.documentation.rust']
 			expectNext tokens,
 				'http://link.com',
 				['comment.line.documentation.rust', 'markup.link.documentation.rust', 'markup.link.entity.documentation.rust']
-			
+		
 		it 'should parse code blocks', ->
 			tokens = tokenize grammar, '''
 				/// text `code` text
@@ -421,7 +451,7 @@ describe 'atom-language-rust-redux', ->
 				/// }
 				/// ```
 				'''
-			
+
 			expectNext tokens,
 				'///',
 				'comment.line.documentation.rust'
@@ -434,7 +464,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				' text',
 				'comment.line.documentation.rust'
-			
+
 			nextLine()
 			expectNext tokens,
 				'///',
@@ -474,7 +504,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'```',
 				['comment.line.documentation.rust', 'markup.code.raw.block.documentation.rust']
-	
+		
 	describe 'when tokenizing strings', ->
 		#TODO: unicode tests
 		it 'should parse strings', ->
@@ -488,7 +518,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'"',
 				'string.quoted.double.rust'
-			
+
 			tokens = tokenize grammar, '"test\\ntset"'
 			expectNext tokens,
 				'"',
@@ -505,7 +535,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'"',
 				'string.quoted.double.rust'
-		
+
 		it 'should parse byte strings', ->
 			tokens = tokenize grammar, 'b"test"'
 			expectNext tokens,
@@ -517,7 +547,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'"',
 				'string.quoted.double.rust'
-			
+
 			tokens = tokenize grammar, 'b"test\\ntset"'
 			expectNext tokens,
 				'b"',
@@ -534,7 +564,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'"',
 				'string.quoted.double.rust'
-		
+
 		it 'should parse raw strings', ->
 			tokens = tokenize grammar, 'r"test"'
 			expectNext tokens,
@@ -546,7 +576,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'"',
 				'string.quoted.double.raw.rust'
-			
+
 			tokens = tokenize grammar, 'r"test\\ntset"'
 			expectNext tokens,
 				'r"',
@@ -557,7 +587,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'"',
 				'string.quoted.double.raw.rust'
-			
+
 			tokens = tokenize grammar, 'r##"test##"#tset"##'
 			expectNext tokens,
 				'r##"',
@@ -568,7 +598,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'"##',
 				'string.quoted.double.raw.rust'
-			
+
 			tokens = tokenize grammar, 'r"test\ntset"'
 			expectNext tokens,
 				'r"',
@@ -583,7 +613,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'"',
 				'string.quoted.double.raw.rust'
-			
+
 			tokens = tokenize grammar, 'r#"test#"##test"#'
 			expectNext tokens,
 				'r#"',
@@ -600,7 +630,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'test',
 				[]
-		
+
 		it 'should parse raw byte strings', ->
 			tokens = tokenize grammar, 'br"test"'
 			expectNext tokens,
@@ -612,7 +642,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'"',
 				'string.quoted.double.raw.rust'
-			
+
 			tokens = tokenize grammar, 'br"test\\ntset"'
 			expectNext tokens,
 				'br"',
@@ -623,7 +653,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'"',
 				'string.quoted.double.raw.rust'
-			
+
 			tokens = tokenize grammar, 'rb"test"'
 			expectNext tokens,
 				'rb',
@@ -637,14 +667,14 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'"',
 				'string.quoted.double.raw.rust'
-		
+
 		it 'should parse character strings', ->
 			tokens = tokenize grammar, '\'a\''
 			#TODO
-			
+
 			tokens = tokenize grammar, '\'\\n\''
 			#TODO
-			
+
 			tokens = tokenize grammar, '\'abc\''
 			expectNext tokens,
 				'\'',
@@ -658,14 +688,14 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'\'',
 				'string.quoted.single.rust'
-		
+
 		it 'should parse character byte strings', ->
 			tokens = tokenize grammar, 'b\'a\''
 			#TODO
-		
+
 		it 'should parse escape characters', ->
 			#TODO
-	
+
 	describe 'when tokenizing format strings', ->
 		#TODO
 
@@ -675,90 +705,90 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'4.2',
 				'constant.numeric.float.rust'
-			
+
 			tokens = tokenize grammar, '4_2.0'
 			expectNext tokens,
 				'4_2.0',
 				'constant.numeric.float.rust'
-			
+
 			tokens = tokenize grammar, '0_________0.6'
 			expectNext tokens,
 				'0_________0.6',
 				'constant.numeric.float.rust'
-		
+
 		it 'should parse with type', ->
 			tokens = tokenize grammar, '4f32'
 			expectNext tokens,
 				'4f32',
 				'constant.numeric.float.rust'
-			
+
 			tokens = tokenize grammar, '4f64'
 			expectNext tokens,
 				'4f64',
 				'constant.numeric.float.rust'
-			
+
 			tokens = tokenize grammar, '4.2f32'
 			expectNext tokens,
 				'4.2f32',
 				'constant.numeric.float.rust'
-			
+
 			tokens = tokenize grammar, '3_________3f32'
 			expectNext tokens,
 				'3_________3f32',
 				'constant.numeric.float.rust'
-		
+
 		it 'should parse with exponents', ->
 			tokens = tokenize grammar, '3e8'
 			expectNext tokens,
 				'3e8',
 				'constant.numeric.float.rust'
-			
+
 			tokens = tokenize grammar, '3E8'
 			expectNext tokens,
 				'3E8',
 				'constant.numeric.float.rust'
-			
+
 			tokens = tokenize grammar, '3e+8'
 			expectNext tokens,
 				'3e+8',
 				'constant.numeric.float.rust'
-			
+
 			tokens = tokenize grammar, '3e-8'
 			expectNext tokens,
 				'3e-8',
 				'constant.numeric.float.rust'
-			
+
 			tokens = tokenize grammar, '2.99e8'
 			expectNext tokens,
 				'2.99e8',
 				'constant.numeric.float.rust'
-			
+
 			tokens = tokenize grammar, '6.626e-34'
 			expectNext tokens,
 				'6.626e-34',
 				'constant.numeric.float.rust'
-			
+
 			tokens = tokenize grammar, '3e8f64'
 			expectNext tokens,
 				'3e8f64',
 				'constant.numeric.float.rust'
-	
+
 	describe 'when tokenizing integer literals', ->
 		it 'should parse decimal', ->
 			tokens = tokenize grammar, '13'
 			expectNext tokens,
 				'13',
 				'constant.numeric.integer.decimal.rust'
-			
+
 			tokens = tokenize grammar, '1_013'
 			expectNext tokens,
 				'1_013',
 				'constant.numeric.integer.decimal.rust'
-			
+
 			tokens = tokenize grammar, '_031'
 			expectNoScope tokens, 0, 0,
 				'constant.numeric.integer.decimal.rust'
-		
+
 		it 'should parse type suffixes', ->
 			val = 2
 			for type in ['u8', 'u16', 'u32', 'u64', 'u128', 'usize', 'i8', 'i16', 'i32', 'i64', 'i128', 'isize']
@@ -767,7 +797,7 @@ describe 'atom-language-rust-redux', ->
 					"#{val}#{type}",
 					'constant.numeric.integer.decimal.rust'
 				val *= 2
-		
+
 		it 'should parse invalid type suffixes', ->
 			val = 2
 			for type in ['int', 'uint', 'is', 'us']
@@ -779,28 +809,28 @@ describe 'atom-language-rust-redux', ->
 					"#{type}",
 					['constant.numeric.integer.decimal.rust', 'invalid.illegal.rust']
 				val *= 2
-		
+
 		it 'should parse hexadecimal', ->
 			tokens = tokenize grammar, '0x123'
 			expectNext tokens,
 				'0x123',
 				'constant.numeric.integer.hexadecimal.rust'
-			
+
 			tokens = tokenize grammar, '0xbeeF'
 			expectNext tokens,
 				'0xbeeF',
 				'constant.numeric.integer.hexadecimal.rust'
-			
+
 			tokens = tokenize grammar, '0x1_2_3'
 			expectNext tokens,
 				'0x1_2_3',
 				'constant.numeric.integer.hexadecimal.rust'
-			
+
 			tokens = tokenize grammar, '0x123u8'
 			expectNext tokens,
 				'0x123u8',
 				'constant.numeric.integer.hexadecimal.rust'
-			
+
 			tokens = tokenize grammar, '0x123us'
 			expectNext tokens,
 				'0x123',
@@ -808,23 +838,23 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'us',
 				['constant.numeric.integer.hexadecimal.rust', 'invalid.illegal.rust']
-		
+
 		it 'should parse octal', ->
 			tokens = tokenize grammar, '0o123'
 			expectNext tokens,
 				'0o123',
 				'constant.numeric.integer.octal.rust'
-			
+
 			tokens = tokenize grammar, '0o1_2_3'
 			expectNext tokens,
 				'0o1_2_3',
 				'constant.numeric.integer.octal.rust'
-			
+
 			tokens = tokenize grammar, '0o123u8'
 			expectNext tokens,
 				'0o123u8',
 				'constant.numeric.integer.octal.rust'
-			
+
 			tokens = tokenize grammar, '0o123us'
 			expectNext tokens,
 				'0o123',
@@ -832,23 +862,23 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'us',
 				['constant.numeric.integer.octal.rust', 'invalid.illegal.rust']
-		
+
 		it 'should parse binary', ->
 			tokens = tokenize grammar, '0b1111011'
 			expectNext tokens,
 				'0b1111011',
 				'constant.numeric.integer.binary.rust'
-			
+
 			tokens = tokenize grammar, '0b1_11_10_11'
 			expectNext tokens,
 				'0b1_11_10_11',
 				'constant.numeric.integer.binary.rust'
-			
+
 			tokens = tokenize grammar, '0b1111011u8'
 			expectNext tokens,
 				'0b1111011u8',
 				'constant.numeric.integer.binary.rust'
-			
+
 			tokens = tokenize grammar, '0b1111011us'
 			expectNext tokens,
 				'0b1111011',
@@ -856,19 +886,19 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'us',
 				['constant.numeric.integer.binary.rust', 'invalid.illegal.rust']
-	
+
 	describe 'when tokenizing boolean literals', ->
 		it 'should parse them', ->
 			tokens = tokenize grammar, 'true'
 			expectNext tokens,
 				'true',
 				'constant.language.boolean.rust'
-			
+
 			tokens = tokenize grammar, 'false'
 			expectNext tokens,
 				'false',
 				'constant.language.boolean.rust'
-	
+
 	describe 'when tokenizing variable type declarations', ->
 		it 'should parse integer variations', ->
 			for type in ['u8', 'u16', 'u32', 'u64', 'u128', 'usize', 'i8', 'i16', 'i32', 'i64', 'i128', 'isize']
@@ -877,7 +907,7 @@ describe 'atom-language-rust-redux', ->
 				expectNext tokens,
 					type,
 					'storage.type.core.rust'
-		
+
 		it 'should parse float variations', ->
 			for type in ['f32', 'f64']
 				tokens = tokenize grammar, "let x: #{type};"
@@ -885,7 +915,7 @@ describe 'atom-language-rust-redux', ->
 				expectNext tokens,
 					type,
 					'storage.type.core.rust'
-		
+
 		it 'should parse other core types', ->
 			for type in ['bool', 'char', 'str', 'String', 'Self', 'Option', 'Result']
 				tokens = tokenize grammar, "let x: #{type};"
@@ -893,7 +923,7 @@ describe 'atom-language-rust-redux', ->
 				expectNext tokens,
 					type,
 					'storage.type.core.rust'
-		
+
 		it 'should parse std types', ->
 			for type in ['Path', 'PathBuf', 'Arc', 'Weak', 'Box', 'Rc', 'Vec', 'VecDeque', 'LinkedList', 'HashMap', 'BTreeMap', 'HashSet', 'BTreeSet', 'BinaryHeap']
 				tokens = tokenize grammar, "let x: #{type};"
@@ -901,9 +931,9 @@ describe 'atom-language-rust-redux', ->
 				expectNext tokens,
 					type,
 					'storage.class.std.rust'
-	
+
 	# Incomplete
-	
+
 	describe 'when tokenizing impl', ->
 		it 'should parse basic', ->
 			tokens = tokenize grammar, 'impl Cookie {}'
@@ -918,7 +948,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'{',
 				'punctuation.brace.rust'
-		
+
 		it 'should parse for', ->
 			tokens = tokenize grammar, 'impl Eat for Cookie {}'
 			expectNext tokens,
@@ -940,7 +970,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'{',
 				'punctuation.brace.rust'
-		
+
 		it 'should parse where', ->
 			tokens = tokenize grammar, 'impl Eat where Cookie: Delicious {}'
 			expectNext tokens,
@@ -966,7 +996,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'{',
 				'punctuation.brace.rust'
-		
+
 		it 'should parse for and where', ->
 			tokens = tokenize grammar, 'impl Eat for Cookie where Cookie: Delicious {}'
 			expectNext tokens,
@@ -1000,7 +1030,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'{',
 				'punctuation.brace.rust'
-		
+
 		describe 'with type args', ->
 			it 'should parse where', ->
 				tokens = tokenize grammar, 'impl<Flavor> Eat where Cookie<Flavor>: Oatmeal {}'
@@ -1045,7 +1075,7 @@ describe 'atom-language-rust-redux', ->
 				expectNext tokens,
 					'{',
 					'punctuation.brace.rust'
-			
+
 			it 'should parse for and where', ->
 				tokens = tokenize grammar, 'impl<Flavor> Eat for Cookie<Flavor> where Flavor: Oatmeal {}'
 				expectNext tokens,
@@ -1097,7 +1127,7 @@ describe 'atom-language-rust-redux', ->
 				expectNext tokens,
 					'{',
 					'punctuation.brace.rust'
-			
+
 		describe 'with lifetimes', ->
 			it 'should parse where', ->
 				tokens = tokenize grammar, 'impl<\'F> Eat where Cookie<\'F>: Oatmeal {}'
@@ -1148,7 +1178,7 @@ describe 'atom-language-rust-redux', ->
 				expectNext tokens,
 					'{',
 					'punctuation.brace.rust'
-			
+
 			it 'should parse for and where', ->
 				tokens = tokenize grammar, 'impl<Flavor> Eat for Cookie<Flavor> where Flavor: Oatmeal {}'
 				expectNext tokens,
@@ -1200,11 +1230,11 @@ describe 'atom-language-rust-redux', ->
 				expectNext tokens,
 					'{',
 					'punctuation.brace.rust'
-		
+
 	describe 'when tokenizing the question mark operator thing', ->
 		beforeEach ->
 			reset()
-		
+
 		it 'should parse', ->
 			tokens = grammar.tokenizeLines('File::create("foo.txt")?')
 			expectNext tokens,
@@ -1234,7 +1264,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'?',
 				'keyword.operator.misc.question-mark.rust'
-			
+
 			reset()
 			tokens = grammar.tokenizeLines('File::create("foo.txt")?.write_all("test")?')
 			expectNext tokens,
@@ -1288,7 +1318,7 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'?',
 				'keyword.operator.misc.question-mark.rust'
-			
+
 			reset()
 			tokens = grammar.tokenizeLines('if test()? {}')
 			expectNext tokens,

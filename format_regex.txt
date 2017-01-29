@@ -1,0 +1,75 @@
+https://doc.rust-lang.org/std/fmt/#syntax
+https://doc.rust-lang.org/reference.html#identifiers
+http://oniguruma.rubyforge.org/oniguruma/files/Syntax_txt.html
+
+(?:
+	// argument
+	([0-9]+)								// 1	integer, argument
+	|
+	(\\p{Alpha}\\w*|_\\w+)					// 2	identifier, argument
+)?
+(?:
+	(\\:)									// 3	separator
+	
+	// format_spec
+	
+	// fill/align
+	(										// 4	punctuation
+		// fill
+		.?
+		// align
+		[<>\\^]
+	)?
+	
+	// sign
+	([\\+\\-])?								// 5	punctuation
+	
+	// '#'
+	(#)?									// 6	punctuation
+	
+	// 0
+	0?
+	
+	// width
+	/// count
+	(?:
+		// parameter
+		// argument
+		((?:								// 7	identifier, argument
+			([0-9]+)						// 8	integer, argument
+			|
+			\\p{Alpha}\\w*|_\\w+
+		)\\$)
+		|
+		// integer
+		([0-9]+)							// 9	integer
+	)?
+	
+	// '.' precision
+	(?:
+		\\.
+		// precision
+		(?:
+			// count
+			(?:
+				// parameter
+				/// argument
+				((?:						// 10	identifier, argument
+					([0-9]+)				// 11	integer, argument
+					|
+					\\p{Alpha}\\w*|_\\w+
+				)\\$)
+				|
+				/// integer
+				([0-9]+)					// 12	integer
+			)
+			|
+			\\*
+			|
+			(\\})							// 13	illegal
+		)
+	)?
+	
+	// type
+	(\\?|\\p{Alpha}\\w*|_\\w+)?				// 14	identifier (maybe special)
+)?

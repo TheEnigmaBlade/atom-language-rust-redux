@@ -373,3 +373,14 @@ warn!("{}", "text");
 info!("{}", "text");
 debug!("{}", "text");
 trace!("{}", "text");
+
+// Unused reserved words
+
+abstract fn do_thing();
+
+final let MAX = 10us;
+
+let i = 0;
+do {
+    yield do_thing(i++);
+} while(i < MAX);

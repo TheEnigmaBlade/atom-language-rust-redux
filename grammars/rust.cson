@@ -263,6 +263,12 @@ repository: {
     ]
   }
   
+  'format_named_arg': {
+    match: '(\\p{Alpha}\\w*|_\\w+)\\s*(?==)'
+    captures:
+      '1': { name: 'constant.variable.parameter.format.argument.rust' }
+  }
+  
   ## Numbers
   
   'floating_point_literal': {
@@ -436,13 +442,15 @@ repository: {
       # Format macro
       {
         begin: '\\b(?:((?:write|writeln|panic)!)|((?:format|format_args|print|println)!))'
-        end: '[,\\)\\]\\}]'
+        end: '[\\)\\]\\}]'
         beginCaptures: {
           '1': { name: 'support.function.macro.core.rust' }
           '2': { name: 'support.function.macro.std.rust' }
         }
         patterns: [
           { include: '#format_string_literal' }
+          { include: '#format_named_arg' }
+          { include: '$base' }
         ]
       }
       # Logging macro
@@ -453,12 +461,14 @@ repository: {
       {
         comment: 'Logging format macro'
         begin: '\\b((?:log|error|warn|info|debug|trace)!)'
-        end: '[,\\)\\]\\}]'
+        end: '[\\)\\]\\}]'
         beginCaptures: {
           '1': { name: 'support.function.macro.log.rust' }
         }
         patterns: [
           { include: '#format_string_literal' }
+          { include: '#format_named_arg' }
+          { include: '$base' }
         ]
       }
     ]

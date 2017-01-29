@@ -1,269 +1,261 @@
-'name': 'Rust'
-'scopeName': 'source.rust'
-'fileTypes': ['rs']
+name: 'Rust'
+scopeName: 'source.rust'
+fileTypes: ['rs']
 
-'repository': {
+repository: {
   
   # Comments
   
   'line_comment': {
-    'comment': 'Single-line comment'
-    'name': 'comment.line.rust'
-    'begin': '//'
-    'end': '$'
+    name: 'comment.line.rust'
+    begin: '//'
+    end: '$'
   }
   'line_doc_comment': {
-    'comment': 'Single-line documentation comment'
-    'name': 'comment.line.documentation.rust'
-    'begin': '//[!/](?=[^/])'
-    'end': '$'
-    'patterns': [
-      { 'include': '#markdown' }
+    name: 'comment.line.documentation.rust'
+    begin: '//[!/](?=[^/])'
+    end: '$'
+    patterns: [
+      { include: '#markdown' }
     ]
   }
   'block_comment': {
-    'comment': 'Block comment'
-    'name': 'comment.block.rust'
-    'begin': '/\\*'
-    'end': '\\*/'
-    'patterns': [
-      { 'include': '#block_comment' }
-      { 'include': '#block_doc_comment' }
+    name: 'comment.block.rust'
+    begin: '/\\*'
+    end: '\\*/'
+    patterns: [
+      { include: '#block_comment' }
+      { include: '#block_doc_comment' }
     ]
   }
   'block_doc_comment': {
-    'comment': 'Block documentation comment'
-    'name': 'comment.block.documentation.rust'
-    'begin': '(/\\*[\\*!](?![\\*/]))'
-    'end': '(\\*/)'
-    'beginCaptures': {
-      '1': { 'name': 'invalid.deprecated.rust' }
+    name: 'comment.block.documentation.rust'
+    begin: '(/\\*[\\*!](?![\\*/]))'
+    end: '(\\*/)'
+    beginCaptures: {
+      '1': { name: 'invalid.deprecated.rust' }
     }
-    'endCaptures': {
-      '1': { 'name': 'invalid.deprecated.rust' }
+    endCaptures: {
+      '1': { name: 'invalid.deprecated.rust' }
     }
-    'patterns': [
+    patterns: [
       {
-        'begin': '^\\s*(\\*)(?!/)'
-        'end': '$'
-        'beginCaptures': {
-          '1': { 'name': 'invalid.deprecated.rust' }
+        begin: '^\\s*(\\*)(?!/)'
+        end: '$'
+        beginCaptures: {
+          '1': { name: 'invalid.deprecated.rust' }
         }
-        'patterns': [
-          { 'include': '#block_comment' }
-          { 'include': '#block_doc_comment' }
-          { 'include': '#markdown' }
+        patterns: [
+          { include: '#block_comment' }
+          { include: '#block_doc_comment' }
+          { include: '#markdown' }
         ]
       }
-      { 'include': '#block_comment' }
-      { 'include': '#block_doc_comment' }
-      { 'include': '#markdown' }
+      { include: '#block_comment' }
+      { include: '#block_doc_comment' }
+      { include: '#markdown' }
     ]
   }
   
   'comments': {
-    'patterns': [
-      { 'include': '#block_doc_comment' }
-      { 'include': '#block_comment' }
-      { 'include': '#line_doc_comment' }
-      { 'include': '#line_comment' }
+    patterns: [
+      { include: '#block_doc_comment' }
+      { include: '#block_comment' }
+      { include: '#line_doc_comment' }
+      { include: '#line_comment' }
     ]
   }
   
   # Markdown for documentation comments
   
   'md_inline': {
-    'patterns': [
+    patterns: [
       {
-        'comment': 'Italic'
-        'begin': '\\*(?!\\*)'
-        'end': '\\*'
-        'name': 'markup.italic.documentation.rust'
-        'patterns': [
-          { 'include': '#md_inline' }
+        comment: 'Italic'
+        begin: '\\*(?!\\*)'
+        end: '\\*'
+        name: 'markup.italic.documentation.rust'
+        patterns: [
+          { include: '#md_inline' }
         ]
       }
       {
-        'comment': 'Italic'
-        'begin': '_(?!_)'
-        'end': '_'
-        'name': 'markup.italic.documentation.rust'
-        'patterns': [
-          { 'include': '#md_inline' }
+        comment: 'Italic'
+        begin: '_(?!_)'
+        end: '_'
+        name: 'markup.italic.documentation.rust'
+        patterns: [
+          { include: '#md_inline' }
         ]
       }
       {
-        'comment': 'Bold'
-        'begin': '\\*\\*'
-        'end': '\\*\\*'
-        'name': 'markup.bold.documentation.rust'
-        'patterns': [
-          { 'include': '#md_inline' }
+        comment: 'Bold'
+        begin: '\\*\\*'
+        end: '\\*\\*'
+        name: 'markup.bold.documentation.rust'
+        patterns: [
+          { include: '#md_inline' }
         ]
       }
       {
-        'comment': 'Underline'
-        'begin': '__'
-        'end': '__'
-        'name': 'markup.underline.documentation.rust'
-        'patterns': [
-          { 'include': '#md_inline' }
+        comment: 'Underline'
+        begin: '__'
+        end: '__'
+        name: 'markup.underline.documentation.rust'
+        patterns: [
+          { include: '#md_inline' }
         ]
       }
     ]
   }
   
   'markdown': {
-    'patterns': [
+    patterns: [
       {
-        'comment': 'Headers'
-        'begin': '(#{1,6})(#*)'
-        'end': '$'
-        'name': 'markup.heading.documentation.rust'
-        'captures': {
-          '1': { 'name': 'markup.heading.punctuation.definition.documentation.rust' }
-          '2': { 'name': 'markup.invalid.illegal.documentation.rust' }
+        comment: 'Headers'
+        begin: '(#{1,6})(#*)'
+        end: '$'
+        name: 'markup.heading.documentation.rust'
+        captures: {
+          '1': { name: 'markup.heading.punctuation.definition.documentation.rust' }
+          '2': { name: 'markup.invalid.illegal.documentation.rust' }
         }
-        'patterns': [
-          { 'include': 'md_inline' }
+        patterns: [
+          { include: 'md_inline' }
         ]
       }
       {
-        'comment': 'Links'
-        'match': '!?\\[.*?\\](?:\\(([^\\s\\)]+)(?:\\s+(["\'].*?["\']))?\\)|(\\(\\)))'
-        'name': 'markup.link.documentation.rust'
-        'captures': {
-          '1': { 'name': 'markup.link.entity.documentation.rust' }
-          '2': { 'name': 'markup.link.entity.documentation.rust' }
-          '3': { 'name': 'markup.invalid.illegal.documentation.rust' }
+        comment: 'Links'
+        match: '!?\\[.*?\\](?:\\(([^\\s\\)]+)(?:\\s+(["\'].*?["\']))?\\)|(\\(\\)))'
+        name: 'markup.link.documentation.rust'
+        captures: {
+          '1': { name: 'markup.link.entity.documentation.rust' }
+          '2': { name: 'markup.link.entity.documentation.rust' }
+          '3': { name: 'markup.invalid.illegal.documentation.rust' }
         }
       }
       {
-        'comment': 'Links'
-        'match': '(\\[.*?\\]\\:\\s*([^\\s\\)]+))'
-        'captures': {
-          '1': { 'name': 'markup.link.documentation.rust' }
-          '2': { 'name': 'markup.link.entity.documentation.rust' }
+        comment: 'Links'
+        match: '(\\[.*?\\]\\:\\s*([^\\s\\)]+))'
+        captures: {
+          '1': { name: 'markup.link.documentation.rust' }
+          '2': { name: 'markup.link.entity.documentation.rust' }
         }
       }
       {
-        'match': '`(?!`).*?`'
-        'name': 'markup.code.raw.inline.documentation.rust'
+        match: '`(?!`).*?`'
+        name: 'markup.code.raw.inline.documentation.rust'
       }
       {
-        'begin': '(```)(\\w*)'
-        'end': '//[/!]\\s*(```)'
-        'beginCaptures': {
-          '1': { 'name': 'markup.code.raw.block.documentation.rust' }
-          '2': { 'name': 'markup.bold.code.raw.block.name.documentation.rust' }
+        begin: '(```)(\\w*)'
+        end: '//[/!]\\s*(```)'
+        beginCaptures: {
+          '1': { name: 'markup.code.raw.block.documentation.rust' }
+          '2': { name: 'markup.bold.code.raw.block.name.documentation.rust' }
         }
-        'endCaptures': {
-          '1': { 'name': 'markup.code.raw.block.documentation.rust' }
+        endCaptures: {
+          '1': { name: 'markup.code.raw.block.documentation.rust' }
         }
-        'patterns': [
+        patterns: [
           {
-            'match': '//[/!]\\s*(?!```)'
-            #'name': 'comment.line.documentation.rust'
+            match: '//[/!]\\s*(?!```)'
+            #name: 'comment.line.documentation.rust'
           }
           {
-            'match': '(?<!```).+(?!```)'
-            'name': 'markup.code.raw.block.documentation.rust'
+            match: '(?<!```).+(?!```)'
+            name: 'markup.code.raw.block.documentation.rust'
           }
         ]
       }
-      { 'include': '#md_inline' }
+      { include: '#md_inline' }
     ]
   }
   
   # Literals
   
   'literals': {
-    'patterns': [
-      { 'include': '#string_literal' }
-      { 'include': '#raw_string_literal' }
-      { 'include': '#character_literal' }
-      { 'include': '#number_literal' }
-      { 'include': '#boolean_literal' }
+    patterns: [
+      { include: '#string_literal' }
+      { include: '#raw_string_literal' }
+      { include: '#character_literal' }
+      { include: '#number_literal' }
+      { include: '#boolean_literal' }
     ]
   }
   
   ## Strings
   
   'escaped_character': {
-    'name': 'constant.character.escape.rust'
-    'match': '\\\\(x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
+    name: 'constant.character.escape.rust'
+    match: '\\\\(x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
   }
   
   'string_literal': {
-    'comment': 'Double-quote string literal'
-    'name': 'string.quoted.double.rust'
-    'begin': 'b?"'
-    'end': '"'
-    'patterns': [
-      { 'include': '#escaped_character' }
+    name: 'string.quoted.double.rust'
+    begin: 'b?"'
+    end: '"'
+    patterns: [
+      { include: '#escaped_character' }
     ]
   }
   
   'raw_string_literal': {
-    'comment': 'Raw double-quote string literal'
-    'name': 'string.quoted.double.raw.rust'
-    'begin': '(?:b?r|(rb))(#*)"'
-    'end': '"\\2(#*)'
-    'beginCaptures': {
-      '1': { 'name': 'invalid.illegal.rust' }
+    name: 'string.quoted.double.raw.rust'
+    begin: '(?:b?r|(rb))(#*)"'
+    end: '"\\2(#*)'
+    beginCaptures: {
+      '1': { name: 'invalid.illegal.rust' }
     }
-    'endCaptures': {
-      '1': { 'name': 'invalid.illegal.rust' }
+    endCaptures: {
+      '1': { name: 'invalid.illegal.rust' }
     }
   }
   
   'character_literal': {
-    'comment': 'Character literal'
-    'name': 'string.quoted.single.rust'
-    'match': '(b?\')(?:[^\'\\\\]|\\\\(?:x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.))([^\']*)(\')'
-    'captures': {
-      '1': { 'name': '' }
-      '2': { 'name': 'invalid.illegal.rust' }
-      '3': { 'name': '' }
+    name: 'string.quoted.single.rust'
+    match: '(b?\')(?:[^\'\\\\]|\\\\(?:x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.))([^\']*)(\')'
+    captures: {
+      '1': { name: '' }
+      '2': { name: 'invalid.illegal.rust' }
+      '3': { name: '' }
     }
   }
   
   ## Format strings
   
   'format_string_literal': {
-    'comment': 'Format string literal'
-    'name': 'string.quoted.double.format.rust'
-    'begin': '"'
-    'end': '"'
-    'patterns': [
-      { 'include': '#escaped_character' }
+    name: 'string.quoted.double.format.rust'
+    begin: '"'
+    end: '"'
+    patterns: [
+      { include: '#escaped_character' }
       {
-        'name': 'constant.character.escape.rust'
-        'match': '{{|}}'
+        name: 'constant.character.escape.rust'
+        match: '{{|}}'
       }
       {
-        'comment': 'Format string thing'
-        'name': 'punctuation.section.embedded.meta.tag.format.rust'
-        'begin': "{"
-        'end': "}"
-        'patterns': [
+        comment: 'Format string thing'
+        name: 'punctuation.section.embedded.meta.tag.format.rust'
+        begin: "{"
+        end: "}"
+        patterns: [
           {
             # I hope you like regular expressions
-            'match': '(?:([0-9]+)|(\\p{Alpha}\\w*|_\\w+))?(?:(\\:)(.?[<>\\^])?([\\+\\-])?(#)?0?(?:((?:([0-9]+)|\\p{Alpha}\\w*|_\\w+)\\$)|([0-9]+))?(?:\\.(?:(?:((?:([0-9]+)|\\p{Alpha}\\w*|_\\w+)\\$)|([0-9]+))|\\*))?(\\?|\\p{Alpha}\\w*|_\\w+)?)?'
-            'captures': {
-              '1': { 'name': 'constant.numeric.integer.format.argument.rust' }
-              '2': { 'name': 'constant.variable.parameter.format.argument.rust' }
-              '3': { 'name': 'meta.separator.format.rust' }
-              '4': { 'name': 'punctuation.parameters.format.fill.rust' }
-              '5': { 'name': 'punctuation.separator.format.sign.rust' }
-              '6': { 'name': 'punctuation.separator.format.alt.rust' }
-              '7': { 'name': 'constant.variable.format.width.argument.rust' }
-              '8': { 'name': 'constant.numeric.integer.format.width.argument.rust' }
-              '9': { 'name': 'constant.numeric.integer.format.width.rust' }
-              '10': { 'name': 'constant.variable.format.precision.argument.rust' }
-              '11': { 'name': 'constant.numeric.integer.format.precision.argument.rust' }
-              '12': { 'name': 'constant.numeric.integer.format.precision.rust' }
-              '13': { 'name': 'support.type.format.type.rust' }
+            match: '(?:([0-9]+)|(\\p{Alpha}\\w*|_\\w+))?(?:(\\:)(.?[<>\\^])?([\\+\\-])?(#)?0?(?:((?:([0-9]+)|\\p{Alpha}\\w*|_\\w+)\\$)|([0-9]+))?(?:\\.(?:(?:((?:([0-9]+)|\\p{Alpha}\\w*|_\\w+)\\$)|([0-9]+))|\\*))?(\\?|\\p{Alpha}\\w*|_\\w+)?)?'
+            captures: {
+              '1': { name: 'constant.numeric.integer.format.argument.rust' }
+              '2': { name: 'constant.variable.parameter.format.argument.rust' }
+              '3': { name: 'meta.separator.format.rust' }
+              '4': { name: 'punctuation.parameters.format.fill.rust' }
+              '5': { name: 'punctuation.separator.format.sign.rust' }
+              '6': { name: 'punctuation.separator.format.alt.rust' }
+              '7': { name: 'constant.variable.format.width.argument.rust' }
+              '8': { name: 'constant.numeric.integer.format.width.argument.rust' }
+              '9': { name: 'constant.numeric.integer.format.width.rust' }
+              '10': { name: 'constant.variable.format.precision.argument.rust' }
+              '11': { name: 'constant.numeric.integer.format.precision.argument.rust' }
+              '12': { name: 'constant.numeric.integer.format.precision.rust' }
+              '13': { name: 'support.type.format.type.rust' }
             }
           }
         ]
@@ -274,75 +266,74 @@
   ## Numbers
   
   'floating_point_literal': {
-    'patterns': [
+    patterns: [
       {
-        'comment': 'Floating point literal (basic)'
-        'name': 'constant.numeric.float.rust'
-        'match': '\\b([0-9][0-9_]*\\.[0-9][0-9_]*)\\b'
+        comment: 'Floating point literal (basic)'
+        name: 'constant.numeric.float.rust'
+        match: '\\b([0-9][0-9_]*\\.[0-9][0-9_]*)\\b'
       }
       {
-        'comment': 'Floating point literal (typed)'
-        'name': 'constant.numeric.float.rust'
-        'match': '\\b([0-9][0-9_]*(?:\\.[0-9][0-9_]*)?)(f32|f64)\\b'
+        comment: 'Floating point literal (typed)'
+        name: 'constant.numeric.float.rust'
+        match: '\\b([0-9][0-9_]*(?:\\.[0-9][0-9_]*)?)(f32|f64)\\b'
       }
       {
-        'comment': 'Floating point literal (exponent)'
-        'name': 'constant.numeric.float.rust'
-        'match': '\\b([0-9][0-9_]*(?:\\.[0-9][0-9_]*)?[eE][+-]?[0-9_]+)(f32|f64)?\\b'
+        comment: 'Floating point literal (exponent)'
+        name: 'constant.numeric.float.rust'
+        match: '\\b([0-9][0-9_]*(?:\\.[0-9][0-9_]*)?[eE][+-]?[0-9_]+)(f32|f64)?\\b'
       }
     ]
   }
   
   'integer_literal': {
-    'patterns': [
+    patterns: [
       {
-        'comment': 'Integer literal (decimal)'
-        'name': 'constant.numeric.integer.decimal.rust'
-        'match': '\\b([0-9][0-9_]*)(?:([ui](?:8|16|32|64|128|size))|(int|uint|is|us))?\\b'
-        'captures': {
-          '3': { 'name': 'invalid.illegal.rust' }
+        comment: 'Integer literal (decimal)'
+        name: 'constant.numeric.integer.decimal.rust'
+        match: '\\b([0-9][0-9_]*)(?:([ui](?:8|16|32|64|128|size))|(int|uint|is|us))?\\b'
+        captures: {
+          '3': { name: 'invalid.illegal.rust' }
         }
       }
       {
-        'comment': 'Integer literal (hexadecimal)'
-        'name': 'constant.numeric.integer.hexadecimal.rust'
-        'match': '\\b(0x[a-fA-F0-9_]+)(?:([ui](?:8|16|32|64|128|size))|(int|uint|is|us))?\\b'
-        'captures': {
-          '3': { 'name': 'invalid.illegal.rust' }
+        comment: 'Integer literal (hexadecimal)'
+        name: 'constant.numeric.integer.hexadecimal.rust'
+        match: '\\b(0x[a-fA-F0-9_]+)(?:([ui](?:8|16|32|64|128|size))|(int|uint|is|us))?\\b'
+        captures: {
+          '3': { name: 'invalid.illegal.rust' }
         }
       }
       {
-        'comment': 'Integer literal (octal)'
-        'name': 'constant.numeric.integer.octal.rust'
-        'match': '\\b(0o[0-7_]+)(?:([ui](?:8|16|32|64|128|size))|(int|uint|is|us))?\\b'
-        'captures': {
-          '3': { 'name': 'invalid.illegal.rust' }
+        comment: 'Integer literal (octal)'
+        name: 'constant.numeric.integer.octal.rust'
+        match: '\\b(0o[0-7_]+)(?:([ui](?:8|16|32|64|128|size))|(int|uint|is|us))?\\b'
+        captures: {
+          '3': { name: 'invalid.illegal.rust' }
         }
       }
       {
-        'comment': 'Integer literal (binary)'
-        'name': 'constant.numeric.integer.binary.rust'
-        'match': '\\b(0b[01_]+)(?:([ui](?:8|16|32|64|128|size))|(int|uint|is|us))?\\b'
-        'captures': {
-          '3': { 'name': 'invalid.illegal.rust' }
+        comment: 'Integer literal (binary)'
+        name: 'constant.numeric.integer.binary.rust'
+        match: '\\b(0b[01_]+)(?:([ui](?:8|16|32|64|128|size))|(int|uint|is|us))?\\b'
+        captures: {
+          '3': { name: 'invalid.illegal.rust' }
         }
       }
     ]
   }
   
   'number_literal': {
-    'patterns': [
-      { 'include': '#floating_point_literal' }
-      { 'include': '#integer_literal' }
+    patterns: [
+      { include: '#floating_point_literal' }
+      { include: '#integer_literal' }
     ]
   }
   
   ## Other
   
   'boolean_literal': {
-    'comment': 'Boolean constant'
-    'name': 'constant.language.boolean.rust'
-    'match': '\\b(true|false)\\b'
+    name: 'constant.language.boolean.rust'
+    match: '\\b(true|false)\\b'
   }
   
   # Keywords
@@ -350,31 +341,31 @@
   ## Modifiers
   
   'modifiers': {
-    'patterns': [
+    patterns: [
       {
-        'comment': 'Mutable storage modifier'
-        'name': 'storage.modifier.mut.rust'
-        'match': '\\bmut\\b'
+        comment: 'Mutable storage modifier'
+        name: 'storage.modifier.mut.rust'
+        match: '\\bmut\\b'
       }
       {
-        'comment': 'Visibility modifier'
-        'name': 'storage.modifier.visibility.rust'
-        'match': '\\bpub\\b'
+        comment: 'Visibility modifier'
+        name: 'storage.modifier.visibility.rust'
+        match: '\\bpub\\b'
       }
       {
-        'comment': 'Const storage modifier'
-        'name': 'storage.modifier.const.rust'
-        'match': '\\bconst\\b'
+        comment: 'Const storage modifier'
+        name: 'storage.modifier.const.rust'
+        match: '\\bconst\\b'
       }
       {
-        'comment': 'Static storage modifier'
-        'name': 'storage.modifier.static.rust'
-        'match': '\\bstatic\\b'
+        comment: 'Static storage modifier'
+        name: 'storage.modifier.static.rust'
+        match: '\\bstatic\\b'
       }
       {
-        'comment': 'Unsafe code keyword'
-        'name': 'keyword.other.unsafe.rust'
-        'match': '\\bunsafe\\b'
+        comment: 'Unsafe code keyword'
+        name: 'keyword.other.unsafe.rust'
+        match: '\\bunsafe\\b'
       }
     ]
   }
@@ -382,16 +373,16 @@
   ## Types
   
   'types': {
-    'patterns': [
+    patterns: [
       {
-        'comment': 'Built-in/core type'
-        'name': 'storage.type.core.rust'
-        'match': '\\b(bool|char|usize|isize|[ui](?:8|16|32|64|128)|f(?:32|64)|str|String|Self|Option|Result)\\b'
+        comment: 'Built-in/core type'
+        name: 'storage.type.core.rust'
+        match: '\\b(bool|char|usize|isize|[ui](?:8|16|32|64|128)|f(?:32|64)|str|String|Self|Option|Result)\\b'
       }
       {
-        'comment': 'Standard library type'
-        'name': 'storage.class.std.rust'
-        'match': '\\b(Path|PathBuf|Arc|Weak|Box|Rc|Vec|VecDeque|LinkedList|HashMap|BTreeMap|HashSet|BTreeSet|BinaryHeap)\\b'
+        comment: 'Standard library type'
+        name: 'storage.class.std.rust'
+        match: '\\b(Path|PathBuf|Arc|Weak|Box|Rc|Vec|VecDeque|LinkedList|HashMap|BTreeMap|HashSet|BTreeSet|BinaryHeap)\\b'
       }
     ]
   }
@@ -399,26 +390,26 @@
   ## Traits
   
   'traits': {
-    'patterns': [
+    patterns: [
       {
-        'comment': 'Core trait'
-        'name': 'support.type.core.rust'
-        'match': '\\b(Any|FixedSizeArray|Borrow|BorrowMut|Clone|Eq|Ord|PartialEq|PartialOrd|AsMut|AsRef|From|Into|TryFrom|TryInfo|Default|Debug|Display|Write|Binary|LowerExp|LowerHex|Octal|Pointer|UpperExp|UpperHex|BuildHasher|Hash|Hasher|DoubleEndedIterator|ExactSizeIterator|Extend|FromIterator|IntoIterator|Iterator|Product|Step|Sum|Zeroable|One|Zero|SliceExt|FromStr)\\b'
+        comment: 'Core trait'
+        name: 'support.type.core.rust'
+        match: '\\b(Any|FixedSizeArray|Borrow|BorrowMut|Clone|Eq|Ord|PartialEq|PartialOrd|AsMut|AsRef|From|Into|TryFrom|TryInfo|Default|Debug|Display|Write|Binary|LowerExp|LowerHex|Octal|Pointer|UpperExp|UpperHex|BuildHasher|Hash|Hasher|DoubleEndedIterator|ExactSizeIterator|Extend|FromIterator|IntoIterator|Iterator|Product|Step|Sum|Zeroable|One|Zero|SliceExt|FromStr)\\b'
       }
       {
-        'comment': 'Core trait (marker)'
-        'name': 'support.type.marker.rust'
-        'match': '\\b(Copy|Send|Sized|Sync|Reflect|Unsize)\\b'
+        comment: 'Core trait (marker)'
+        name: 'support.type.marker.rust'
+        match: '\\b(Copy|Send|Sized|Sync|Reflect|Unsize)\\b'
       }
       {
-        'comment': 'Core trait (ops)'
-        'name': 'support.type.marker.rust'
-        'match': '\\b(Add|AddAssign|BitAnd|BitAndAssign|BitOr|BitOrAssign|BitXor|BitXorAssign|Deref|DerefMut|Div|DivAssign|Drop|Fn|FnMut|FnOnce|Index|IndexMut|Mul|MulAssign|Neg|Not|Rem|RemAssign|Shl|ShlAssign|Shr|ShrAssign|Sub|SubAssign|BoxPlace|Boxed|CoerceUnsized|InPlace|Place|Placer)\\b'
+        comment: 'Core trait (ops)'
+        name: 'support.type.marker.rust'
+        match: '\\b(Add|AddAssign|BitAnd|BitAndAssign|BitOr|BitOrAssign|BitXor|BitXorAssign|Deref|DerefMut|Div|DivAssign|Drop|Fn|FnMut|FnOnce|Index|IndexMut|Mul|MulAssign|Neg|Not|Rem|RemAssign|Shl|ShlAssign|Shr|ShrAssign|Sub|SubAssign|BoxPlace|Boxed|CoerceUnsized|InPlace|Place|Placer)\\b'
       }
       {
-        'comment': 'Standard library trait'
-        'name': 'support.type.std.rust'
-        'match': '\\b(FnBox|ToOwned|ToString)\\b'
+        comment: 'Standard library trait'
+        name: 'support.type.std.rust'
+        match: '\\b(FnBox|ToOwned|ToString)\\b'
       }
     ]
   }
@@ -426,48 +417,48 @@
   ## Macros
   
   'macros': {
-    'patterns': [
+    patterns: [
+      # Built-in macro
       {
-        'comment': 'Built-in macro'
-        'name': 'support.function.macro.builtin.rust'
-        'match': '\\b(macro_rules|log_syntax|asm|trace_macros)!'
+        name: 'support.function.macro.builtin.rust'
+        match: '\\b(macro_rules|log_syntax|asm|trace_macros)!'
       }
+      # Core macro
       {
-        'comment': 'Core macro'
-        'name': 'support.function.macro.core.rust'
-        'match': '\\b(assert|assert_eq|debug_assert|debug_assert_eq|try|unimplemented|unreachable)!'
+        name: 'support.function.macro.core.rust'
+        match: '\\b(assert|assert_eq|debug_assert|debug_assert_eq|try|unimplemented|unreachable)!'
       }
+      # Standard library macro
       {
-        'comment': 'Standard library macro'
-        'name': 'support.function.macro.std.rust'
-        'match': '\\b(cfg|column|concat|env|file|include|include_bytes|include_str|line|module_path|option_env|stringify|thread_local|concat_idents|select|vec)!'
+        name: 'support.function.macro.std.rust'
+        match: '\\b(cfg|column|concat|env|file|include|include_bytes|include_str|line|module_path|option_env|stringify|thread_local|concat_idents|select|vec)!'
       }
+      # Format macro
       {
-        'comment': 'Format macro'
-        'begin': '\\b(?:((?:write|writeln|panic)!)|((?:format|format_args|print|println)!))'
-        'end': '[,\\)\\]\\}]'
-        'beginCaptures': {
-          '1': { 'name': 'support.function.macro.core.rust' }
-          '2': { 'name': 'support.function.macro.std.rust' }
+        begin: '\\b(?:((?:write|writeln|panic)!)|((?:format|format_args|print|println)!))'
+        end: '[,\\)\\]\\}]'
+        beginCaptures: {
+          '1': { name: 'support.function.macro.core.rust' }
+          '2': { name: 'support.function.macro.std.rust' }
         }
-        'patterns': [
-          { 'include': '#format_string_literal' }
+        patterns: [
+          { include: '#format_string_literal' }
         ]
       }
+      # Logging macro
       {
-        'comment': 'Logging macro'
-        'name': 'support.function.log.rust'
-        'match': '\\b(log_enabled)!'
+        name: 'support.function.log.rust'
+        match: '\\b(log_enabled)!'
       }
       {
-        'comment': 'Logging format macro'
-        'begin': '\\b((?:log|error|warn|info|debug|trace)!)'
-        'end': '[,\\)\\]\\}]'
-        'beginCaptures': {
-          '1': { 'name': 'support.function.macro.log.rust' }
+        comment: 'Logging format macro'
+        begin: '\\b((?:log|error|warn|info|debug|trace)!)'
+        end: '[,\\)\\]\\}]'
+        beginCaptures: {
+          '1': { name: 'support.function.macro.log.rust' }
         }
-        'patterns': [
-          { 'include': '#format_string_literal' }
+        patterns: [
+          { include: '#format_string_literal' }
         ]
       }
     ]
@@ -476,73 +467,73 @@
   ## Special variables
   
   'special_enums': {
-    'patterns': [
+    patterns: [
       {
-        'comment': 'Enum'
-        'name': 'support.constant.core.rust'
-        'match': '\\b(Some|None|Ok|Err)\\b'
+        comment: 'Enum'
+        name: 'support.constant.core.rust'
+        match: '\\b(Some|None|Ok|Err)\\b'
       }
     ]
   }
   
   'self': {
-    'comment': 'Self variable'
-    'name': 'variable.language.self.rust'
-    'match': '\\bself\\b'
+    comment: 'Self variable'
+    name: 'variable.language.self.rust'
+    match: '\\bself\\b'
   }
   
   'special_variables': {
-    'patterns': [
-      { 'include': '#special_enums' }
-      { 'include': '#self' }
+    patterns: [
+      { include: '#special_enums' }
+      { include: '#self' }
     ]
   }
   
   # Operators
   
   'structure_operators': {
-    'comment': 'Miscellaneous operator'
-    'name': 'keyword.operator.misc.rust'
-    'match': '->|=>|::|:'
+    comment: 'Miscellaneous operator'
+    name: 'keyword.operator.misc.rust'
+    match: '->|=>|::|:'
   }
   
   'operators': {
-    'patterns': [
-      { 'include': '#structure_operators' }
+    patterns: [
+      { include: '#structure_operators' }
       {
-        'comment': 'Comparison operator'
-        'name': 'keyword.operator.comparison.rust'
-        'match': '&&|\\|\\||==|!='
+        comment: 'Comparison operator'
+        name: 'keyword.operator.comparison.rust'
+        match: '&&|\\|\\||==|!='
       }
       {
-        'comment': 'Assignment operator'
-        'name': 'keyword.operator.assignment.rust'
-        'match': '\\+=|-=|/=|\\*=|%=|\\^=|&=|\\|=|<<=|>>=|='
+        comment: 'Assignment operator'
+        name: 'keyword.operator.assignment.rust'
+        match: '\\+=|-=|/=|\\*=|%=|\\^=|&=|\\|=|<<=|>>=|='
       }
       {
-        'comment': 'Arithmetic operator'
-        'name': 'keyword.operator.arithmetic.rust'
-        'match': '!|\\+(?!\\+)|-(?!-)|/|\\*|%|\\^|&|\\||<<|>>'
+        comment: 'Arithmetic operator'
+        name: 'keyword.operator.arithmetic.rust'
+        match: '!|\\+(?!\\+)|-(?!-)|/|\\*|%|\\^|&|\\||<<|>>'
       }
       {
-        'comment': 'Comparison operator (second group because of regex precedence)'
-        'name': 'keyword.operator.comparison.rust'
-        'match': '<=|>=|<|>'
+        comment: 'Comparison operator (second group because of regex precedence)'
+        name: 'keyword.operator.comparison.rust'
+        match: '<=|>=|<|>'
       }
       {
-        'comment': 'Common non-existant operators'
-        'name': 'invalid.illegal.rust'
-        'match': '\\+\\+|--'
+        comment: 'Common non-existant operators'
+        name: 'invalid.illegal.rust'
+        match: '\\+\\+|--'
       }
       {
-        'comment': 'Box pattern'
-        'name': 'storage.modifier.box.rust'
-        'match': '\\bbox\\b'
+        comment: 'Box pattern'
+        name: 'storage.modifier.box.rust'
+        match: '\\bbox\\b'
       }
       {
-        'comment': '? operator (v1.13 onwards)'
-        'name': 'keyword.operator.misc.question-mark.rust'
-        'match': '\\?'
+        comment: '? operator (v1.13 onwards)'
+        name: 'keyword.operator.misc.question-mark.rust'
+        match: '\\?'
       }
     ]
   }
@@ -550,131 +541,131 @@
   # Punctuation
   
   'punctuation_braces': {
-    'comment': '{ and }'
-    'name': 'punctuation.brace.rust'
-    'match': '[\\{\\}]'
+    comment: '{ and }'
+    name: 'punctuation.brace.rust'
+    match: '[\\{\\}]'
   }
   
   'punctuation_brackets': {
-    'comment': '[ and ]'
-    'name': 'punctuation.bracket.rust'
-    'match': '[\\[\\]]'
+    comment: '[ and ]'
+    name: 'punctuation.bracket.rust'
+    match: '[\\[\\]]'
   }
   
   'punctuation_parentheses': {
-    'comment': '( and )'
-    'name': 'punctuation.parenthesis.rust'
-    'match': '[\\(\\)]'
+    comment: '( and )'
+    name: 'punctuation.parenthesis.rust'
+    match: '[\\(\\)]'
   }
   
   'punctuation': {
-    'patterns': [
-      { 'include': '#punctuation_braces' }
-      { 'include': '#punctuation_brackets' }
-      { 'include': '#punctuation_parentheses' }
+    patterns: [
+      { include: '#punctuation_braces' }
+      { include: '#punctuation_brackets' }
+      { include: '#punctuation_parentheses' }
     ]
   }
   
   # Grammar structures
   
   'sigils': {
-    'comment': 'Sigil'
-    'name': 'keyword.operator.sigil.rust'
-    'match': '[&*](?=[\\w\\(\\[\\|\\"]+)'
+    comment: 'Sigil'
+    name: 'keyword.operator.sigil.rust'
+    match: '[&*](?=[\\w\\(\\[\\|\\"]+)'
   }
   
   'where': {
-    'comment': 'Generic where clause'
-    'begin': '\\b(where)\\b'
-    'end': '(?=\\{)'
-    'beginCaptures': {
-      '1': { 'name': 'keyword.other.where.rust' }
+    comment: 'Generic where clause'
+    begin: '\\b(where)\\b'
+    end: '(?=\\{)'
+    beginCaptures: {
+      '1': { name: 'keyword.other.where.rust' }
     }
-    'patterns': [
-      { 'include': '#comments' }
-      { 'include': '#structure_operators' }
-      { 'include': '#types' }
-      { 'include': '#traits' }
-      { 'include': '#type_params' }
-      { 'include': '#lifetime' }
+    patterns: [
+      { include: '#comments' }
+      { include: '#structure_operators' }
+      { include: '#types' }
+      { include: '#traits' }
+      { include: '#type_params' }
+      { include: '#lifetime' }
     ]
   }
   
   'type_params': {
-    'comment': 'Type parameters'
-    'name': 'meta.type_params.rust'
-    'begin': '<(?![=<])'
-    'end': '>'
-    'patterns': [
-      { 'include': '#comments' }
+    comment: 'Type parameters'
+    name: 'meta.type_params.rust'
+    begin: '<(?![=<])'
+    end: '>'
+    patterns: [
+      { include: '#comments' }
       {
-        'match': '\\b\\s*(=)\\s*\\b'
-        'captures':
-          '1': { 'name': 'keyword.operator.type_params.rust' }
+        match: '\\b\\s*(=)\\s*\\b'
+        captures:
+          '1': { name: 'keyword.operator.type_params.rust' }
       }
-      { 'include': '#sigils' }
-      { 'include': '#modifiers' }
-      { 'include': '#lifetime' }
-      { 'include': '#types' }
-      { 'include': '#traits' }
-      { 'include': '#type_params' }
+      { include: '#sigils' }
+      { include: '#modifiers' }
+      { include: '#lifetime' }
+      { include: '#types' }
+      { include: '#traits' }
+      { include: '#type_params' }
     ]
   }
   
   'lifetime': {
-    'comment': 'Named lifetime'
-    'name': 'storage.modifier.lifetime.rust'
-    'match': '\'([\\p{Alpha}_][\\w]*)\\b'
-    'captures': {
-      '1': { 'name': 'entity.name.lifetime.rust' }
+    comment: 'Named lifetime'
+    name: 'storage.modifier.lifetime.rust'
+    match: '\'([\\p{Alpha}_][\\w]*)\\b'
+    captures: {
+      '1': { name: 'entity.name.lifetime.rust' }
     }
   }
   
   'ref_lifetime': {
-    'comment': 'Reference with named lifetime'
-    'match': '&(\'([\\p{Alpha}_][\\w]*))\\b'
-    'captures': {
-      '1': { 'name': 'storage.modifier.lifetime.rust' }
-      '2': { 'name': 'entity.name.lifetime.rust' }
+    comment: 'Reference with named lifetime'
+    match: '&(\'([\\p{Alpha}_][\\w]*))\\b'
+    captures: {
+      '1': { name: 'storage.modifier.lifetime.rust' }
+      '2': { name: 'entity.name.lifetime.rust' }
     }
   }
   
   'implementation': {
-    'comment': 'Implementation'
-    'begin': '\\b(impl)\\b'
-    'end': '(?=[\\{])'
-    'beginCaptures': {
-      '1': { 'name': 'storage.type.impl.rust' }
+    comment: 'Implementation'
+    begin: '\\b(impl)\\b'
+    end: '(?=[\\{])'
+    beginCaptures: {
+      '1': { name: 'storage.type.impl.rust' }
     }
-    'patterns': [
-      { 'include': '#comments' }
-      { 'include': '#type_params' }
-      { 'include': '#traits' }
+    patterns: [
+      { include: '#comments' }
+      { include: '#type_params' }
+      { include: '#traits' }
       {
-        'comment': 'Trait name (or skip if for is next)'
-        'begin': '([\\p{Alpha}_][\\w]*)|(?=\\s*for)'
-        'end': '(?=[\\{])'
-        'beginCaptures': {
-          '1': { 'name': 'entity.name.type.rust' }
+        comment: 'Trait name (or skip if for is next)'
+        begin: '([\\p{Alpha}_][\\w]*)|(?=\\s*for)'
+        end: '(?=[\\{])'
+        beginCaptures: {
+          '1': { name: 'entity.name.type.rust' }
         }
-        'patterns': [
-          { 'include': '#comments' }
-          { 'include': '#types' }
-          { 'include': '#traits' }
-          { 'include': '#lifetime' }
-          { 'include': '#type_params' }
-          { 'include': '#where' }
+        patterns: [
+          { include: '#comments' }
+          { include: '#types' }
+          { include: '#traits' }
+          { include: '#lifetime' }
+          { include: '#type_params' }
+          { include: '#where' }
           {
-            'begin': '\\b(for)\\b'
-            'end': '(?<=\\w)(?<!\\sfor)'
-            'beginCaptures': {
-              '1': { 'name': 'keyword.other.for.rust' }
+            begin: '\\b(for)\\b'
+            end: '(?<=\\w)(?<!\\sfor)'
+            beginCaptures: {
+              '1': { name: 'keyword.other.for.rust' }
             }
-            'patterns': [
-              { 'include': '#comments' }
+            patterns: [
+              { include: '#comments' }
               {
-                'match': '[\\p{Alpha}_][\\w]*'
-                'name': ''#'entity.name.type.rust'
+                match: '[\\p{Alpha}_][\\w]*'
+                name: ''#'entity.name.type.rust'
               }
             ]
           }
@@ -683,102 +674,103 @@
     ]
   }
 }
-'patterns': [
+
+patterns: [
   # Comments
-  { 'include': '#comments' }
+  { include: '#comments' }
   
   # Attributes
   {
-    'comment': 'Attribute'
-    'name': 'meta.attribute.rust'
-    'begin': '#\\!?\\['
-    'end': '\\]'
-    'patterns': [
-      { 'include': '#string_literal' }
+    comment: 'Attribute'
+    name: 'meta.attribute.rust'
+    begin: '#\\!?\\['
+    end: '\\]'
+    patterns: [
+      { include: '#string_literal' }
     ]
   }
   
   # Literals
-  { 'include': '#literals' }
+  { include: '#literals' }
   
   # Language
   {
-    'comment': 'Control keyword'
-    'name': 'keyword.control.rust'
-    'match': '\\b(break|continue|else|if|in|for|loop|match|return|while)\\b'
+    comment: 'Control keyword'
+    name: 'keyword.control.rust'
+    match: '\\b(break|continue|else|if|in|for|loop|match|return|while)\\b'
   }
   {
-    'comment': 'Keyword'
-    'name': 'keyword.other.rust'
-    'match': '\\b(crate|extern|mod|let|ref|use|super|as|move)\\b'
+    comment: 'Keyword'
+    name: 'keyword.other.rust'
+    match: '\\b(crate|extern|mod|let|ref|use|super|as|move)\\b'
   }
   {
-    'comment': 'Unused reserved keyword'
-    'name': 'invalid.illegal.rust'
-    'match': '\\b(abstract|alignof|become|do|final|macro|offsetof|override|priv|proc|pure|sizeof|typeof|virtual|yield)\\b'
+    comment: 'Unused reserved keyword'
+    name: 'invalid.illegal.rust'
+    match: '\\b(abstract|alignof|become|do|final|macro|offsetof|override|priv|proc|pure|sizeof|typeof|virtual|yield)\\b'
   }
-  { 'include': '#sigils' }
-  { 'include': '#modifiers' }
-  { 'include': '#lifetime' }
-  { 'include': '#ref_lifetime' }
+  { include: '#sigils' }
+  { include: '#modifiers' }
+  { include: '#lifetime' }
+  { include: '#ref_lifetime' }
   
   # Operators
-  { 'include': '#operators' }
-  { 'include': '#punctuation' }
+  { include: '#operators' }
+  { include: '#punctuation' }
   
   # Standard types and traits
-  { 'include': '#types' }
-  { 'include': '#special_variables' }
-  { 'include': '#traits' }
-  { 'include': '#macros' }
+  { include: '#types' }
+  { include: '#special_variables' }
+  { include: '#traits' }
+  { include: '#macros' }
   
   # Function and macro calls
   {
-    'comment': 'Macro invocation'
-    'match': '\\b([\\p{Alpha}_][\\w]*\\!)'
-    'captures': {
-      '1': { 'name': 'entity.name.function.macro.rust' }
+    comment: 'Macro invocation'
+    match: '\\b([\\p{Alpha}_][\\w]*\\!)'
+    captures: {
+      '1': { name: 'entity.name.function.macro.rust' }
     }
   }
   {
-    'comment': 'Function call'
-    'match': '\\b([\\p{Alpha}_][\\w]*)\\s*(?=\\()'
-    'captures': {
-      '1': { 'name': 'entity.name.function.rust' }
+    comment: 'Function call'
+    match: '\\b([\\p{Alpha}_][\\w]*)\\s*(?=\\()'
+    captures: {
+      '1': { name: 'entity.name.function.rust' }
     }
   }
   
   # Function definition
   {
-    'comment': 'Function definition'
-    'begin': '\\b(fn)\\b'
-    'end': '(?=[\\{;])'
-    'beginCaptures': {
-      '1': { 'name': 'keyword.other.fn.rust' }
+    comment: 'Function definition'
+    begin: '\\b(fn)\\b'
+    end: '(?=[\\{;])'
+    beginCaptures: {
+      '1': { name: 'keyword.other.fn.rust' }
     }
-    'patterns': [
-      { 'include': '#comments' }
+    patterns: [
+      { include: '#comments' }
       {
-        'begin': '([\\p{Alpha}_][\\w]*)'
-        'end': '(?=[\\{;])'
-        'beginCaptures': {
-          '1': { 'name': 'entity.name.function.rust' }
+        begin: '([\\p{Alpha}_][\\w]*)'
+        end: '(?=[\\{;])'
+        beginCaptures: {
+          '1': { name: 'entity.name.function.rust' }
         }
-        'patterns': [
-          { 'include': '#comments' }
-          { 'include': '#structure_operators' }
-          { 'include': '#special_variables' }
-          { 'include': '#sigils' }
-          { 'include': '#modifiers' }
-          { 'include': '#ref_lifetime' }
-          { 'include': '#types' }
-          { 'include': '#traits' }
-          { 'include': '#type_params' }
-          { 'include': '#where' }
+        patterns: [
+          { include: '#comments' }
+          { include: '#structure_operators' }
+          { include: '#special_variables' }
+          { include: '#sigils' }
+          { include: '#modifiers' }
+          { include: '#ref_lifetime' }
+          { include: '#types' }
+          { include: '#traits' }
+          { include: '#type_params' }
+          { include: '#where' }
           {
-            'comment': 'Function arguments'
-            'match': 'fn'
-            'name': 'keyword.other.fn.rust'
+            comment: 'Function arguments'
+            match: 'fn'
+            name: 'keyword.other.fn.rust'
           }
         ]
       }
@@ -787,30 +779,30 @@
   
   # Type declaration
   {
-    'comment': 'Type declaration'
-    'begin': '\\b(enum|struct|trait)\\b'
-    'end': '(?=[\\{\\(;])'
-    'beginCaptures': {
-      '1': { 'name': 'storage.type.rust' }
+    comment: 'Type declaration'
+    begin: '\\b(enum|struct|trait)\\b'
+    end: '(?=[\\{\\(;])'
+    beginCaptures: {
+      '1': { name: 'storage.type.rust' }
     }
-    'patterns': [
-      { 'include': '#comments' }
+    patterns: [
+      { include: '#comments' }
       {
-        'begin': '([\\p{Alpha}_][\\w]*)'
-        'end': '(?=[\\{;])'
-        'beginCaptures': {
-          '1': { 'name': 'entity.name.type.rust' }
+        begin: '([\\p{Alpha}_][\\w]*)'
+        end: '(?=[\\{;])'
+        beginCaptures: {
+          '1': { name: 'entity.name.type.rust' }
         }
-        'patterns': [
-          { 'include': '#comments' }
-          { 'include': '#structure_operators' }
-          { 'include': '#sigils' }
-          { 'include': '#modifiers' }
-          { 'include': '#traits' }
-          { 'include': '#type_params' }
-          { 'include': '#types' }
-          { 'include': '#modifiers' }
-          { 'include': '#where' }
+        patterns: [
+          { include: '#comments' }
+          { include: '#structure_operators' }
+          { include: '#sigils' }
+          { include: '#modifiers' }
+          { include: '#traits' }
+          { include: '#type_params' }
+          { include: '#types' }
+          { include: '#modifiers' }
+          { include: '#where' }
         ]
       }
     ]
@@ -818,37 +810,37 @@
   
   # Type alias
   {
-    'comment': 'Type alias'
-    'begin': '\\b(type)\\b'
-    'end': '(?=;)'
-    'beginCaptures': {
-      '1': { 'name': 'storage.type.rust' }
-      '2': { 'name': 'entity.name.type.rust' }
+    comment: 'Type alias'
+    begin: '\\b(type)\\b'
+    end: '(?=;)'
+    beginCaptures: {
+      '1': { name: 'storage.type.rust' }
+      '2': { name: 'entity.name.type.rust' }
     }
-    'patterns': [
-      { 'include': '#comments' }
+    patterns: [
+      { include: '#comments' }
       {
-        'begin': '([\\p{Alpha}_][\\w]*)'
-        'end': '(?=[\\{;])'
-        'beginCaptures': {
-          '1': { 'name': 'entity.name.type.rust' }
+        begin: '([\\p{Alpha}_][\\w]*)'
+        end: '(?=[\\{;])'
+        beginCaptures: {
+          '1': { name: 'entity.name.type.rust' }
         }
-        'patterns': [
-          { 'include': '#comments' }
-          { 'include': '#punctuation' }
-          { 'include': '#operators' }
-          { 'include': '#sigils' }
-          { 'include': '#modifiers' }
-          { 'include': '#lifetime' }
-          { 'include': '#ref_lifetime' }
-          { 'include': '#types' }
-          { 'include': '#traits' }
-          { 'include': '#type_params' }
+        patterns: [
+          { include: '#comments' }
+          { include: '#punctuation' }
+          { include: '#operators' }
+          { include: '#sigils' }
+          { include: '#modifiers' }
+          { include: '#lifetime' }
+          { include: '#ref_lifetime' }
+          { include: '#types' }
+          { include: '#traits' }
+          { include: '#type_params' }
         ]
       }
     ]
   }
   
   # Implementation
-  { 'include': '#implementation' }
+  { include: '#implementation' }
 ]

@@ -111,8 +111,8 @@ repository: {
   
   'markdown': {
     patterns: [
+      # Headers
       {
-        comment: 'Headers'
         begin: '(#{1,6})(#*)'
         end: '$'
         name: 'markup.heading.documentation.rust'
@@ -124,28 +124,31 @@ repository: {
           { include: 'md_inline' }
         ]
       }
+      # Links
       {
-        comment: 'Links'
-        match: '!?\\[.*?\\](?:\\(([^\\s\\)]+)(?:\\s+(["\'].*?["\']))?\\)|(\\(\\)))'
+        match: '!?\\[(.*?)\\](?:\\(([^\\s\\)]+)(?:\\s+(["\'].*?["\']))?\\)|(\\(\\)))'
         name: 'markup.link.documentation.rust'
         captures: {
-          '1': { name: 'markup.link.entity.documentation.rust' }
+          '1': { name: 'markup.link.text.documentation.rust' }
           '2': { name: 'markup.link.entity.documentation.rust' }
-          '3': { name: 'markup.invalid.illegal.documentation.rust' }
+          '3': { name: 'markup.link.entity.documentation.rust' }
+          '4': { name: 'markup.invalid.illegal.documentation.rust' }
         }
       }
       {
-        comment: 'Links'
-        match: '(\\[.*?\\]\\:\\s*([^\\s\\)]+))'
+        match: '(\\[(.*?)\\]\\:\\s*([^\\s\\)]+))'
         captures: {
           '1': { name: 'markup.link.documentation.rust' }
-          '2': { name: 'markup.link.entity.documentation.rust' }
+          '2': { name: 'markup.link.text.documentation.rust' }
+          '3': { name: 'markup.link.entity.documentation.rust' }
         }
       }
+      # Inline code
       {
         match: '`(?!`).*?`'
         name: 'markup.code.raw.inline.documentation.rust'
       }
+      # Block code
       {
         begin: '(```)(\\w*)'
         end: '//[/!]\\s*(```)'
@@ -167,6 +170,7 @@ repository: {
           }
         ]
       }
+      
       { include: '#md_inline' }
     ]
   }

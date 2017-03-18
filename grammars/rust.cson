@@ -492,7 +492,7 @@ repository: {
   
   'self': {
     comment: 'Self variable'
-    name: 'variable.language.self.rust'
+    name: 'keyword.other.self.rust'
     match: '\\bself\\b'
   }
   
@@ -700,7 +700,20 @@ patterns: [
     begin: '#\\!?\\['
     end: '\\]'
     patterns: [
+      { include: '#comments' }
       { include: '#string_literal' }
+      {
+        name: 'meta.attribute.derive.rust'
+        begin: 'derive\\s*\\('
+        end: '\\)'
+        patterns: [
+          { include: '#comments' }
+          {
+            name: 'support.type.attribute.core.rust'
+            match: '\\b(Copy|Clone|Debug|Default|Eq|PartialEq|Ord|PartialOrd|Hash|Zero)\\b'
+          }
+        ]
+      }
     ]
   }
   

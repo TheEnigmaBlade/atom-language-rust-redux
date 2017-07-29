@@ -56,6 +56,7 @@ describe 'atom-language-rust-redux', ->
 	grammar = null
 	
 	# Setup
+	
 	beforeEach ->
 		waitsForPromise ->
 			atom.packages.activatePackage 'language-rust-redux'
@@ -475,7 +476,7 @@ describe 'atom-language-rust-redux', ->
 				['comment.line.documentation.rust', 'markup.code.raw.block.documentation.rust']
 			expectNext tokens,
 				'rust',
-				['comment.line.documentation.rust', 'markup.bold.code.raw.block.name.documentation.rust']
+				['comment.line.documentation.rust', 'markup.code.raw.block.name.bold.documentation.rust']
 			nextLine()
 			expectNext tokens,
 				'/// ',
@@ -504,6 +505,54 @@ describe 'atom-language-rust-redux', ->
 			expectNext tokens,
 				'```',
 				['comment.line.documentation.rust', 'markup.code.raw.block.documentation.rust']
+		
+		it 'should always terminate code blocks under valid conditions (issues 1, 2)', ->
+			# Code block in quote
+			tokens = tokenize grammar, '''
+				/// before text
+				/// > ```
+				/// > I'm a quoted block of code!
+				/// > ```
+				/// after text
+				'''
+			
+			expectNext tokens,
+				'///',
+				'comment.line.documentation.rust'
+			expectNext tokens,
+				' before text',
+				'comment.line.documentation.rust'
+			nextLine()
+			expectNext tokens,
+				'///',
+				'comment.line.documentation.rust'
+			expectNext tokens,
+				' > ',
+				'comment.line.documentation.rust'
+			expectNext tokens,
+				'```',
+				['comment.line.documentation.rust', 'markup.code.raw.block.documentation.rust']
+			nextLine()
+			expectNext tokens,
+				'/// > ',
+				'comment.line.documentation.rust'
+			expectNext tokens,
+				'I\'m a quoted block of code!',
+				['comment.line.documentation.rust', 'markup.code.raw.block.documentation.rust']
+			nextLine()
+			expectNext tokens,
+				'/// > ',
+				'comment.line.documentation.rust'
+			expectNext tokens,
+				'```',
+				['comment.line.documentation.rust', 'markup.code.raw.block.documentation.rust']
+			nextLine()
+			expectNext tokens,
+				'///',
+				'comment.line.documentation.rust'
+			expectNext tokens,
+				' after text',
+				'comment.line.documentation.rust'
 		
 	describe 'when tokenizing strings', ->
 		#TODO: unicode tests
@@ -1232,11 +1281,8 @@ describe 'atom-language-rust-redux', ->
 					'punctuation.brace.rust'
 
 	describe 'when tokenizing the question mark operator thing', ->
-		beforeEach ->
-			reset()
-
 		it 'should parse', ->
-			tokens = grammar.tokenizeLines('File::create("foo.txt")?')
+			tokens = tokenize grammar, 'File::create("foo.txt")?'
 			expectNext tokens,
 				'File',
 				[]
@@ -1265,8 +1311,7 @@ describe 'atom-language-rust-redux', ->
 				'?',
 				'keyword.operator.misc.question-mark.rust'
 
-			reset()
-			tokens = grammar.tokenizeLines('File::create("foo.txt")?.write_all("test")?')
+			tokens = tokenize grammar, 'File::create("foo.txt")?.write_all("test")?'
 			expectNext tokens,
 				'File',
 				[]
@@ -1319,8 +1364,7 @@ describe 'atom-language-rust-redux', ->
 				'?',
 				'keyword.operator.misc.question-mark.rust'
 
-			reset()
-			tokens = grammar.tokenizeLines('if test()? {}')
+			tokens = tokenize grammar, 'if test()? {}'
 			expectNext tokens,
 				'if',
 				'keyword.control.rust'

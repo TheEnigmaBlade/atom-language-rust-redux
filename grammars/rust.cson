@@ -712,6 +712,29 @@ patterns: [
             name: 'support.type.attribute.core.rust'
             match: '\\b(Copy|Clone|Debug|Default|Eq|PartialEq|Ord|PartialOrd|Hash|Zero)\\b'
           }
+          {
+            name: 'support.name.attribute.rust'
+            match: '[^\\)]*'
+          }
+        ]
+      }
+      {
+        name: 'meta.attribute.repr.rust'
+        begin: 'repr\\s*\\('
+        end: '\\)'
+        patterns: [
+          { include: '#comments' }
+          {
+            name: 'support.type.repr.core.rust'
+            match: '\\b(C|rust|packed|u8|u16|u32|u64)\\b'
+          }
+          {
+            match: '\\s*,\\s*'
+          }
+          {
+            name: 'invalid.illegal.rust'
+            match: '[^\\),]*'
+          }
         ]
       }
     ]
@@ -807,7 +830,7 @@ patterns: [
   # Type declaration
   {
     comment: 'Type declaration'
-    begin: '\\b(enum|struct|trait)\\b'
+    begin: '\\b(enum|struct|trait|union)\\b'
     end: '(?=[\\{\\(;])'
     beginCaptures: {
       '1': { name: 'storage.type.rust' }

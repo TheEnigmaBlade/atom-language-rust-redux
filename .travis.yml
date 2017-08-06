@@ -2,15 +2,15 @@
 env:
   global:
     - APM_TEST_PACKAGES=""
-    - ATOM_LINT_WITH_BUNDLED_NODE="false"
+    - ATOM_LINT_WITH_BUNDLED_NODE="true"
 
   matrix:
     - ATOM_CHANNEL=stable
-    #- ATOM_CHANNEL=beta
+    - ATOM_CHANNEL=beta
 
 os:
   - linux
-  #- osx
+  - osx
 
 # Installed for linting the project
 #language: node_js
@@ -36,10 +36,12 @@ git:
 
 sudo: false
 
-#addons:
-#  apt:
-#    packages:
-#    - build-essential
-#    - git
-#    - libgnome-keyring-dev
-#    - fakeroot
+dist: trusty
+
+addons:
+  apt:
+    packages:
+    - build-essential
+    - fakeroot
+    - git
+    - libsecret-1-dev

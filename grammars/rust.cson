@@ -747,7 +747,7 @@ patterns: [
   {
     comment: 'Control keyword'
     name: 'keyword.control.rust'
-    match: '\\b(break|continue|else|if|in|for|loop|match|return|while)\\b'
+    match: '\\b(break|continue|else|if|in|for|loop|match|return|while|catch)\\b'
   }
   {
     comment: 'Keyword'

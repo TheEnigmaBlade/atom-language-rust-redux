@@ -677,6 +677,7 @@ repository: {
             }
             patterns: [
               { include: '#comments' }
+              { include: '#types' }
               {
                 match: '[\\p{Alpha}_][\\w]*'
                 name: ''#'entity.name.type.rust'

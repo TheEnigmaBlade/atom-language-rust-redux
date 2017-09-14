@@ -72,7 +72,7 @@ repository: {
     patterns: [
       {
         comment: 'Italic'
-        begin: '\\*(?!\\*)'
+        begin: '\\*(?!\\*)(?=.+\\*)'
         end: '\\*'
         name: 'markup.italic.documentation.rust'
         patterns: [
@@ -81,7 +81,7 @@ repository: {
       }
       {
         comment: 'Italic'
-        begin: '_(?!_)'
+        begin: '_(?!_)(?=.+_)'
         end: '_'
         name: 'markup.italic.documentation.rust'
         patterns: [
@@ -90,7 +90,7 @@ repository: {
       }
       {
         comment: 'Bold'
-        begin: '\\*\\*'
+        begin: '\\*\\*(?!\\*\\*)(?=.+\\*\\*)'
         end: '\\*\\*'
         name: 'markup.bold.documentation.rust'
         patterns: [
@@ -99,7 +99,7 @@ repository: {
       }
       {
         comment: 'Underline'
-        begin: '__'
+        begin: '__(?!__)(?=.+__)'
         end: '__'
         name: 'markup.underline.documentation.rust'
         patterns: [

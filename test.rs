@@ -384,3 +384,39 @@ let i = 0;
 do {
     yield do_thing(i++);
 } while(i < MAX);
+
+impl Float for f32 {
+    fn infinity() -> Self {
+        f32::INFINITY
+    }
+}
+
+#[derive(Default)]
+enum State {
+    /// Currently open in a sane state
+    Open,
+    
+    /// Waiting to send a GO_AWAY frame
+    GoAway(frame::GoAway)
+    
+    /// Waiting to send a GO_AWAY_ frame
+    GoAway(frame::GoAway)
+    
+    /// Waiting to send a GO*AWAY frame
+    GoAway(frame::GoAway)
+    
+    /// Waiting to send a GO*AWAY* frame
+    GoAway(frame::GoAway)
+    
+    /// Waiting to send a GO__AWAY frame
+    GoAway(frame::GoAway)
+    
+    /// Waiting to send a GO__AWAY__ frame
+    GoAway(frame::GoAway)
+    
+    /// Waiting to send a GO**AWAY frame
+    GoAway(frame::GoAway)
+    
+    /// Waiting to send a GO**AWAY** frame
+    GoAway(frame::GoAway)
+}

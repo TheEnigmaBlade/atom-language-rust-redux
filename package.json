@@ -1,6 +1,6 @@
 {
   "name": "language-rust-redux",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Rust language support for Atom (maintained)",
   "keywords": [
     "language",

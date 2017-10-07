@@ -445,7 +445,7 @@ repository: {
       }
       # Format macro
       {
-        begin: '\\b(?:((?:write|writeln|panic)!)|((?:format|format_args|print|println)!))'
+        begin: '\\b(?:((?:write|writeln|panic)!)|((?:format|format_args|print|println|eprint|eprintln)!))'
         end: '[\\)\\]\\}]'
         beginCaptures: {
           '1': { name: 'support.function.macro.core.rust' }

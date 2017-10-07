@@ -373,6 +373,8 @@ warn!("{}", "text");
 info!("{}", "text");
 debug!("{}", "text");
 trace!("{}", "text");
+eprint!("{}", "text");
+eprintln!("{}", "text");
 
 // Unused reserved words
 

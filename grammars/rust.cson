@@ -151,7 +151,7 @@ repository: {
       # Block code
       {
         begin: '(```)(\\w*)'
-        end: '//[/!]\\s*(>\\s*)*(```)'
+        end: '\\s*//[/!]\\s*(>\\s*)*(```)'
         beginCaptures: {
           '1': { name: 'markup.code.raw.block.documentation.rust' }
           '2': { name: 'markup.code.raw.block.name.bold.documentation.rust' }
@@ -161,7 +161,7 @@ repository: {
         }
         patterns: [
           {
-            match: '//[/!]\\s*(>\\s*)*(?!```)'
+            match: '\\s*//[/!]\\s*(>\\s*)*(?!```)'
             #name: 'comment.line.documentation.rust'
           }
           {

@@ -422,3 +422,7 @@ enum State {
     /// Waiting to send a GO**AWAY** frame
     GoAway(frame::GoAway)
 }
+
+Box<dyn MyTrait>
+&dyn Foo
+&mut dyn Foo

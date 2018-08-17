@@ -727,7 +727,7 @@ patterns: [
           { include: '#comments' }
           {
             name: 'support.type.repr.core.rust'
-            match: '\\b(C|rust|packed|u8|u16|u32|u64)\\b'
+            match: '\\b([Cc]|[Rr]ust|packed|u8|u16|u32|u64)\\b'
           }
           {
             match: '\\s*,\\s*'
@@ -753,7 +753,7 @@ patterns: [
   {
     comment: 'Keyword'
     name: 'keyword.other.rust'
-    match: '\\b(crate|extern|mod|let|ref|use|super|as|move)\\b'
+    match: '\\b(crate|extern|mod|let|ref|use|super|as|move|dyn)\\b'
   }
   {
     comment: 'Unused reserved keyword'

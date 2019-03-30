@@ -637,10 +637,11 @@ repository: {
   
   'ref_lifetime': {
     comment: 'Reference with named lifetime'
-    match: '&(\'([\\p{Alpha}_][\\w]*))\\b'
+    match: '(&)(\'([\\p{Alpha}_][\\w]*))\\b'
     captures: {
-      '1': { name: 'storage.modifier.lifetime.rust' }
-      '2': { name: 'entity.name.lifetime.rust' }
+      '1': { name: 'keyword.operator.sigil.rust' }
+      '2': { name: 'storage.modifier.lifetime.rust' }
+      '3': { name: 'entity.name.lifetime.rust' }
     }
   }
   
@@ -811,9 +812,10 @@ patterns: [
           { include: '#comments' }
           { include: '#structure_operators' }
           { include: '#special_variables' }
-          { include: '#sigils' }
-          { include: '#modifiers' }
           { include: '#ref_lifetime' }
+          { include: '#sigils' }
+          { include: '#lifetime' }
+          { include: '#modifiers' }
           { include: '#types' }
           { include: '#traits' }
           { include: '#type_params' }

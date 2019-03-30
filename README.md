@@ -4,19 +4,26 @@
 
 Adds syntax highlighting and snippets for [Rust](http://www.rust-lang.org/) files in [Atom](http://atom.io/).
 
-Forked from the existing [atom-language-rust](https://github.com/zargony/atom-language-rust) due to lack of support.
-
 ## Install
 
-Install the package `language-rust-redux` in Atom (Preferences->Packages) or Atom's package manager:
+Install the package `language-rust-redux` from within Atom (Preferences->Packages) or through Atom's package manager:
 
 ```bash
 $ apm install language-rust-redux
 ```
 
-## Key changes from fork
+### JSON grammar
 
-Previews taken with Firewatch syntax. More improvements to come.
+To obtain a JSON version of the grammar for use in other supported editors, run the npm script "cson2json" and `grammars/rust.json` will be generated.
+
+```bash
+$ npm install
+$ npm run cson2json
+```
+
+## Key changes from other grammars
+
+Previews taken with Firewatch syntax.
 
 - The latest syntax, such as the `?` operator
 - Format macro syntax highlighting<br>
@@ -33,6 +40,4 @@ Previews taken with Firewatch syntax. More improvements to come.
 
 ## Bugs and suggestions
 
-Because this is a fork, there may be bugs I haven't noticed from the original version. Please submit an issue or pull request to get them fixed.
-
-If you have any suggestions for improvement, please submit an issue with a full description and example code for when your suggestion should apply.
+If you notice any bugs or have any suggestions for improvement, please submit an issue with a full description and example code.

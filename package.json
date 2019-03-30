@@ -12,7 +12,12 @@
   "engines": {
     "atom": ">0.50.0 <2.0.0"
   },
-  "dependencies": {},
+  "devDependencies": {
+    "cson": "^5.1.0"
+  },
+  "scripts": {
+    "cson2json": "node node_modules/cson/bin/cson2json grammars/rust.cson > grammars/rust.json"
+  },
   "homepage": "https://github.com/theenigmablade/atom-language-rust-redux",
   "repository": {
     "type": "git",

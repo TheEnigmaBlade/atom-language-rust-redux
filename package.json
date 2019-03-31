@@ -25,5 +25,8 @@
   },
   "bugs": {
     "url": "https://github.com/theenigmablade/atom-language-rust-redux/issues"
+  },
+  "dependencies": {
+    "tree-sitter-rust": "^0.13.5"
   }
 }
